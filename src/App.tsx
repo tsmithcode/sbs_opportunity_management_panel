@@ -1800,6 +1800,9 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
           </span>
         </div>
       </header>
+      <div role="alert" style={{ background: "#7c3aed", color: "#fff", textAlign: "center", padding: "10px 16px", fontSize: "0.9rem", fontWeight: 500 }}>
+        Scheduled maintenance in progress — some features may be temporarily unavailable.
+      </div>
 
       {currentPage === "about" ? (
         <main id="main-content" className="workspace">
