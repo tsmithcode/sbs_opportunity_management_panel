@@ -35,6 +35,7 @@ This repository uses **Spatial Business Systems (SBS)** as the active reference 
 
 ## Repository Map
 - [src](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/src) - app shell, workflow state, seed data, coaching, export packaging
+- [tests/fixtures/desktop-e2e](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/tests/fixtures/desktop-e2e) - frozen live-posting snapshots and reusable desktop/mobile proof scenarios
 - [docs-index.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/docs-index.md) - fast navigation map for builders, operators, and reviewers
 - [CONTRIBUTING.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/CONTRIBUTING.md) - contributor setup, working rules, and update expectations
 - [use-cases](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/use-cases) - reference use cases and use-case operating assets
@@ -45,6 +46,8 @@ This repository uses **Spatial Business Systems (SBS)** as the active reference 
 - [trust-center-index.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/trust-center-index.md) - trust and readiness entrypoint
 - [platform-roadmap.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/platform-roadmap.md) - platform sequencing and strategic roadmap
 - [repo-organization-and-expert-execution-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/repo-organization-and-expert-execution-plan.md) - repo-quality plan, benchmark table, and execution owners
+- [frontend-frustration-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/frontend-frustration-matrix.md) - blunt role-by-role view of current frontend friction and expected fixes
+- [desktop-town-hall-ui-data-pipeline-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/desktop-town-hall-ui-data-pipeline-matrix.md) - desktop/mobile blockers, owners, and target outcomes for premium acceptance
 - [ceo-premium-sovereign-enterprise-expectations-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/ceo-premium-sovereign-enterprise-expectations-matrix.md) - CEO-grade premium sovereign enterprise gap matrix and required experts
 - [ceo-premium-sovereign-enterprise-phase-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/ceo-premium-sovereign-enterprise-phase-plan.md) - phased implementation path to reach premium sovereign enterprise outcomes
 - [premium-enterprise-positioning-and-claims-guide.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/premium-enterprise-positioning-and-claims-guide.md) - approved premium narrative, positioning, and claim boundaries
@@ -99,9 +102,29 @@ Run the browser round-trip verification:
 npm run roundtrip
 ```
 
+Run the full desktop proof suite:
+```bash
+npm run desktop:e2e
+```
+
+Run the full mobile proof suite:
+```bash
+npm run mobile:e2e
+```
+
 Run the full release verification bundle:
 ```bash
 npm run verify
+```
+
+Run build plus the desktop proof suite:
+```bash
+npm run verify:desktop
+```
+
+Run build plus the mobile proof suite:
+```bash
+npm run verify:mobile
 ```
 
 Generate verification summary artifacts:
@@ -184,7 +207,7 @@ For CEO-grade premium sovereign enterprise execution, use:
 
 ## Current Limits
 - No cloud sync or Monyawn-hosted persistence
-- Round-trip verification is still Chromium-only; cross-browser CI currently covers the smoke suite rather than the full export/import flow
+- Desktop/mobile end-to-end proof and round-trip verification are still Chromium-only; cross-browser CI currently covers the smoke suite rather than the full export/import flow
 - Industry coaching is bundled and stage-aware, but not yet dynamically expanded from richer imported knowledge packs
 
 ## 10/10 Repo Standard

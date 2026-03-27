@@ -31,8 +31,12 @@ Useful checks:
 npm run build
 npm run smoke
 npm run smoke:cross-browser
+npm run desktop:e2e
+npm run mobile:e2e
 npm run roundtrip
 npm run verify
+npm run verify:desktop
+npm run verify:mobile
 npm run release:summary
 npm run verify:artifacts
 ```

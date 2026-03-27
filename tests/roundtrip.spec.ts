@@ -1,4 +1,6 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+const notice = (page: Page) => page.locator("p.notice[role='status']");
 
 test("handoff zip restores workspace state after mutation", async ({ page }, testInfo) => {
   await page.goto("/");
@@ -18,7 +20,7 @@ test("handoff zip restores workspace state after mutation", async ({ page }, tes
 
   await page.locator('input[type="file"]').setInputFiles(handoffPath);
 
-  await expect(page.getByRole("status")).toContainText("Platform import loaded");
+  await expect(notice(page)).toContainText("Platform import loaded");
   await expect(page.getByText("2 of 10 stages")).toBeVisible();
 });
 
@@ -66,7 +68,7 @@ test("release readiness packet can be imported for review", async ({ page }, tes
 
   await page.getByTestId("release-artifact-input").setInputFiles(packetPath);
 
-  await expect(page.getByRole("status")).toContainText("artifact imported for review");
+  await expect(notice(page)).toContainText("artifact imported for review");
   await expect(page.getByText("Buyer-Facing Readiness Packet")).toBeVisible();
   await expect(page.getByRole("heading", { name: "1 stored" })).toBeVisible();
 });

@@ -14,7 +14,8 @@ test("guided workspace loads with core lifecycle controls", async ({ page }) => 
   await expect(page.getByRole("button", { name: "Import ZIP or JSON" })).toBeVisible();
   await expect(page.getByRole("combobox", { name: "Opportunity" })).toBeVisible();
   await expect(page.getByText("Current operating context")).toBeVisible();
-  await expect(page.getByText("Story ready")).toBeVisible();
+  await expect(page.getByTestId("desktop-opportunity-cockpit")).toBeVisible();
+  await expect(page.getByText("Operational summary")).toBeVisible();
 });
 
 test("admin mode exposes enterprise controls and buyer packet generation", async ({ page }) => {

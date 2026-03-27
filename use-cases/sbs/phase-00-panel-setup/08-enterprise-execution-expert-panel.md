@@ -8,11 +8,14 @@ Define the experts required to execute the SBS use case at enterprise grade so t
 | Expert | Why Required | Core Ownership |
 |---|---|---|
 | Product Lead / AI Product Architect | Converts the SBS use case into a scalable product workflow | Product scope, phase logic, roadmap, acceptance criteria |
+| Desktop Experience Director | Turns the desktop workspace into a premium operating cockpit instead of a flat card grid | Desktop hierarchy, cockpit composition, premium sizing discipline |
+| Mobile Experience Lead | Turns responsive screens into a usable operating flow instead of a compressed desktop | Mobile hierarchy, touch-priority action order, responsive composition |
 | CRO / Revenue Lead | Ensures commercialization and market-readiness decisions stay aligned to the product’s trust posture | Revenue readiness, monetization strategy, GTM alignment |
 | Mission / Purpose Lead | Keeps company purpose and values legible across product and public narratives | Mission framing, values-to-product coherence, purpose clarity |
 | Brand Strategy Lead | Ensures Monyawn’s identity, positioning, and about-page story stay coherent | Brand direction, market positioning, public identity coherence |
 | Repository Steward / Documentation Systems Lead | Keeps the repo legible, navigable, and source-of-truth coherent across product, trust, and use-case docs | Repo organization, cross-doc consistency, documentation architecture |
 | Developer Experience Lead | Makes the repo and implementation workflow excellent for builders and maintainers | Dev workflow quality, contribution ergonomics, repo usability |
+| E2E Proof Lead | Ensures the product is proven through real end-to-end browser journeys rather than shallow assertions | Full-journey proof scope, scenario completeness, acceptance gating |
 | CI / Release Automation Lead | Makes verification repeatable in a clean environment instead of relying on memory or manual release habits | CI workflows, automated verification gates, release-pipeline reliability |
 | Browser Compatibility Lead | Makes browser support explicit and prevents false confidence from single-browser-only checks | Cross-browser smoke coverage, browser-support matrix, compatibility risk visibility |
 | Contributor Onboarding Lead | Makes it easy for a new builder to install, run, understand, and contribute without guessing | Contributor setup, working agreements, first-pass onboarding quality |
@@ -36,8 +39,10 @@ Define the experts required to execute the SBS use case at enterprise grade so t
 | Knowledge Operations Lead | Governs coaching packs, dictionaries, and content lifecycle consistency | Glossary and coaching governance, industry-context quality, content operations |
 | LLM / Agent Engineer | Implements AI checkpoints and determination logic | Agent orchestration, prompts, confidence rules |
 | Frontend Engineer | Builds the wizard UI and review surfaces | Responsive UI, interaction fidelity, stateful flows |
+| Visual QA Lead | Makes premium desktop quality measurable through screenshots and hierarchy review, not opinion only | Screenshot review, visual regression proof, desktop polish acceptance |
 | Backend / Workflow Engineer | Implements persistence and pipeline control | Save/resume, APIs, eventing, stage transitions |
 | Director Of Data Platform | Owns canonical data contracts, package structure, and reporting consistency | JSON schema, ZIP package contract, event integrity, reporting alignment |
+| Data Pipeline Validation Lead | Proves that exports, imports, restored state, and lifecycle data all survive real journeys | Export/import proof, restored-state validation, scenario pipeline integrity |
 | Data Engineer | Builds extraction, transformation, import/export, and packaging flows | Parsing pipeline, package generation, import validation |
 | Data Steward / Data Quality Lead | Ensures imported and generated data remains correct and repairable | Data correction, quality review, field integrity |
 | API / Integration Lead | Owns portable interfaces and package interoperability | Import/export contracts, future connector strategy, interface governance |
@@ -45,9 +50,11 @@ Define the experts required to execute the SBS use case at enterprise grade so t
 | PDF / Document Rendering Specialist | Produces enterprise-grade formatted export outputs | PDF templates, page breaks, timestamp naming, print-safe formatting |
 | Content Librarian / Information Architect | Owns information architecture for glossary and hidden/show content | Taxonomy, dictionaries, coaching placement, compact content structure |
 | Workflow Analyst | Keeps new capability aligned to the existing SBS screens and lifecycle | Stage fit, exception handling, no-new-primary-screen discipline |
+| Scenario Fixture Steward | Keeps scenario fixtures, frozen posting snapshots, and proof artifacts reusable and deterministic | Scenario fixtures, frozen opportunity inputs, repeatable proof artifacts |
 | QA / Reliability Lead | Required for browser/device proof and release gates | Regression, device coverage, production validation |
 | Benchmarking And Evaluation Lead | Defines maturity scoring, current benchmarks, and expected outcome ratings for repo and platform execution | Benchmark tables, outcome ratings, evidence-based readiness scoring |
 | Release Manager | Coordinates release readiness, execution sequencing, and final package integrity | Release checklist, cut coordination, ship readiness |
+| Responsive QA Lead | Makes mobile and breakpoint-specific proof measurable instead of assumed | Mobile screenshots, touch-flow proof, breakpoint acceptance |
 | Research Lead | Validates that zero-knowledge users can complete the flow | Usability studies, friction analysis |
 | Security Lead | Required for enterprise and government trust review | Security posture, incident readiness, control claims |
 | Customer Assurance / Security Questionnaire Lead | Required for premium enterprise diligence and repeatable buyer trust responses | Security questionnaires, diligence responses, trust packet coordination |
@@ -65,6 +72,7 @@ Define the experts required to execute the SBS use case at enterprise grade so t
 | Training And Enablement Lead | Makes the product and handoff model understandable to users and staff | User guidance, onboarding aids, internal enablement, save/export education |
 | Change Management Lead | Governs rollout clarity as product capabilities evolve | Rollout planning, transition communication, adoption support |
 | GTM / Growth Lead | Turns product clarity into acquisition and activation strategy | Launch posture, activation loops, free-model growth logic |
+| Applied Opportunity Research Lead | Finds live role references and freezes them into reusable local proof inputs | Live opportunity sourcing, posting capture, scenario-market fit |
 | Community Lead | Builds mission-led trust, feedback loops, and audience learning channels | Community engagement, user insight loops, mission-aligned distribution |
 | Trust Center / Public Documentation Owner | Keeps buyer-facing and public operating docs consistent with product truth and governed commitments | Trust-center clarity, public documentation quality, cross-doc consistency |
 | Government Contracting Lead | Required when pursuing public-sector buyers | Vendor registration, public procurement readiness |
@@ -77,10 +85,15 @@ Define the experts required to execute the SBS use case at enterprise grade so t
 ## Minimum Execution Rule
 If any of the following functions are missing, enterprise-grade execution is not complete:
 - accessibility
+- desktop experience discipline
+- mobile experience discipline
 - security
 - privacy
 - legal
 - QA / reliability
+- end-to-end proof leadership
+- visual QA discipline
+- responsive QA discipline
 - developer experience and repo stewardship
 - contributor onboarding and docs navigation
 - README and root-document clarity
@@ -90,10 +103,13 @@ If any of the following functions are missing, enterprise-grade execution is not
 - customer implementation
 - finance
 - data platform and quality
+- data pipeline validation
 - content and coaching governance
 - document and PDF rendering quality
+- scenario fixture stewardship
 - change enablement
 - GTM and revenue readiness
+- applied opportunity research
 - public trust-center and documentation ownership
 - diligence packet and sales enablement quality
 - executive presentation quality

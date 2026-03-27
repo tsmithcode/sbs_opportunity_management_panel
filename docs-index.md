@@ -16,6 +16,8 @@ Use it when you need to get from the root of the repo to the right source-of-tru
 | what the first-class platform resources are | [platform-api-surface.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/platform-api-surface.md) |
 | current trust and buyer materials | [trust-center-index.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/trust-center-index.md) |
 | how the repo is organized and benchmarked | [repo-organization-and-expert-execution-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/repo-organization-and-expert-execution-plan.md) |
+| what the team hates about the frontend | [frontend-frustration-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/frontend-frustration-matrix.md) |
+| what currently blocks premium desktop and mobile acceptance | [desktop-town-hall-ui-data-pipeline-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/desktop-town-hall-ui-data-pipeline-matrix.md) |
 | who owns which decisions | [07-company-org-structure-and-ai-decision-authority.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/use-cases/sbs/phase-00-panel-setup/07-company-org-structure-and-ai-decision-authority.md) |
 | how to contribute safely | [CONTRIBUTING.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/CONTRIBUTING.md) |
 
@@ -53,6 +55,7 @@ Use it when you need to get from the root of the repo to the right source-of-tru
 
 ## Repo, Execution, And Contribution
 - [repo-organization-and-expert-execution-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/repo-organization-and-expert-execution-plan.md)
+- [desktop-town-hall-ui-data-pipeline-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/desktop-town-hall-ui-data-pipeline-matrix.md)
 - [CONTRIBUTING.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/CONTRIBUTING.md)
 - [ready-for-personal-use-checklist.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/ready-for-personal-use-checklist.md)
 
@@ -68,6 +71,12 @@ Use it when you need to get from the root of the repo to the right source-of-tru
 - [src/integrity.ts](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/src/integrity.ts)
 - [src/seed.ts](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/src/seed.ts)
 - [src/styles.css](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/src/styles.css)
+
+## Test Fixtures And Proof
+- [tests/fixtures/desktop-e2e/README.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/tests/fixtures/desktop-e2e/README.md)
+- [tests/fixtures/desktop-e2e/scenarios.ts](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/tests/fixtures/desktop-e2e/scenarios.ts)
+- [tests/desktop-e2e.spec.ts](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/tests/desktop-e2e.spec.ts)
+- [tests/mobile-e2e.spec.ts](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/tests/mobile-e2e.spec.ts)
 
 ## Builder Shortcut
 If you are new here, this is the shortest useful path:

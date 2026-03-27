@@ -10,8 +10,13 @@
     "release:summary": "node scripts/write_release_summary.mjs",
     "smoke": "playwright test tests/smoke.spec.ts --project=chromium",
     "smoke:cross-browser": "playwright test tests/smoke.spec.ts --project=chromium --project=firefox --project=webkit",
+    "desktop:e2e": "playwright test tests/desktop-e2e.spec.ts --project=chromium",
+    "mobile:e2e": "playwright test tests/mobile-e2e.spec.ts --project=chromium",
+    "townhall:habasit": "playwright test tests/habasit-town-hall.spec.ts --project=chromium",
     "roundtrip": "playwright test tests/roundtrip.spec.ts --project=chromium",
-    "verify": "npm run build && npm run smoke && npm run roundtrip",
+    "verify": "npm run build && npm run smoke && npm run desktop:e2e && npm run mobile:e2e && npm run roundtrip",
+    "verify:desktop": "npm run build && npm run desktop:e2e",
+    "verify:mobile": "npm run build && npm run mobile:e2e",
     "verify:artifacts": "npm run verify && npm run smoke:cross-browser && npm run release:summary"
   },
   "dependencies": {

@@ -8,17 +8,20 @@ import type {
   ConfidenceLevel,
   CorrespondenceItem,
   DecisionMemo,
+  EventType,
   Escalation,
   EnterpriseControlProfile,
   Opportunity,
   OpportunityStage,
   ReportingSnapshot,
   RoleEntitlement,
+  StageEvent,
   SensitiveSupportProfile,
   SourceArtifact,
   SponsorshipType,
   User,
   WorkflowTask,
+  ActorType,
 } from "./types";
 
 export const stageOrder: OpportunityStage[] = [
@@ -374,6 +377,26 @@ export function createTask(
     status: "open",
     blocking,
     created_at: nowIso(),
+  };
+}
+
+export function createStageEvent(
+  opportunityId: string,
+  stage: OpportunityStage,
+  eventType: EventType,
+  actorType: ActorType,
+  actorId: string,
+  notes: string,
+): StageEvent {
+  return {
+    event_id: createId("event"),
+    opportunity_id: opportunityId,
+    stage,
+    event_type: eventType,
+    actor_type: actorType,
+    actor_id: actorId,
+    event_timestamp: nowIso(),
+    notes,
   };
 }
 
