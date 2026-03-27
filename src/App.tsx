@@ -34,6 +34,7 @@ import {
   createMemo,
   createOpportunity,
   createReportingSnapshot,
+  createStageEvent,
   createSensitiveSupportProfile,
   createTask,
   createUser,
@@ -828,6 +829,14 @@ function App() {
       "Customer Success Lead",
       true,
     );
+    const stageEvent = createStageEvent(
+      opportunity.opportunity_id,
+      opportunity.current_stage,
+      "created",
+      "user",
+      state.selectedUserId,
+      "Opportunity created from guided intake.",
+    );
 
     patchState(
       (current) => ({
@@ -836,6 +845,7 @@ function App() {
         candidateProfiles: [profile, ...current.candidateProfiles],
         checkpoints: [checkpoint, ...current.checkpoints],
         tasks: [task, ...current.tasks],
+        events: [stageEvent, ...current.events],
         selectedOpportunityId: opportunity.opportunity_id,
       }),
       "Opportunity created and routed into intake.",
@@ -1059,6 +1069,14 @@ function App() {
       stageMeta[nextStage].reviewerRole,
       !isClosedStage(nextStage),
     );
+    const stageEvent = createStageEvent(
+      selectedOpportunity.opportunity_id,
+      nextStage,
+      "advanced",
+      "user",
+      state.selectedUserId,
+      `Advanced from ${stageMeta[selectedOpportunity.current_stage].label} to ${stageMeta[nextStage].label}.`,
+    );
     const memo = createMemo(
       selectedOpportunity.opportunity_id,
       nextStage === "offer_review"
@@ -1086,8 +1104,67 @@ function App() {
         checkpoints: [checkpoint, ...current.checkpoints],
         tasks: [task, ...current.tasks],
         memos: [memo, ...current.memos],
+        events: [stageEvent, ...current.events],
       }),
       `Opportunity advanced into ${stageMeta[nextStage].label}.`,
+    );
+  }
+
+  function handleCloseLost() {
+    if (!selectedOpportunity) {
+      return;
+    }
+
+    if (isClosedStage(selectedOpportunity.current_stage)) {
+      setNotice({ tone: "info", message: "This opportunity is already at a terminal stage." });
+      return;
+    }
+
+    const updatedOpportunity = {
+      ...selectedOpportunity,
+      current_stage: "closed_lost" as const,
+      updated_at: nowIso(),
+      status: "closed_lost" as OpportunityStatus,
+    };
+    const checkpoint = createCheckpoint(
+      updatedOpportunity,
+      stageMeta.closed_lost.label,
+      `Close from ${stageMeta[selectedOpportunity.current_stage].label}`,
+      "medium",
+      "proceed_with_warning",
+      "Opportunity was intentionally closed as lost from the active workflow.",
+      "low",
+      "low",
+    );
+    const memo = createMemo(
+      selectedOpportunity.opportunity_id,
+      "final",
+      "Opportunity was closed as lost after guided review and lifecycle capture.",
+      checkpoint.confidence_level,
+      false,
+    );
+    const stageEvent = createStageEvent(
+      selectedOpportunity.opportunity_id,
+      "closed_lost",
+      "completed",
+      "user",
+      state.selectedUserId,
+      `Closed as lost from ${stageMeta[selectedOpportunity.current_stage].label}.`,
+    );
+
+    patchState(
+      (current) => ({
+        ...current,
+        opportunities: current.opportunities.map((opportunity) =>
+          opportunity.opportunity_id === updatedOpportunity.opportunity_id
+            ? updatedOpportunity
+            : opportunity,
+        ),
+        checkpoints: [checkpoint, ...current.checkpoints],
+        memos: [memo, ...current.memos],
+        events: [stageEvent, ...current.events],
+      }),
+      "Opportunity closed as lost with audit history preserved.",
     );
   }
 
@@ -1800,8 +1877,33 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
           </span>
         </div>
       </header>
-      <div role="alert" style={{ background: "#7c3aed", color: "#fff", textAlign: "center", padding: "10px 16px", fontSize: "0.9rem", fontWeight: 500 }}>
-        Scheduled maintenance in progress — some features may be temporarily unavailable.
+      <div role="status" aria-live="polite" style={{
+        background: "linear-gradient(90deg, #0a5f57, #083f3b)",
+        color: "#fff",
+        textAlign: "center",
+        padding: "11px 20px",
+        fontSize: "0.88rem",
+        fontWeight: 500,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "10px",
+        letterSpacing: "0.01em",
+      }}>
+        <span style={{
+          display: "inline-block",
+          width: "8px",
+          height: "8px",
+          borderRadius: "50%",
+          background: "#4ade80",
+          boxShadow: "0 0 0 0 rgba(74,222,128,0.7)",
+          animation: "pulse-dot 1.8s ease-in-out infinite",
+          flexShrink: 0,
+        }} aria-hidden="true" />
+        <span>
+          <strong>Live build — 7-day sprint in progress.</strong>{" "}
+          This platform is being built in public to demonstrate production-ready delivery under real pressure — validating multi-client readiness for teams that can't afford slow.
+        </span>
       </div>
 
       {currentPage === "about" ? (
@@ -1977,54 +2079,66 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
             ) : null}
           </div>
 
-          <div className="hero-panel" aria-label="Platform posture">
-            <p className="panel-label">Current platform posture</p>
-            <ul className="plain-list">
-              <li>Canonical workflow entities persisted in local state</li>
-              <li>Progressive disclosure across user, staff, and admin views</li>
-              <li>Review gates, escalations, and reporting visible in-product</li>
-            </ul>
-            <div className="summary-grid">
+          <div className="hero-panel hero-panel-ops" aria-label="Platform posture">
+            <div className="hero-panel-head">
               <div>
+                <p className="panel-label">Current platform posture</p>
+                <h3>Operational confidence at a glance</h3>
+              </div>
+              <span className="status-chip">desktop-first discipline</span>
+            </div>
+            <div className="hero-metric-strip">
+              <div className="hero-metric">
                 <span className="metric-label">Active opportunities</span>
                 <strong>{reportingSnapshot.active_opportunities}</strong>
               </div>
-              <div>
+              <div className="hero-metric">
                 <span className="metric-label">Open escalations</span>
                 <strong>{escalationQueue.length}</strong>
               </div>
-              <div>
+              <div className="hero-metric">
                 <span className="metric-label">Review queue</span>
                 <strong>{reviewQueue.length}</strong>
               </div>
-              <div>
+              <div className="hero-metric">
                 <span className="metric-label">Completion</span>
                 <strong>{completionScore}%</strong>
               </div>
             </div>
+            <ul className="plain-list compact-proof-list">
+              <li>Canonical workflow entities persisted in local state</li>
+              <li>Progressive disclosure across user, staff, and admin views</li>
+              <li>Review gates, escalations, and reporting visible in-product</li>
+            </ul>
           </div>
         </section>
 
-        <section className="mode-switch" aria-label="Mode selection">
-          {(Object.keys(modeLabels) as AppMode[]).map((mode) => (
-            <button
-              key={mode}
-              type="button"
-              className={`step-button compact-button${
-                state.currentMode === mode ? " is-active" : ""
-              }`}
-              onClick={() => setState((current) => ({ ...current, currentMode: mode }))}
-            >
-              <span className="step-name">{modeLabels[mode]}</span>
-              <span className="step-caption">
-                {mode === "user"
-                  ? "Primary guided workflow"
-                  : mode === "staff"
-                    ? "Queues and execution"
-                    : "API, policy, and account controls"}
-              </span>
-            </button>
-          ))}
+        <section className="mode-switch mode-switch-premium" aria-label="Mode selection">
+          <div className="mode-switch-copy">
+            <p className="panel-label">Operating surface</p>
+            <h3>Choose one working lane, not three competing dashboards</h3>
+          </div>
+          <div className="mode-switch-rail">
+            {(Object.keys(modeLabels) as AppMode[]).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                className={`step-button compact-button mode-pill${
+                  state.currentMode === mode ? " is-active" : ""
+                }`}
+                onClick={() => setState((current) => ({ ...current, currentMode: mode }))}
+              >
+                <span className="step-name">{modeLabels[mode]}</span>
+                <span className="step-caption">
+                  {mode === "user"
+                    ? "Primary guided workflow"
+                    : mode === "staff"
+                      ? "Queues and execution"
+                      : "API, policy, and account controls"}
+                </span>
+              </button>
+            ))}
+          </div>
         </section>
 
         <section className="wizard-layout" aria-label="Platform workspace">
@@ -2068,78 +2182,131 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
 
           <div className="content-stack">
             <section className="stage-panel">
-              <div className="stage-header">
-                <p className="stage-eyebrow">Current operating context</p>
-                <h2>
-                  {selectedOpportunity
-                    ? `${selectedOpportunity.company_name} • ${selectedOpportunity.role_title}`
-                    : "Set up account, user, and opportunity records"}
-                </h2>
-                <p className="stage-summary">
-                  {selectedOpportunity
-                    ? stageMeta[selectedOpportunity.current_stage].description
-                    : "The app now supports onboarding intake, lifecycle state, document and correspondence records, review queues, escalations, and exportable platform data in one local product shell."}
-                </p>
+              <div className="stage-context-grid" data-testid="desktop-stage-context">
+                <div className="stage-context-main">
+                  <div className="stage-header">
+                    <p className="stage-eyebrow">Current operating context</p>
+                    <h2>
+                      {selectedOpportunity
+                        ? `${selectedOpportunity.company_name} • ${selectedOpportunity.role_title}`
+                        : "Set up account, user, and opportunity records"}
+                    </h2>
+                    <p className="stage-summary">
+                      {selectedOpportunity
+                        ? stageMeta[selectedOpportunity.current_stage].description
+                        : "The app now supports onboarding intake, lifecycle state, document and correspondence records, review queues, escalations, and exportable platform data in one local product shell."}
+                    </p>
+                  </div>
+                  {selectedOpportunity ? (
+                    <div className="chip-row stage-context-chips">
+                      <span className="status-chip">
+                        stage: {stageMeta[selectedOpportunity.current_stage].label}
+                      </span>
+                      <span className="status-chip">
+                        source: {selectedOpportunity.opportunity_source || "manual intake"}
+                      </span>
+                      <span className="status-chip">
+                        {selectedOpportunity.location_type || "Location not set"}
+                      </span>
+                      <span className="status-chip">
+                        {selectedOpportunity.employment_type || "Employment type not set"}
+                      </span>
+                    </div>
+                  ) : null}
+                </div>
+
+                {selectedOpportunity ? (
+                  <aside className="stage-context-rail" aria-label="Desktop status rail">
+                    <article className="mini-card rail-card">
+                      <p className="panel-label">Handoff readiness</p>
+                      <h4>{exportReadinessLabel}</h4>
+                      <p>
+                        Last export:{" "}
+                        {state.lastExportedAt
+                          ? new Date(state.lastExportedAt).toLocaleString()
+                          : "No ZIP created yet"}
+                      </p>
+                    </article>
+                    <article className="mini-card rail-card">
+                      <p className="panel-label">Review controls</p>
+                      <h4>{currentReviewRequiredCount} visible</h4>
+                      <p>
+                        Blocking tasks: {blockingTaskCount}. Escalations:{" "}
+                        {opportunityEscalations.length}. Memos: {opportunityMemos.length}.
+                      </p>
+                    </article>
+                  </aside>
+                ) : null}
               </div>
 
-              <div className="platform-actions">
-                <label className="field">
-                  <span>Account</span>
-                  <select
-                    value={state.selectedAccountId}
-                    onChange={(event) =>
-                      setState((current) => ({
-                        ...current,
-                        selectedAccountId: event.target.value,
-                      }))
-                    }
-                  >
-                    {state.accounts.map((account) => (
-                      <option key={account.account_id} value={account.account_id}>
-                        {account.account_name}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="field">
-                  <span>User</span>
-                  <select
-                    value={state.selectedUserId}
-                    onChange={(event) =>
-                      setState((current) => ({
-                        ...current,
-                        selectedUserId: event.target.value,
-                      }))
-                    }
-                  >
-                    {state.users.map((user) => (
-                      <option key={user.user_id} value={user.user_id}>
-                        {user.full_name}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="field">
-                  <span>Opportunity</span>
-                  <select
-                    value={state.selectedOpportunityId}
-                    onChange={(event) =>
-                      setState((current) => ({
-                        ...current,
-                        selectedOpportunityId: event.target.value,
-                      }))
-                    }
-                  >
-                    {state.opportunities.map((opportunity) => (
-                      <option key={opportunity.opportunity_id} value={opportunity.opportunity_id}>
-                        {opportunity.company_name} • {opportunity.role_title}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <div className="platform-button-row">
+              <div className="platform-actions desktop-toolbar">
+                <div className="selector-strip">
+                  <label className="field">
+                    <span>Account</span>
+                    <select
+                      value={state.selectedAccountId}
+                      onChange={(event) =>
+                        setState((current) => ({
+                          ...current,
+                          selectedAccountId: event.target.value,
+                        }))
+                      }
+                    >
+                      {state.accounts.map((account) => (
+                        <option key={account.account_id} value={account.account_id}>
+                          {account.account_name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="field">
+                    <span>User</span>
+                    <select
+                      value={state.selectedUserId}
+                      onChange={(event) =>
+                        setState((current) => ({
+                          ...current,
+                          selectedUserId: event.target.value,
+                        }))
+                      }
+                    >
+                      {state.users.map((user) => (
+                        <option key={user.user_id} value={user.user_id}>
+                          {user.full_name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="field">
+                    <span>Opportunity</span>
+                    <select
+                      value={state.selectedOpportunityId}
+                      onChange={(event) =>
+                        setState((current) => ({
+                          ...current,
+                          selectedOpportunityId: event.target.value,
+                        }))
+                      }
+                    >
+                      {state.opportunities.map((opportunity) => (
+                        <option key={opportunity.opportunity_id} value={opportunity.opportunity_id}>
+                          {opportunity.company_name} • {opportunity.role_title}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <div className="platform-button-row action-strip">
                   <button className="primary-action" type="button" onClick={handleAdvanceStage}>
                     Advance stage
+                  </button>
+                  <button
+                    className="secondary-action"
+                    type="button"
+                    onClick={handleCloseLost}
+                    disabled={!selectedOpportunity || isClosedStage(selectedOpportunity.current_stage)}
+                  >
+                    Close as lost
                   </button>
                   <button className="secondary-action" type="button" onClick={handleExport}>
                     Export handoff ZIP
@@ -2160,6 +2327,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                 </div>
                 <input
                   ref={fileInputRef}
+                  data-testid="workspace-import-input"
                   className="sr-only"
                   type="file"
                   accept=".zip,application/zip,application/json"
@@ -2168,35 +2336,43 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
               </div>
 
               {selectedOpportunity ? (
-                <div className="cockpit-grid" aria-label="Opportunity cockpit">
-                  <article className="mini-card">
-                    <p className="panel-label">Handoff readiness</p>
-                    <h4>{exportReadinessLabel}</h4>
-                    <p>
-                      Last export:{" "}
-                      {state.lastExportedAt
-                        ? new Date(state.lastExportedAt).toLocaleString()
-                        : "No ZIP created yet"}
-                    </p>
-                  </article>
-                  <article className="mini-card">
-                    <p className="panel-label">Candidate story</p>
-                    <h4>{selectedCandidateStory ? "Story ready" : "Story missing"}</h4>
+                <div
+                  className="cockpit-grid cockpit-grid-premium"
+                  aria-label="Opportunity cockpit"
+                  data-testid="desktop-opportunity-cockpit"
+                >
+                  <article className="mini-card cockpit-feature">
+                    <p className="panel-label">Operational summary</p>
+                    <h4>
+                      {selectedCandidateStory ? "Story and evidence are in motion" : "Evidence still needs shaping"}
+                    </h4>
                     <p>
                       {selectedCandidateStory
-                        ? `${selectedCandidateStory.source_artifact_ids.length} artifacts and ${selectedCandidateStory.source_correspondence_ids.length} correspondence records support this narrative.`
-                        : "Generate a who/what/why/where/when/how narrative before final handoff."}
+                        ? `${selectedCandidateStory.source_artifact_ids.length} artifacts and ${selectedCandidateStory.source_correspondence_ids.length} correspondence records are already backing the narrative for this opportunity.`
+                        : "Generate a who/what/why/where/when/how story after artifacts and profile corrections are in place so the opportunity reads like a guided operating flow rather than a loose document pile."}
                     </p>
+                    <div className="chip-row">
+                      <span className="status-chip">artifacts: {opportunityArtifacts.length}</span>
+                      <span className="status-chip">correspondence: {opportunityCorrespondence.length}</span>
+                      <span className="status-chip">tasks: {opportunityTasks.length}</span>
+                    </div>
                   </article>
-                  <article className="mini-card">
-                    <p className="panel-label">Review gates</p>
-                    <h4>{currentReviewRequiredCount} visible</h4>
+                  <article className="mini-card cockpit-support">
+                    <p className="panel-label">Sensitive support boundary</p>
+                    <h4>
+                      {selectedSensitiveSupport?.enabled
+                        ? `${selectedSensitiveSupport.categories.length} path${selectedSensitiveSupport.categories.length === 1 ? "" : "s"} enabled`
+                        : "Support path disabled"}
+                    </h4>
                     <p>
-                      Blocking tasks: {blockingTaskCount}. Escalations:{" "}
-                      {opportunityEscalations.length}. Memos: {opportunityMemos.length}.
+                      {selectedSensitiveSupport?.enabled
+                        ? selectedSensitiveSupport.include_in_export
+                          ? "This opportunity currently allows support-path data into the next export."
+                          : "Sensitive-support guidance is active but remains local-only unless you turn export inclusion on."
+                        : "No sensitive support data is being tracked for this opportunity."}
                     </p>
                   </article>
-                  <article className="mini-card">
+                  <article className="mini-card cockpit-status">
                     <p className="panel-label">Integrity status</p>
                     <h4>
                       {integrityReport.errors.length
@@ -2211,19 +2387,11 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                         : "Run an integrity check before major imports or exports."}
                     </p>
                   </article>
-                  <article className="mini-card">
-                    <p className="panel-label">Optional support</p>
-                    <h4>
-                      {selectedSensitiveSupport?.enabled
-                        ? `${selectedSensitiveSupport.categories.length} path${selectedSensitiveSupport.categories.length === 1 ? "" : "s"} enabled`
-                        : "Support path disabled"}
-                    </h4>
+                  <article className="mini-card cockpit-status">
+                    <p className="panel-label">Current stage owner</p>
+                    <h4>{stageMeta[selectedOpportunity.current_stage].reviewerRole}</h4>
                     <p>
-                      {selectedSensitiveSupport?.enabled
-                        ? selectedSensitiveSupport.include_in_export
-                          ? "Included in export when you generate a ZIP."
-                          : "Excluded from export unless you turn inclusion on."
-                        : "No sensitive support data is being tracked for this opportunity."}
+                      {stageMeta[selectedOpportunity.current_stage].description}
                     </p>
                   </article>
                 </div>
@@ -2429,6 +2597,30 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                           setOpportunityDraft((current) => ({
                             ...current,
                             job_posting_url: event.target.value,
+                          }))
+                        }
+                      />
+                    </label>
+                    <label className="field">
+                      <span>Employment type</span>
+                      <input
+                        value={opportunityDraft.employment_type}
+                        onChange={(event) =>
+                          setOpportunityDraft((current) => ({
+                            ...current,
+                            employment_type: event.target.value,
+                          }))
+                        }
+                      />
+                    </label>
+                    <label className="field">
+                      <span>Location type</span>
+                      <input
+                        value={opportunityDraft.location_type}
+                        onChange={(event) =>
+                          setOpportunityDraft((current) => ({
+                            ...current,
+                            location_type: event.target.value,
                           }))
                         }
                       />
@@ -3198,8 +3390,8 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
 
             {state.currentMode === "admin" ? (
               <>
-                <section className="record-grid">
-                  <div className="stage-block">
+                <section className="record-grid admin-grid" data-testid="admin-desktop-overview">
+                  <div className="stage-block admin-primary">
                     <h3>Current handoff package scope</h3>
                     <div className="chip-row">
                       <span className="status-chip">session.json</span>
@@ -3232,7 +3424,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </div>
                   </div>
 
-                  <div className="stage-block">
+                  <div className="stage-block admin-secondary admin-api">
                     <h3>Platform API surface</h3>
                     <div className="chip-row">
                       {apiSurface.map((resource) => (
@@ -3248,7 +3440,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </p>
                   </div>
 
-                  <div className="stage-block">
+                  <div className="stage-block admin-secondary admin-integrity">
                     <h3>Integrity summary</h3>
                     <div className="summary-grid">
                       <div>
@@ -3288,7 +3480,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </p>
                   </div>
 
-                  <div className="stage-block col-span-2">
+                  <div className="stage-block col-span-2 admin-metrics">
                     <h3>Reporting snapshot</h3>
                     <div className="summary-grid">
                       <div>
@@ -3310,7 +3502,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </div>
                   </div>
 
-                  <div className="stage-block col-span-3">
+                  <div className="stage-block col-span-3 admin-release">
                     <h3>Release status</h3>
                     <div className="summary-grid">
                       <div>
@@ -3326,8 +3518,8 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                         <strong>{releaseStatus.ciChecks.length}</strong>
                       </div>
                     </div>
-                    <div className="stack-list">
-                      <article className="mini-card">
+                    <div className="stack-list admin-release-grid">
+                      <article className="mini-card release-column">
                         <p className="panel-label">Local release path</p>
                         <ul className="plain-list">
                           {releaseStatus.localChecks.map((item) => (
@@ -3335,7 +3527,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                           ))}
                         </ul>
                       </article>
-                      <article className="mini-card">
+                      <article className="mini-card release-column">
                         <p className="panel-label">CI release path</p>
                         <ul className="plain-list">
                           {releaseStatus.ciChecks.map((item) => (
@@ -3343,7 +3535,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                           ))}
                         </ul>
                       </article>
-                      <article className="mini-card tone-warning">
+                      <article className="mini-card tone-warning release-column">
                         <p className="panel-label">Known limits</p>
                         <ul className="plain-list">
                           {releaseStatus.currentLimits.map((item) => (
@@ -3398,7 +3590,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                       onChange={handleReleaseArtifactImport}
                     />
                     {importedReleaseArtifact ? (
-                      <div className="stack-list artifact-review">
+                      <div className="stack-list artifact-review artifact-review-grid">
                         <article className="mini-card">
                           <p className="panel-label">Imported artifact</p>
                           <h4>{importedReleaseArtifact.title}</h4>
@@ -3419,7 +3611,10 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                         </article>
                       </div>
                     ) : null}
-                    <div className="stack-list artifact-review" data-testid="release-review-history">
+                    <div
+                      className="stack-list artifact-review artifact-review-grid"
+                      data-testid="release-review-history"
+                    >
                       <article className="mini-card">
                         <p className="panel-label">Review history</p>
                         <h4>{releaseArtifactReviews.length} stored</h4>
