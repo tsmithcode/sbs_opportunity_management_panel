@@ -520,8 +520,26 @@ select:focus-visible {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.col-span-2 {
+  grid-column: span 2;
+}
+
+.col-span-3 {
+  grid-column: span 3;
+}
+
 .stage-block {
   padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Anchor action buttons to the bottom of stretched cards */
+.stage-block > button:last-child,
+.stage-block > .stage-footer,
+.stage-block > .platform-button-row {
+  margin-top: auto;
+  padding-top: 1.25rem;
 }
 
 .stage-block h3 {

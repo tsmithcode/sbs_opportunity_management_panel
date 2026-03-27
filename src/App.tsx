@@ -2646,7 +2646,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </div>
                   </div>
 
-                  <form className="stage-block" onSubmit={handleSensitiveSupportSubmit}>
+                  <form className="stage-block col-span-2" onSubmit={handleSensitiveSupportSubmit}>
                     <h3>Optional sensitive support path</h3>
                     <p>
                       This section is fully optional. It stays local to this device and
@@ -3288,7 +3288,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </p>
                   </div>
 
-                  <div className="stage-block">
+                  <div className="stage-block col-span-2">
                     <h3>Reporting snapshot</h3>
                     <div className="summary-grid">
                       <div>
@@ -3310,7 +3310,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                     </div>
                   </div>
 
-                  <div className="stage-block">
+                  <div className="stage-block col-span-3">
                     <h3>Release status</h3>
                     <div className="summary-grid">
                       <div>
