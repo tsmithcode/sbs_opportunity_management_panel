@@ -221,21 +221,32 @@ async function expectBaseExportStructure(
   expect(fileNames.some((name) => name.startsWith("pdf/") && name.endsWith(".pdf"))).toBeTruthy();
 
   const session = JSON.parse(await zip.file("session.json")!.async("string")) as {
-    opportunities: Array<{ company_name: string; role_title: string; current_stage: string }>;
+    opportunities: Array<{
+      opportunity_id: string;
+      company_name: string;
+      role_title: string;
+      current_stage: string;
+    }>;
     candidateStories: Array<{ opportunity_id: string }>;
     tasks: unknown[];
     checkpoints: unknown[];
     correspondence: unknown[];
     events: unknown[];
-    sensitiveSupportProfiles: Array<{ include_in_export: boolean; enabled: boolean }>;
+    sensitiveSupportProfiles: Array<{
+      opportunity_id: string;
+      include_in_export: boolean;
+      enabled: boolean;
+    }>;
   };
 
+  const currentOpportunity = session.opportunities.find(
+    (opportunity) =>
+      opportunity.company_name === scenario.posting.company &&
+      opportunity.role_title === scenario.posting.roleTitle,
+  );
+
   expect(
-    session.opportunities.some(
-      (opportunity) =>
-        opportunity.company_name === scenario.posting.company &&
-        opportunity.role_title === scenario.posting.roleTitle,
-    ),
+    currentOpportunity,
   ).toBeTruthy();
   expect(session.candidateStories.length).toBeGreaterThan(0);
   expect(session.tasks.length).toBeGreaterThan(0);
@@ -244,15 +255,20 @@ async function expectBaseExportStructure(
   expect(session.events.length).toBeGreaterThan(0);
 
   const hasSupportFolder = fileNames.some((name) => name.startsWith("support/"));
-  expect(hasSupportFolder).toBe(supportIncluded);
+  const hasAnyIncludedSupport = session.sensitiveSupportProfiles.some(
+    (profile) => profile.enabled && profile.include_in_export,
+  );
+  const hasIncludedSupportForCurrentOpportunity = session.sensitiveSupportProfiles.some(
+    (profile) =>
+      profile.opportunity_id === currentOpportunity?.opportunity_id &&
+      profile.enabled &&
+      profile.include_in_export,
+  );
+  expect(hasSupportFolder).toBe(hasAnyIncludedSupport);
   if (supportIncluded) {
-    expect(
-      session.sensitiveSupportProfiles.some((profile) => profile.enabled && profile.include_in_export),
-    ).toBeTruthy();
-  } else {
-    expect(
-      session.sensitiveSupportProfiles.every((profile) => !profile.include_in_export),
-    ).toBeTruthy();
+    expect(hasIncludedSupportForCurrentOpportunity).toBeTruthy();
+  } else if (scenario.support) {
+    expect(hasIncludedSupportForCurrentOpportunity).toBeFalsy();
   }
 }
 
