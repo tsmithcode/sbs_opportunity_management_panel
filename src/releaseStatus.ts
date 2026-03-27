@@ -1,0 +1,33 @@
+export const releaseStatus = {
+  summary:
+    "Release verification is scripted, automated, and visible. Local verification and CI both run the same build and browser gates.",
+  lastValidatedPhase: "Cross-browser CI and release-status surfacing",
+  localChecks: [
+    "npm run build",
+    "npm run smoke",
+    "npm run roundtrip",
+    "npm run verify",
+    "npm run smoke:cross-browser",
+  ],
+  ciChecks: [
+    "GitHub Actions verify workflow runs npm run verify on push, pull request, and manual dispatch.",
+    "GitHub Actions cross-browser smoke matrix runs chromium, firefox, and webkit.",
+  ],
+  currentCoverage: [
+    "Production build verification",
+    "Chromium smoke verification for guided, admin, and About surfaces",
+    "Chromium round-trip verification for handoff ZIP and buyer packet ZIP",
+    "Cross-browser smoke verification for chromium, firefox, and webkit",
+  ],
+  currentLimits: [
+    "Round-trip export/import verification remains Chromium-only.",
+    "CI result status is surfaced through repo docs and workflow files, not a hosted dashboard.",
+  ],
+  expertOwners: [
+    "CI / Release Automation Lead",
+    "Browser Compatibility Lead",
+    "QA / Reliability Lead",
+    "Engineering Lead",
+    "Release Manager",
+  ],
+} as const;

@@ -1,0 +1,68 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run verification bundle
+        run: npm run verify
+
+      - name: Generate verification summary artifacts
+        run: npm run release:summary
+
+      - name: Upload verification summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-verification-summary
+          path: output/release/
+          if-no-files-found: error
+
+  cross-browser-smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run smoke suite on ${{ matrix.browser }}
+        run: npx playwright test tests/smoke.spec.ts --project=${{ matrix.browser }}
