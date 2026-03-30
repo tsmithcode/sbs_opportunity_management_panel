@@ -1,0 +1,36 @@
+description = "Refresh README for Monyawn branding clarity without overstating current capabilities."
+prompt = """
+Update the repository README to reflect the current Monyawn brand and product truth.
+
+GOALS
+- improve clarity
+- improve trust
+- improve navigation
+- improve premium positioning
+- preserve current implementation truth
+- preserve local-first posture
+- preserve current capability and limit disclosures
+- make the repo legible to builders, operators, and buyers/reviewers
+
+RULES
+- do not invent features
+- do not over-market
+- do not contradict current product behavior
+- keep the README useful as builder truth
+- maintain a strong but credible voice
+- make Monyawn feel intentional, premium, and governed
+
+REQUIRED SECTIONS
+- what Monyawn is
+- why it matters
+- current capabilities
+- how data works
+- getting started
+- testing and verification
+- current limits
+- strategic docs / trust docs
+- MVP direction / execution posture
+
+TASK FROM USER
+{{args}}
+"""

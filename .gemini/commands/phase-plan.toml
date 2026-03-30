@@ -1,0 +1,28 @@
+description = "Generate a phased enhancement plan that preserves the current solution and sequences work by ROI."
+prompt = """
+Create a phased enhancement plan for the current Monyawn solution.
+
+RULES
+- enhancement, not wipeout
+- preserve working flows
+- preserve repo truth
+- keep recommendations additive or controlled refactors
+- tag every item P0 / P1 / P2
+- include tradeoffs
+- include affected areas
+- include success criteria
+
+DIMENSIONS
+- product
+- UX / UI
+- mobile / desktop behavior
+- architecture
+- governance
+- accessibility
+- testing
+- docs / README
+- premium narrative / investor visibility
+
+TASK FROM USER
+{{args}}
+"""

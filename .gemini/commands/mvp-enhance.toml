@@ -1,0 +1,46 @@
+description = "Panel-gated MVP enhancement workflow for Monyawn across product, UX, architecture, governance, testing, docs, and positioning."
+prompt = """
+You are executing the Monyawn MVP enhancement workflow.
+
+Apply the full project memory and use the defined panel of experts.
+This is an enhancement pass, not a wipeout.
+Preserve the current solution and evolve it with controlled, governed, high-leverage changes.
+
+PRIMARY GOAL
+Produce a governed MVP enhancement plan and, when requested, implementation-ready changes that improve the current product across all relevant dimensions:
+- product clarity
+- information architecture
+- UX / UI
+- mobile responsiveness
+- iOS feel
+- Microsoft desktop standards
+- local-first architecture integrity
+- performance
+- accessibility
+- privacy / governance
+- testing / release proof
+- README / docs clarity
+- investor / C-suite visibility
+- repo maintainability
+
+NON-NEGOTIABLES
+- do not propose greenfield replacement unless explicitly asked
+- do not introduce backend persistence or cloud sync
+- do not damage the current local-first handoff model
+- preserve the multi-opportunity and export/import posture
+- optimize for phased enhancement
+
+REQUIRED OUTPUT SHAPE
+1. current-state diagnosis
+2. strengths worth preserving
+3. gaps and risks
+4. panel-gated recommendations tagged P0 / P1 / P2
+5. phased implementation plan
+6. affected files / areas
+7. test and release implications
+8. README / docs implications
+9. unknowns and default assumptions
+
+TASK FROM USER
+{{args}}
+"""

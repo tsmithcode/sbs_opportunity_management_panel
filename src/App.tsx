@@ -1,3 +1,5 @@
+import { AboutPage } from "./components/pages/About/AboutPage";
+import { AppHeader } from "./components/layout/AppHeader/AppHeader";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { getCoachingForStage, getCoachingTitle } from "./coaching";
 import { validateAppStateIntegrity } from "./integrity";
@@ -59,33 +61,6 @@ const STORAGE_KEY = "monyawn-platform-state-v1";
 const RESUME_PATH = "/thomas-smith-architect-resume.pdf";
 
 type AppPage = "workspace" | "about";
-
-const aboutExperts = [
-  {
-    role: "Founder / CEO",
-    purpose: "Owns company direction, mission clarity, and the long-range reason Monyawn exists.",
-  },
-  {
-    role: "Mission / Purpose Lead",
-    purpose: "Turns company values and public purpose into stable product and brand guidance.",
-  },
-  {
-    role: "Brand Strategy Lead",
-    purpose: "Shapes how Monyawn is understood in the market and how the story stays coherent across product and public surfaces.",
-  },
-  {
-    role: "Marketing / Communications Lead",
-    purpose: "Owns public-facing messaging, including how the about page explains the platform in plain language.",
-  },
-  {
-    role: "Candidate Story Architect",
-    purpose: "Ensures the product teaches users how to communicate identity, value, and purpose through evidence-backed narrative.",
-  },
-  {
-    role: "Trust Center / Public Documentation Owner",
-    purpose: "Keeps public-facing explanations truthful, aligned to policy, and consistent with the product’s local-only posture.",
-  },
-];
 
 type Notice = { tone: "success" | "info"; message: string } | null;
 type ImportedReleaseArtifact = {
@@ -1845,192 +1820,20 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <header className="topbar" aria-label="Primary">
-        <div>
-          <p className="brand-mark">Monyawn</p>
-          <p className="brand-subtitle">
-            Enterprise ops foundation with premium governance and accessible workflow UX
-          </p>
-        </div>
-        <div className="topbar-nav" aria-label="Page navigation">
-          <button
-            className={`secondary-action nav-button${currentPage === "workspace" ? " is-current" : ""}`}
-            type="button"
-            onClick={() => navigateToPage("workspace")}
-          >
-            Workspace
-          </button>
-          <button
-            className={`secondary-action nav-button${currentPage === "about" ? " is-current" : ""}`}
-            type="button"
-            onClick={() => navigateToPage("about")}
-          >
-            About
-          </button>
-        </div>
-        <div className="topbar-actions" aria-label="Session status">
-          <span className="status-chip">{modeLabels[state.currentMode]}</span>
-          <span className="status-chip">Human-in-the-loop</span>
-          <span className="status-chip">Saved locally</span>
-          <span className="status-chip">
-            {state.lastExportedAt ? "ZIP export ready" : "Export recommended"}
-          </span>
-        </div>
-      </header>
-      <div role="status" aria-live="polite" style={{
-        background: "linear-gradient(90deg, #0a5f57, #083f3b)",
-        color: "#fff",
-        textAlign: "center",
-        padding: "11px 20px",
-        fontSize: "0.88rem",
-        fontWeight: 500,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "10px",
-        letterSpacing: "0.01em",
-      }}>
-        <span style={{
-          display: "inline-block",
-          width: "8px",
-          height: "8px",
-          borderRadius: "50%",
-          background: "#4ade80",
-          boxShadow: "0 0 0 0 rgba(74,222,128,0.7)",
-          animation: "pulse-dot 1.8s ease-in-out infinite",
-          flexShrink: 0,
-        }} aria-hidden="true" />
-        <span>
-          <strong>Live build — 7-day sprint in progress.</strong>{" "}
-          This platform is being built in public to demonstrate production-ready delivery under real pressure — validating multi-client readiness for teams that can't afford slow.
-        </span>
-      </div>
+      <AppHeader
+        currentPage={currentPage}
+        currentMode={state.currentMode}
+        modeLabel={modeLabels[state.currentMode]}
+        lastExportedAt={state.lastExportedAt}
+        navigateToPage={navigateToPage}
+      />
 
       {currentPage === "about" ? (
-        <main id="main-content" className="workspace">
-          <section className="hero hero-wide" aria-labelledby="about-title">
-            <div className="hero-copy">
-              <p className="kicker">About Monyawn</p>
-              <h1 id="about-title">A local-first platform built to help people move with clarity.</h1>
-              <p className="hero-text">
-                Monyawn is designed to turn opportunity management into a guided, evidence-backed,
-                human-readable workflow. The product is intentionally local-first, export-first,
-                and supportive of people navigating complex career transitions without giving up
-                control of their data.
-              </p>
-              <div className="hero-actions">
-                <a className="primary-action" href={RESUME_PATH} download>
-                  Download Thomas Smith Resume
-                </a>
-                <button
-                  className="secondary-action"
-                  type="button"
-                  onClick={() => navigateToPage("workspace")}
-                >
-                  Open workspace
-                </button>
-              </div>
-              <div className="warning-callout" role="note" aria-label="Purpose note">
-                <p className="panel-label">Direction and purpose</p>
-                <p>
-                  The company direction is to build trustworthy opportunity infrastructure that
-                  helps users understand themselves, communicate more clearly, and keep control of
-                  their own handoff package.
-                </p>
-              </div>
-            </div>
-
-            <div className="hero-panel" aria-label="About posture">
-              <p className="panel-label">Current public posture</p>
-              <ul className="plain-list">
-                <li>Local-only user data posture in the current version</li>
-                <li>Guided workflow across user, staff, and admin perspectives</li>
-                <li>Candidate story, coaching, and exportable handoff package are core value surfaces</li>
-              </ul>
-            </div>
-          </section>
-
-          <section className="record-grid">
-            <div className="stage-block">
-              <h3>What this platform is for</h3>
-              <p>
-                Monyawn exists to help users pursue opportunities with stronger judgment, better
-                narrative clarity, and a calmer operating system for complex decisions.
-              </p>
-              <ul className="plain-list">
-                <li>Guided opportunity intake and evidence capture</li>
-                <li>Know-thyself candidate story development</li>
-                <li>Contextual coaching and compensation literacy</li>
-                <li>Portable ZIP handoff with JSON, Markdown, and PDF outputs</li>
-              </ul>
-            </div>
-
-            <div className="stage-block">
-              <h3>Direction and purpose experts</h3>
-              <div className="stack-list">
-                {aboutExperts.map((expert) => (
-                  <article key={expert.role} className="mini-card">
-                    <p className="panel-label">{expert.role}</p>
-                    <p>{expert.purpose}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div className="stage-block">
-              <h3>Why the local-first choice matters</h3>
-              <p>
-                In the current version, Monyawn does not retain user opportunity data on company
-                systems. Local browser storage is for convenience, and ZIP export is the durable
-                recovery path.
-              </p>
-              <ul className="plain-list">
-                <li>Users keep control of their own records</li>
-                <li>Human-readable outputs remain portable</li>
-                <li>Public product claims stay aligned to the real implementation</li>
-              </ul>
-            </div>
-
-            <div className="stage-block">
-              <h3>Release confidence</h3>
-              <p>{releaseStatus.summary}</p>
-              <div className="stage-footer">
-                <button
-                  className="secondary-action"
-                  type="button"
-                  onClick={handleReleaseSummaryMarkdownDownload}
-                >
-                  Download release summary MD
-                </button>
-                <button
-                  className="secondary-action"
-                  type="button"
-                  onClick={handleReleaseSummaryJsonDownload}
-                >
-                  Download release summary JSON
-                </button>
-              </div>
-              <div className="stack-list">
-                <article className="mini-card">
-                  <p className="panel-label">Current coverage</p>
-                  <ul className="plain-list">
-                    {releaseStatus.currentCoverage.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
-                <article className="mini-card tone-warning">
-                  <p className="panel-label">Current limits</p>
-                  <ul className="plain-list">
-                    {releaseStatus.currentLimits.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </article>
-              </div>
-            </div>
-          </section>
-        </main>
+        <AboutPage
+          navigateToPage={navigateToPage}
+          RESUME_PATH={RESUME_PATH}
+          setNotice={setNotice}
+        />
       ) : (
       <main id="main-content" className="workspace">
         <section className="hero hero-wide" aria-labelledby="hero-title">
@@ -2062,14 +1865,14 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                 type="button"
                 onClick={() => setState((current) => ({ ...current, currentMode: "staff" }))}
               >
-                Staff queues
+                Staff operations
               </button>
               <button
                 className="secondary-action"
                 type="button"
                 onClick={() => setState((current) => ({ ...current, currentMode: "admin" }))}
               >
-                Governance and API
+                Platform admin
               </button>
             </div>
             {notice ? (
