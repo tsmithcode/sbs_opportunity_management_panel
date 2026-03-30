@@ -33,6 +33,7 @@ npm run smoke
 npm run smoke:cross-browser
 npm run desktop:e2e
 npm run mobile:e2e
+npm run townhall:habasit
 npm run roundtrip
 npm run verify
 npm run verify:desktop

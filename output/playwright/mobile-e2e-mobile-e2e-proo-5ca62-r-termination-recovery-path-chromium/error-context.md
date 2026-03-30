@@ -48,7 +48,7 @@
             - strong [ref=e46]: "1"
           - generic [ref=e47]:
             - generic [ref=e48]: Review queue
-            - strong [ref=e49]: "20"
+            - strong [ref=e49]: "21"
           - generic [ref=e50]:
             - generic [ref=e51]: Completion
             - strong [ref=e52]: 10%
@@ -148,12 +148,12 @@
             - generic [ref=e146]:
               - generic [ref=e147]:
                 - paragraph [ref=e148]: Current operating context
-                - heading "Zoox • Senior/Staff Software Engineer - Operational Tools" [level=2] [ref=e149]
+                - heading "Johnson Controls • Senior Controls Systems Engineer (hybrid)" [level=2] [ref=e149]
                 - paragraph [ref=e150]: Account, user, and opportunity setup have begun.
               - generic [ref=e151]:
                 - generic [ref=e152]: "stage: Intake started"
                 - generic [ref=e153]: "source: Live public posting snapshot captured on 2026-03-27"
-                - generic [ref=e154]: Hybrid - Foster City / Seattle / San Diego
+                - generic [ref=e154]: Hybrid / onsite Glendale, Wisconsin
                 - generic [ref=e155]: Full-time
             - complementary "Desktop status rail" [ref=e156]:
               - article [ref=e157]:
@@ -163,19 +163,19 @@
               - article [ref=e161]:
                 - paragraph [ref=e162]: Review controls
                 - heading "0 visible" [level=4] [ref=e163]
-                - paragraph [ref=e164]: "Blocking tasks: 3. Escalations: 0. Memos: 0."
+                - paragraph [ref=e164]: "Blocking tasks: 4. Escalations: 0. Memos: 0."
           - generic [ref=e165]:
             - generic [ref=e166]:
               - generic [ref=e167]:
                 - generic [ref=e168]: Account
                 - combobox "Account" [ref=e169]:
-                  - option "Town Hall Desktop Proof A" [selected]
+                  - option "Town Hall Desktop Proof C" [selected]
                   - option "SBS Pilot Account"
                   - option "Habasit America - Suwanee 30 Day Sample"
               - generic [ref=e170]:
                 - generic [ref=e171]: User
                 - combobox "User" [ref=e172]:
-                  - option "Jordan Rivera" [selected]
+                  - option "Avery Brooks" [selected]
                   - option "Thomas Smith"
                   - option "Ava Coleman"
                   - option "Darius Reed"
@@ -183,7 +183,7 @@
               - generic [ref=e173]:
                 - generic [ref=e174]: Opportunity
                 - combobox "Opportunity" [ref=e175]:
-                  - option "Zoox • Senior/Staff Software Engineer - Operational Tools" [selected]
+                  - option "Johnson Controls • Senior Controls Systems Engineer (hybrid)" [selected]
                   - option "Spatial Business Systems • Software Engineer, Design Tools"
                   - option "Spatial Business Systems • Implementation Engineer, Grid Design Tools"
                   - option "Spatial Business Systems • Senior Design Tools Engineer"
@@ -204,9 +204,9 @@
               - heading "Evidence still needs shaping" [level=4] [ref=e187]
               - paragraph [ref=e188]: Generate a who/what/why/where/when/how story after artifacts and profile corrections are in place so the opportunity reads like a guided operating flow rather than a loose document pile.
               - generic [ref=e189]:
-                - generic [ref=e190]: "artifacts: 2"
+                - generic [ref=e190]: "artifacts: 3"
                 - generic [ref=e191]: "correspondence: 0"
-                - generic [ref=e192]: "tasks: 3"
+                - generic [ref=e192]: "tasks: 4"
             - article [ref=e193]:
               - paragraph [ref=e194]: Sensitive support boundary
               - heading "Support path disabled" [level=4] [ref=e195]
@@ -214,7 +214,7 @@
             - article [ref=e197]:
               - paragraph [ref=e198]: Integrity status
               - heading "3 warnings" [level=4] [ref=e199]
-              - paragraph [ref=e200]: Last checked 3/27/2026, 11:37:01 AM.
+              - paragraph [ref=e200]: Last checked 3/27/2026, 11:56:41 AM.
             - article [ref=e201]:
               - paragraph [ref=e202]: Current stage owner
               - heading "Customer Success Lead" [level=4] [ref=e203]
@@ -318,16 +318,16 @@
             - paragraph [ref=e285]: Turn extracted data into a reviewable, correctable profile that drives checkpoints and fit analysis.
             - generic [ref=e286]:
               - generic [ref=e287]: Skills summary
-              - textbox "Skills summary" [ref=e288]: Full-stack TypeScript, React, desktop workflow tooling, operational dashboards, and design-system quality.
+              - textbox "Skills summary" [ref=e288]: Controls software, modeling, simulation, MATLAB/Simulink exposure, and cross-functional engineering delivery.
             - generic [ref=e289]:
               - generic [ref=e290]: Experience level
-              - textbox "Experience level" [ref=e291]: Senior / Staff-level software engineer
+              - textbox "Experience level" [ref=e291]: Senior engineer in transition
             - generic [ref=e292]:
               - generic [ref=e293]: Domain strengths
-              - textbox "Domain strengths" [ref=e294]: Workflow-heavy product surfaces, human-in-the-loop tooling, platform operations, and pragmatic frontend architecture.
+              - textbox "Domain strengths" [ref=e294]: Control systems thinking, modeling, simulation, and translating technical breadth into stable operational outcomes.
             - generic [ref=e295]:
               - generic [ref=e296]: Declared gaps
-              - textbox "Declared gaps" [active] [ref=e297]: Direct autonomous vehicle fleet experience is limited, but adjacent operational tooling and high-stakes UI ownership are strong.
+              - textbox "Declared gaps" [active] [ref=e297]: Recent layoff created urgency; relocation and HVAC-specific depth need careful discussion before commit.
             - button "Save profile" [ref=e298] [cursor=pointer]
           - generic [ref=e299]:
             - heading "6. Correspondence operations" [level=3] [ref=e300]
@@ -414,15 +414,15 @@
               - article [ref=e375]:
                 - paragraph [ref=e376]: Contacts and entities
                 - paragraph [ref=e377]: "Names: None yet"
-                - paragraph [ref=e378]: "Emails: jordan.rivera@example.com"
-                - paragraph [ref=e379]: "Phones: (415) 555-0189"
-                - paragraph [ref=e380]: "Companies: Zoox, River Forge Labs"
+                - paragraph [ref=e378]: "Emails: avery.brooks@example.com"
+                - paragraph [ref=e379]: "Phones: (262) 555-0144"
+                - paragraph [ref=e380]: "Companies: Johnson Controls"
               - article [ref=e381]:
                 - paragraph [ref=e382]: Timing and interview cues
-                - paragraph [ref=e383]: "Dates: April 22, 2026, April 14, 2026"
-                - paragraph [ref=e384]: "Times: 1:00 PM, 10:30 AM"
-                - paragraph [ref=e385]: "Interviews: Interview process likely includes recruiter screen, hiring manager interview, and technical panel on April 22, 2026 at 1:00 PM. | Availability: April 14, 2026 at 10:30 AM works for an interview."
-                - paragraph [ref=e386]: "Contingencies: Availability: April 14, 2026 at 10:30 AM works for an interview. | Contingency: can reschedule if needed and provide references."
+                - paragraph [ref=e383]: "Dates: April 20, 2026"
+                - paragraph [ref=e384]: "Times: 3:30 PM"
+                - paragraph [ref=e385]: "Interviews: Interview timing can start April 20, 2026 at 3:30 PM."
+                - paragraph [ref=e386]: "Contingencies: None yet"
           - generic [ref=e387]:
             - heading "Documents and evidence" [level=3] [ref=e388]
             - table [ref=e390]:
@@ -435,9 +435,9 @@
                   - columnheader "Review" [ref=e397]
                   - columnheader "Signals" [ref=e398]
               - rowgroup [ref=e399]:
-                - row "Zoox operational tools posting snapshot job_description v1 pending Unreviewed 2" [ref=e400]:
-                  - cell "Zoox operational tools posting snapshot" [ref=e401]
-                  - cell "job_description" [ref=e402]
+                - row "Compensation comparison notes offer v1 pending Unreviewed 0" [ref=e400]:
+                  - cell "Compensation comparison notes" [ref=e401]
+                  - cell "offer" [ref=e402]
                   - cell "v1" [ref=e403]
                   - cell "pending" [ref=e404]
                   - cell "Unreviewed" [ref=e405]:
@@ -447,10 +447,10 @@
                       - option "Approved"
                       - option "Rejected"
                       - option "Archived"
-                  - cell "2" [ref=e407]
-                - row "Jordan Rivera resume resume v1 pending Unreviewed 3" [ref=e408]:
-                  - cell "Jordan Rivera resume" [ref=e409]
-                  - cell "resume" [ref=e410]
+                  - cell "0" [ref=e407]
+                - row "Johnson Controls controls systems engineer posting snapshot job_description v1 pending Unreviewed 2" [ref=e408]:
+                  - cell "Johnson Controls controls systems engineer posting snapshot" [ref=e409]
+                  - cell "job_description" [ref=e410]
                   - cell "v1" [ref=e411]
                   - cell "pending" [ref=e412]
                   - cell "Unreviewed" [ref=e413]:
@@ -460,29 +460,49 @@
                       - option "Approved"
                       - option "Rejected"
                       - option "Archived"
-                  - cell "3" [ref=e415]
-          - generic [ref=e416]:
-            - heading "AI checkpoints and review gates" [level=3] [ref=e417]
-            - generic [ref=e418]:
-              - article [ref=e419]:
-                - paragraph [ref=e420]: Structured artifact extraction
-                - heading "proceed with warning" [level=4] [ref=e421]
-                - paragraph [ref=e422]: Captured 1 companies, 0 emails, and 1 interview cues from the artifact.
-                - generic [ref=e423]:
-                  - generic [ref=e424]: high
-                  - generic [ref=e425]: "reviewer: Customer Success Lead"
-              - article [ref=e426]:
-                - paragraph [ref=e427]: Structured artifact extraction
-                - heading "proceed with warning" [level=4] [ref=e428]
-                - paragraph [ref=e429]: Captured 2 companies, 1 emails, and 1 interview cues from the artifact.
-                - generic [ref=e430]:
-                  - generic [ref=e431]: high
-                  - generic [ref=e432]: "reviewer: Customer Success Lead"
-              - article [ref=e433]:
-                - paragraph [ref=e434]: Opportunity created
-                - heading "pause for input" [level=4] [ref=e435]
-                - paragraph [ref=e436]: User, account, and opportunity are present. Resume and job description are still required.
-                - generic [ref=e437]:
-                  - generic [ref=e438]: medium
-                  - generic [ref=e439]: "reviewer: Customer Success Lead"
+                  - cell "2" [ref=e415]
+                - row "Avery Brooks resume resume v1 pending Unreviewed 2" [ref=e416]:
+                  - cell "Avery Brooks resume" [ref=e417]
+                  - cell "resume" [ref=e418]
+                  - cell "v1" [ref=e419]
+                  - cell "pending" [ref=e420]
+                  - cell "Unreviewed" [ref=e421]:
+                    - combobox [ref=e422]:
+                      - option "Unreviewed" [selected]
+                      - option "User reviewed"
+                      - option "Approved"
+                      - option "Rejected"
+                      - option "Archived"
+                  - cell "2" [ref=e423]
+          - generic [ref=e424]:
+            - heading "AI checkpoints and review gates" [level=3] [ref=e425]
+            - generic [ref=e426]:
+              - article [ref=e427]:
+                - paragraph [ref=e428]: Structured artifact extraction
+                - heading "proceed with warning" [level=4] [ref=e429]
+                - paragraph [ref=e430]: Captured 1 companies, 0 emails, and 0 interview cues from the artifact.
+                - generic [ref=e431]:
+                  - generic [ref=e432]: medium
+                  - generic [ref=e433]: "reviewer: Customer Success Lead"
+              - article [ref=e434]:
+                - paragraph [ref=e435]: Structured artifact extraction
+                - heading "proceed with warning" [level=4] [ref=e436]
+                - paragraph [ref=e437]: Captured 1 companies, 0 emails, and 1 interview cues from the artifact.
+                - generic [ref=e438]:
+                  - generic [ref=e439]: high
+                  - generic [ref=e440]: "reviewer: Customer Success Lead"
+              - article [ref=e441]:
+                - paragraph [ref=e442]: Structured artifact extraction
+                - heading "proceed with warning" [level=4] [ref=e443]
+                - paragraph [ref=e444]: Captured 1 companies, 1 emails, and 0 interview cues from the artifact.
+                - generic [ref=e445]:
+                  - generic [ref=e446]: high
+                  - generic [ref=e447]: "reviewer: Customer Success Lead"
+              - article [ref=e448]:
+                - paragraph [ref=e449]: Opportunity created
+                - heading "pause for input" [level=4] [ref=e450]
+                - paragraph [ref=e451]: User, account, and opportunity are present. Resume and job description are still required.
+                - generic [ref=e452]:
+                  - generic [ref=e453]: medium
+                  - generic [ref=e454]: "reviewer: Customer Success Lead"
 ```

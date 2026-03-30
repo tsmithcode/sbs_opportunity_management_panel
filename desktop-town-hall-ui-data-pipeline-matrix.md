@@ -47,3 +47,12 @@ The current app is capable, but the operating surfaces need sharper discipline. 
 - Visual acceptance screenshots are captured and reviewed for guided and admin desktop states.
 - Equivalent mobile scenario proofs complete across the same three journeys.
 - Mobile screenshots are captured and reviewed for guided and admin responsive states.
+
+## Habasit America Town Hall Pass
+
+| Pass | Scope | Result | What Worked | What Failed First | Fix Applied |
+|---|---|---|---|---|---|
+| Web pass | Habasit America 30-day seeded sample, desktop, export/import, admin review | Passed | Selector rail, export/import, admin review, seeded support and lifecycle evidence | Workspace selector targeting was initially ambiguous because labels collided with intake forms | Targeted the desktop selector rail explicitly in proof flows |
+| Mobile pass | Habasit America 30-day seeded sample, mobile, support-boundary proof, export/import | Passed | Responsive selector rail, support boundary visibility, export/import, admin review | Initial support assertion was too generic and not tied to the actual cockpit heading | Switched the proof to assert the exact responsive support state shown in-product |
+| Extended desktop scenario suite | Generic three-scenario desktop suite | Passed | Full intake, profile, artifacts, correspondence, terminal states, ZIP restore | Status assertions became ambiguous once multiple live status regions existed | Moved proof to the action-notice channel instead of generic ARIA status |
+| Extended mobile scenario suite | Generic three-scenario mobile suite | Not in default release gate | Responsive flows can run as extended proof | Runtime cost is still too high for the default release gate | Kept it as a separate extended-proof script while Habasit web/mobile proof covers the release gate |

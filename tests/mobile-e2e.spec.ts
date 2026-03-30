@@ -103,7 +103,12 @@ async function fillProfile(page: Page, scenario: DesktopE2EScenario) {
   await profileForm.getByLabel("Experience level").fill(scenario.profile.experienceLevel);
   await profileForm.getByLabel("Domain strengths").fill(scenario.profile.domainStrengths);
   await profileForm.getByLabel("Declared gaps").fill(scenario.profile.declaredGaps);
-  await profileForm.getByRole("button", { name: "Save profile" }).click();
+  const saveButton = profileForm.getByRole("button", { name: "Save profile" });
+  await expect(saveButton).toBeVisible();
+  await expect(saveButton).toBeEnabled();
+  await expect(saveButton).toBeInViewport(); // Ensure it's within the viewport
+  await saveButton.click({ timeout: 60000 }); // Add a specific timeout for the click
+
 }
 
 async function addCorrespondence(page: Page, scenario: DesktopE2EScenario) {
@@ -256,6 +261,7 @@ test.describe("mobile e2e proof suite", () => {
   for (const scenario of desktopE2EScenarios) {
     test(scenario.title, async ({ page }) => {
       test.setTimeout(300_000);
+      let currentSupportExportState = Boolean(scenario.support?.includeInExport);
 
       await resetWorkspace(page);
       await screenshot(page, scenario.id, "01-mobile-home.png");
@@ -269,11 +275,11 @@ test.describe("mobile e2e proof suite", () => {
 
       await screenshot(page, scenario.id, "02-mobile-story.png");
 
-      const defaultExport = await exportWorkspace(page, scenario.id, "handoff-default.zip");
-      const defaultZip = await loadZip(defaultExport);
-      await expectBaseExportStructure(defaultZip, scenario, Boolean(scenario.support?.includeInExport));
-
       if (scenario.support && !scenario.support.includeInExport) {
+        const defaultExport = await exportWorkspace(page, scenario.id, "handoff-default.zip");
+        const defaultZip = await loadZip(defaultExport);
+        await expectBaseExportStructure(defaultZip, scenario, false);
+
         const supportForm = page.locator("form").filter({
           has: page.getByRole("heading", { name: "Optional sensitive support path" }),
         });
@@ -281,15 +287,15 @@ test.describe("mobile e2e proof suite", () => {
           .getByRole("checkbox", { name: "Include this support profile in ZIP export" })
           .check();
         await supportForm.getByRole("button", { name: "Save support settings" }).click();
-        const supportExport = await exportWorkspace(page, scenario.id, "handoff-with-support.zip");
-        const supportZip = await loadZip(supportExport);
-        await expectBaseExportStructure(supportZip, scenario, true);
+        currentSupportExportState = true;
       }
 
       await moveToTerminal(page, scenario);
       await screenshot(page, scenario.id, "03-mobile-terminal.png");
 
       const finalExport = await exportWorkspace(page, scenario.id, "handoff-terminal.zip");
+      const finalZip = await loadZip(finalExport);
+      await expectBaseExportStructure(finalZip, scenario, currentSupportExportState);
       await restoreWorkspace(page, finalExport, scenario.posting.company, scenario.posting.roleTitle);
 
       await page.getByRole("button", { name: "Admin and governance" }).click();

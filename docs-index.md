@@ -18,6 +18,7 @@ Use it when you need to get from the root of the repo to the right source-of-tru
 | how the repo is organized and benchmarked | [repo-organization-and-expert-execution-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/repo-organization-and-expert-execution-plan.md) |
 | what the team hates about the frontend | [frontend-frustration-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/frontend-frustration-matrix.md) |
 | what currently blocks premium desktop and mobile acceptance | [desktop-town-hall-ui-data-pipeline-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/desktop-town-hall-ui-data-pipeline-matrix.md) |
+| what happened in the Habasit CEO-visible product hardening pass | [habasit-town-hall-findings.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/habasit-town-hall-findings.md) |
 | who owns which decisions | [07-company-org-structure-and-ai-decision-authority.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/use-cases/sbs/phase-00-panel-setup/07-company-org-structure-and-ai-decision-authority.md) |
 | how to contribute safely | [CONTRIBUTING.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/CONTRIBUTING.md) |
 
@@ -56,6 +57,7 @@ Use it when you need to get from the root of the repo to the right source-of-tru
 ## Repo, Execution, And Contribution
 - [repo-organization-and-expert-execution-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/repo-organization-and-expert-execution-plan.md)
 - [desktop-town-hall-ui-data-pipeline-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/desktop-town-hall-ui-data-pipeline-matrix.md)
+- [habasit-town-hall-findings.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/habasit-town-hall-findings.md)
 - [CONTRIBUTING.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/CONTRIBUTING.md)
 - [ready-for-personal-use-checklist.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/ready-for-personal-use-checklist.md)
 

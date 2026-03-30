@@ -48,6 +48,7 @@ This repository uses **Spatial Business Systems (SBS)** as the active reference 
 - [repo-organization-and-expert-execution-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/repo-organization-and-expert-execution-plan.md) - repo-quality plan, benchmark table, and execution owners
 - [frontend-frustration-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/frontend-frustration-matrix.md) - blunt role-by-role view of current frontend friction and expected fixes
 - [desktop-town-hall-ui-data-pipeline-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/desktop-town-hall-ui-data-pipeline-matrix.md) - desktop/mobile blockers, owners, and target outcomes for premium acceptance
+- [habasit-town-hall-findings.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/habasit-town-hall-findings.md) - CEO-visible failure log and fixes from the Habasit America seeded product-hardening pass
 - [ceo-premium-sovereign-enterprise-expectations-matrix.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/ceo-premium-sovereign-enterprise-expectations-matrix.md) - CEO-grade premium sovereign enterprise gap matrix and required experts
 - [ceo-premium-sovereign-enterprise-phase-plan.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/ceo-premium-sovereign-enterprise-phase-plan.md) - phased implementation path to reach premium sovereign enterprise outcomes
 - [premium-enterprise-positioning-and-claims-guide.md](/Users/cadguardianllc/Downloads/sbs_opportunity_management_panel/premium-enterprise-positioning-and-claims-guide.md) - approved premium narrative, positioning, and claim boundaries
@@ -110,6 +111,11 @@ npm run desktop:e2e
 Run the full mobile proof suite:
 ```bash
 npm run mobile:e2e
+```
+
+Run the CEO-visible Habasit web/mobile town-hall proof:
+```bash
+npm run townhall:habasit
 ```
 
 Run the full release verification bundle:

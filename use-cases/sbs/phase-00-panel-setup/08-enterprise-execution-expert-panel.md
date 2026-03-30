@@ -10,6 +10,7 @@ Define the experts required to execute the SBS use case at enterprise grade so t
 | Product Lead / AI Product Architect | Converts the SBS use case into a scalable product workflow | Product scope, phase logic, roadmap, acceptance criteria |
 | Desktop Experience Director | Turns the desktop workspace into a premium operating cockpit instead of a flat card grid | Desktop hierarchy, cockpit composition, premium sizing discipline |
 | Mobile Experience Lead | Turns responsive screens into a usable operating flow instead of a compressed desktop | Mobile hierarchy, touch-priority action order, responsive composition |
+| Town Hall Review Lead | Turns executive walkthroughs into disciplined product-hardening sessions instead of ad hoc demos | CEO-visible walkthrough structure, failure capture, hardening readouts |
 | CRO / Revenue Lead | Ensures commercialization and market-readiness decisions stay aligned to the product’s trust posture | Revenue readiness, monetization strategy, GTM alignment |
 | Mission / Purpose Lead | Keeps company purpose and values legible across product and public narratives | Mission framing, values-to-product coherence, purpose clarity |
 | Brand Strategy Lead | Ensures Monyawn’s identity, positioning, and about-page story stay coherent | Brand direction, market positioning, public identity coherence |
@@ -87,6 +88,7 @@ If any of the following functions are missing, enterprise-grade execution is not
 - accessibility
 - desktop experience discipline
 - mobile experience discipline
+- town hall review discipline
 - security
 - privacy
 - legal

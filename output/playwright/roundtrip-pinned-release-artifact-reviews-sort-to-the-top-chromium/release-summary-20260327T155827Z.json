@@ -1,35 +1,35 @@
-export const releaseStatus = {
-  summary:
-    "Release verification is scripted, automated, and visible. Local verification and CI both run the same build and browser gates, with desktop scenario proof plus a CEO-visible Habasit web/mobile town-hall proof on Chromium.",
-  lastValidatedPhase: "Habasit town hall proof and seeded product hardening",
-  localChecks: [
+{
+  "generatedAt": "2026-03-27T15:58:27.234Z",
+  "summary": "Release verification is scripted, automated, and visible. Local verification and CI both run the same build and browser gates, with desktop scenario proof plus a CEO-visible Habasit web/mobile town-hall proof on Chromium.",
+  "lastValidatedPhase": "Habasit town hall proof and seeded product hardening",
+  "localChecks": [
     "npm run build",
     "npm run smoke",
     "npm run desktop:e2e",
     "npm run townhall:habasit",
     "npm run roundtrip",
     "npm run verify",
-    "npm run smoke:cross-browser",
+    "npm run smoke:cross-browser"
   ],
-  ciChecks: [
+  "ciChecks": [
     "GitHub Actions verify workflow runs npm run verify on push, pull request, and manual dispatch.",
-    "GitHub Actions cross-browser smoke matrix runs chromium, firefox, and webkit.",
+    "GitHub Actions cross-browser smoke matrix runs chromium, firefox, and webkit."
   ],
-  currentCoverage: [
+  "currentCoverage": [
     "Production build verification",
     "Chromium smoke verification for guided, admin, and About surfaces",
     "Chromium desktop end-to-end proof for three realistic opportunity scenarios",
     "Chromium Habasit America town-hall proof with one desktop web pass and one mobile pass against a 30-day seeded sample workspace",
     "Chromium round-trip verification for handoff ZIP and buyer packet ZIP",
-    "Cross-browser smoke verification for chromium, firefox, and webkit",
+    "Cross-browser smoke verification for chromium, firefox, and webkit"
   ],
-  currentLimits: [
+  "currentLimits": [
     "Desktop scenario proof and Habasit web/mobile town-hall proof are Chromium-only.",
     "The heavier generic mobile three-scenario proof exists as a separate extended script and is not part of the default release gate yet.",
     "Round-trip export/import verification remains Chromium-only.",
-    "CI result status is surfaced through repo docs and workflow files, not a hosted dashboard.",
+    "CI result status is surfaced through repo docs and workflow files, not a hosted dashboard."
   ],
-  expertOwners: [
+  "expertOwners": [
     "Desktop Experience Director",
     "Mobile Experience Lead",
     "Town Hall Review Lead",
@@ -41,6 +41,6 @@ export const releaseStatus = {
     "Browser Compatibility Lead",
     "QA / Reliability Lead",
     "Engineering Lead",
-    "Release Manager",
-  ],
-} as const;
+    "Release Manager"
+  ]
+}
