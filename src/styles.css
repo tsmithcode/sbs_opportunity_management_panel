@@ -1011,7 +1011,19 @@ th {
     padding-bottom: 80px;
   }
   
-  .topbar-nav {
+  .topbar-nav,
+  .hide-on-mobile {
     display: none;
+  }
+
+  .topbar {
+    padding: 0.5rem 1rem;
+    height: auto;
+    min-height: 56px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.7rem;
+    opacity: 0.8;
   }
 }

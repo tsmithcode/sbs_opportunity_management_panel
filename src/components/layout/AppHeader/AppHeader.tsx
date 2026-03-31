@@ -27,9 +27,9 @@ export function AppHeader({ currentPage, modeLabel, lastExportedAt, navigateToPa
       </nav>
       <div className="topbar-actions" aria-label="Session status">
         <span className="status-chip">{modeLabel}</span>
-        <span className="status-chip">Human-in-the-loop</span>
-        <span className="status-chip">Saved locally</span>
-        <span className="status-chip">
+        <span className="status-chip hide-on-mobile">Human-in-the-loop</span>
+        <span className="status-chip hide-on-mobile">Saved locally</span>
+        <span className="status-chip hide-on-mobile">
           {lastExportedAt ? "ZIP export ready" : "Export recommended"}
         </span>
       </div>
