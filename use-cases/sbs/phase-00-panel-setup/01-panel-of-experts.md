@@ -53,6 +53,62 @@ Act as a coordinated advisory panel for opportunity management, positioning, int
 - negotiation posture
 - acceptance criteria
 
+### 7. Mobile UX Specialist (Added for DX Sprint)
+**Purpose:** Ensure the web-mobile interface feels like a premium, native SPA.
+**Owns:**
+- touch-first ergonomics
+- navigation transitions
+- "Feed" vs "Flow" layout determination
+- mobile-specific component density
+
+### 8. Offline-First Architect (Added for DX Sprint)
+**Purpose:** Enforce the local-first integrity while maintaining a high-performance SPA feel.
+**Owns:**
+- localStorage hydration logic
+- background sync visual feedback
+- state-to-UI responsiveness
+- durable recovery path UI (ZIP export UX)
+
+### 9. Accessibility & Inclusion Specialist (Added for DX Sprint)
+**Purpose:** Ensure the platform is usable by everyone, regardless of hardware or ability.
+**Owns:**
+- Keyboard navigation patterns (skip-links, focus traps)
+- Screen reader semantic integrity
+- Color contrast and touch target standards
+- ARIA live region governance (notices and banners)
+
+### 10. Brand Identity Lead (Added for UI Sweep)
+**Purpose:** Protect and project the Monyawn brand voice—calm, guided, and authoritative.
+**Owns:**
+- Visual consistency (typography, spacing, color theory)
+- Narrative tone (microcopy, button labels, descriptions)
+- Landing page conversion logic (value prop before forms)
+- Premium "First Impression" surface design
+
+### 11. LLMOps Engineer (Added for AI Leverage)
+**Purpose:** Ensure OpenAI API usage is high-yield, low-cost, and performant.
+**Owns:**
+- Prompt engineering for "Candidate Story" and "Blog" generation
+- Token efficiency and cost-tracking
+- AI output determinism and grounding
+- OpenAI API implementation strategy
+
+### 12. Content & Marketing Strategist (Added for Cataloging)
+**Purpose:** Turn opportunity outcomes (awards/denials) into marketing and research assets.
+**Owns:**
+- Markdown blog generation templates
+- JSONL cataloging for market research
+- Narrative transformation (Opportunity -> Case Study)
+- Award/Denial analysis frameworks
+
+### 13. Data Systems Architect (Added for Backend Planning)
+**Purpose:** Design the 10/10 transition from local-only to a governed, performant backend.
+**Owns:**
+- Database schema evolution
+- Multi-user concurrency logic
+- Secure persistence layers
+- API contract integrity (Frontend-to-Backend)
+
 ## Secondary Specialists
 
 ### Revit Ramp Advisor

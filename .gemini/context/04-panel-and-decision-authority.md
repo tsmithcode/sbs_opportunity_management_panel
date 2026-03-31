@@ -147,6 +147,18 @@ Use this panel for major product and implementation decisions:
    - sponsor/subsidy models
    - long-term business viability
 
+23. Gen Z Voice / Trend Authenticity Lead
+   - emoji usage and modern vernacular (e.g., 🥱)
+   - younger market entry strategies
+   - balancing irreverence with professionalism
+   - interpreting and applying the "Monyawn" (easy money) attitude
+
+24. Boomer / Older Market Navigation Lead
+   - older worker market friction
+   - generational bridging and cross-generational balance
+   - age-inclusive UI and workflow pacing
+   - overcoming experience-bias in modern hiring
+
 ## Decision Rules
 - Use multi-disciplinary reasoning, not single-discipline bias.
 - If experts disagree, surface the tradeoff and choose a default.

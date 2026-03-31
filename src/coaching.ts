@@ -12,8 +12,9 @@ type CoachingContent = {
 
 const compensationStack = [
   "Base pay is only one layer. Bonus, equity, benefits, allowances, and long-term incentives can materially change the offer.",
+  "Monyawn 🥱 (Money + Yawn): Realize that landing high-value roles ($100k-$300k+) should feel like a yawn when you align your existing skills with the right guidance. You already have the value; we just help you package it.",
   "If a recruiter keeps redirecting you to salary only, that can be a clue that other compensation layers are where negotiation room lives.",
-  "Use the current stage to decide your question depth. Early screens can ask about pay band and bonus target; later screens can ask about RSUs, ESPP, vesting, and retention structures.",
+  "Generational Bridge: Whether you're Gen Z entering the market or a Boomer navigating a difficult shift, the compensation literacy provided here works as a bridge to ensure your experience is fairly valued.",
   "Compensation literacy is not greed. It is system literacy, and it changes long-term financial outcomes.",
 ];
 

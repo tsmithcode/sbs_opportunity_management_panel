@@ -60,7 +60,7 @@ function createScopedFilename(
   generatedAt: string,
   scope: string,
   name: string,
-  extension: "md" | "pdf",
+  extension: "md" | "pdf" | "zip",
 ): string {
   return `${slugify(scope)}-${slugify(name)}-${formatTimestampForFile(generatedAt)}.${extension}`;
 }
@@ -921,4 +921,41 @@ export async function importReleaseArtifactForReview(
         "Review import failed. Provide a release readiness ZIP, release summary JSON, or release/readiness Markdown file.",
     };
   }
+}
+
+export async function buildBlogAssetZip(input: {
+  opportunity: Opportunity;
+  outcome: AppState["outcomes"][number];
+  story?: CandidateStory;
+}): Promise<Blob> {
+  const { default: JSZip } = await import("jszip");
+  const zip = new JSZip();
+  const generatedAt = nowIso();
+
+  const title = input.outcome.resolution === "awarded" 
+    ? `Monyawn Success Case Study 🥱: ${input.opportunity.role_title} at ${input.opportunity.company_name}`
+    : `Monyawn Market Insights 🥱: Pursuing ${input.opportunity.role_title} at ${input.opportunity.company_name}`;
+
+  const markdownContent = `# ${title}\n\nDate: ${generatedAt}\nResolution: ${input.outcome.resolution.toUpperCase()}\n\n## Overview\n${input.story?.summary || "No narrative summary provided."}\n\n## The Narrative\n${input.story?.markdown || "No detailed narrative provided."}\n\n## Lessons Learned\n${input.outcome.lessons_learned}\n\n## Market Intelligence\n${input.outcome.market_intelligence}\n`;
+
+  const jsonlContent = JSON.stringify({
+    timestamp: generatedAt,
+    opportunity_id: input.opportunity.opportunity_id,
+    company: input.opportunity.company_name,
+    role: input.opportunity.role_title,
+    resolution: input.outcome.resolution,
+    content_potential: input.outcome.content_potential,
+    lessons_learned: input.outcome.lessons_learned,
+    market_intelligence: input.outcome.market_intelligence,
+  }) + "\n";
+
+  zip.file("article.md", markdownContent);
+  zip.file("metadata.jsonl", jsonlContent);
+
+  return zip.generateAsync({ type: "blob" });
+}
+
+export function createBlogAssetFilename(company: string, role: string): string {
+  const generatedAt = nowIso();
+  return createScopedFilename(generatedAt, company, role, "zip").replace(".pdf", "").replace(".md", "");
 }

@@ -66,7 +66,7 @@ a {
 }
 
 .skip-link:focus {
-  top: 1rem;
+  top: 6rem;
 }
 
 .sr-only {
@@ -959,5 +959,59 @@ th {
 
   table {
     min-width: 420px;
+  }
+}
+
+/* --- Mobile Premium Sweep: Phase 1 --- */
+
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: var(--surface-strong);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 0.5rem;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+.mobile-nav-item.is-active {
+  color: var(--accent-strong);
+}
+
+.mobile-nav-icon {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: grid;
+  }
+  
+  .workspace {
+    padding-bottom: 80px;
+  }
+  
+  .topbar-nav {
+    display: none;
   }
 }

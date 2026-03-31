@@ -4,9 +4,9 @@ export function AppHeader({ currentPage, modeLabel, lastExportedAt, navigateToPa
   return (
     <header className="topbar" aria-label="Primary">
       <div>
-        <p className="brand-mark">Monyawn</p>
+        <p className="brand-mark">Monyawn 🥱</p>
         <p className="brand-subtitle">
-          Enterprise ops foundation with premium governance and accessible workflow UX
+          The local-first platform for high-stakes career moves.
         </p>
       </div>
       <nav className="topbar-nav" aria-label="Page navigation">

@@ -2,6 +2,8 @@
 
 Primary domain: `www.monyawn.com`
 
+**Monyawn** (Money + Yawn) represents "easy money" for what used to seem hard—acting as a guardian angel to help candidates, whether Gen Z or Boomers, navigate the friction of landing high-value opportunities ($100k-$300k+) they already have the skills for. 🥱
+
 Monyawn is a local-first, AI-native opportunity platform for guided career decision workflows, candidate story development, and durable handoff packaging without storing user data on Monyawn systems.
 
 ## What Monyawn Is

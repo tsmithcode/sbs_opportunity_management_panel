@@ -981,6 +981,7 @@ export function createSeedState(): AppState {
     enterpriseControlProfiles: [...enterpriseControlProfiles, ...habasitEnterpriseControls],
     roleEntitlements: [...roleEntitlements, ...habasitRoleEntitlements],
     releaseArtifactReviews: [],
+    outcomes: [],
     selectedAccountId: account.account_id,
     selectedUserId: user.user_id,
     selectedOpportunityId: allOpportunities[0].opportunity_id,

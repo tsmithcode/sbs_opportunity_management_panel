@@ -3,6 +3,8 @@
 ## Brand Thesis
 Building **Monyawn** in public during interview season.
 
+The name **Monyawn** is a portmanteau of *Money* and *Yawn*. It signals making "easy money" for what would typically seem hard. It represents the realization of a candidate—often a first-time earner at the $100k, $200k, or $300k level—that they had the skills all along, but simply needed structured guidance and a "guardian angel" to help them across the line.
+
 Monyawn is a guided path from raw ambition to real opportunity.
 
 It is a career decision-support product designed to help people move with more clarity, confidence, and strategic direction through moments that often decide their trajectory.
@@ -79,6 +81,7 @@ When writing or rewriting copy, README content, prompts, feature descriptions, o
 - write with dignity, clarity, and control
 - speak to both the individual user and the institutional reader
 - ensure the mission is bold, but the wording is disciplined
+- utilize emojis strategically (specifically the yawning emoji 🥱 and general emojis) to bridge communication, signaling the "Monyawn" attitude: confident, capable, and unbothered by what used to seem insurmountable
 
 ## Messaging Guardrails
 Monyawn should communicate a strong social and cultural point of view, but always in a way that strengthens the product and protects adoption.

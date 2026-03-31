@@ -373,6 +373,17 @@ export type ReleaseArtifactReviewRecord = {
   imported_at: string;
 };
 
+export type OutcomeMetadata = {
+  outcome_id: string;
+  opportunity_id: string;
+  resolution: "awarded" | "denied" | "withdrawn";
+  lessons_learned: string;
+  market_intelligence: string;
+  content_potential: "low" | "medium" | "high";
+  blog_article_generated: boolean;
+  updated_at: string;
+};
+
 export type AppState = {
   schemaVersion: string;
   accounts: Account[];
@@ -392,6 +403,7 @@ export type AppState = {
   enterpriseControlProfiles: EnterpriseControlProfile[];
   roleEntitlements: RoleEntitlement[];
   releaseArtifactReviews: ReleaseArtifactReviewRecord[];
+  outcomes: OutcomeMetadata[];
   selectedAccountId: string;
   selectedUserId: string;
   selectedOpportunityId: string;

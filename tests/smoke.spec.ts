@@ -1,7 +1,19 @@
 import { expect, test } from "@playwright/test";
 
-test("guided workspace loads with core lifecycle controls", async ({ page }) => {
+test("landing page loads with brand message and CTA", async ({ page }) => {
   await page.goto("/");
+  await page.waitForLoadState("domcontentloaded");
+
+  await expect(
+    page.getByRole("heading", {
+      name: "Landing $100k-$300k+ roles should feel like a yawn.",
+    }),
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Start my pursuit" })).toBeVisible();
+});
+
+test("guided workspace loads with core lifecycle controls", async ({ page }) => {
+  await page.goto("/#workspace");
   await page.waitForLoadState("domcontentloaded");
 
   await expect(
@@ -19,7 +31,7 @@ test("guided workspace loads with core lifecycle controls", async ({ page }) => 
 });
 
 test("admin mode exposes enterprise controls and buyer packet generation", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/#workspace");
   await page.waitForLoadState("domcontentloaded");
   await page.getByRole("button", { name: "Admin and governance API, policy, and account controls" }).click();
 

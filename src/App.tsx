@@ -1,5 +1,11 @@
 import { AboutPage } from "./components/pages/About/AboutPage";
+import { LandingPage } from "./components/pages/Landing/LandingPage";
+import { IntakeFlow } from "./components/flows/IntakeFlow/IntakeFlow";
+import { OutcomePanel } from "./components/panels/OutcomePanel/OutcomePanel";
+import { OutcomeMetadata } from "./components/panels/OutcomePanel/OutcomePanel.contract";
 import { AppHeader } from "./components/layout/AppHeader/AppHeader";
+import { MobileNavigation } from "./components/layout/MobileNavigation/MobileNavigation";
+import { MobileTab } from "./components/layout/MobileNavigation/MobileNavigation.contract";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { getCoachingForStage, getCoachingTitle } from "./coaching";
 import { validateAppStateIntegrity } from "./integrity";
@@ -60,7 +66,7 @@ import {
 const STORAGE_KEY = "monyawn-platform-state-v1";
 const RESUME_PATH = "/thomas-smith-architect-resume.pdf";
 
-type AppPage = "workspace" | "about";
+type AppPage = "landing" | "intake" | "workspace" | "about";
 
 type Notice = { tone: "success" | "info"; message: string } | null;
 type ImportedReleaseArtifact = {
@@ -367,6 +373,7 @@ function loadInitialState(): AppState {
           pinned: item.pinned ?? false,
         }),
       ),
+      outcomes: parsed.outcomes ?? fallback.outcomes,
       lastExportedAt: parsed.lastExportedAt ?? "",
     };
   } catch {
@@ -375,10 +382,20 @@ function loadInitialState(): AppState {
 }
 
 function App() {
-  const [currentPage, setCurrentPage] = useState<AppPage>(() =>
-    window.location.hash === "#about" ? "about" : "workspace",
-  );
+  const [currentPage, setCurrentPage] = useState<AppPage>(() => {
+    if (window.location.hash === "#about") return "about";
+    if (window.location.hash === "#workspace") return "workspace";
+    return "landing";
+  });
+  const [mobileTab, setMobileTab] = useState<MobileTab>("home");
+  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
   const [state, setState] = useState<AppState>(() => loadInitialState());
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const [notice, setNotice] = useState<Notice>(null);
   const [accountDraft, setAccountDraft] = useState<AccountDraft>(defaultAccountDraft);
   const [userDraft, setUserDraft] = useState<UserDraft>(defaultUserDraft);
@@ -658,7 +675,9 @@ function App() {
   }
 
   function navigateToPage(page: AppPage) {
-    window.location.hash = page === "about" ? "about" : "";
+    if (page === "about") window.location.hash = "about";
+    else if (page === "workspace") window.location.hash = "workspace";
+    else window.location.hash = "";
     setCurrentPage(page);
   }
 
@@ -1808,6 +1827,61 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
     );
   }
 
+  function handleOutcomeSubmit(draft: Omit<OutcomeMetadata, "outcome_id" | "updated_at" | "blog_article_generated">) {
+    patchState(
+      (current) => {
+        const existing = current.outcomes.find(o => o.opportunity_id === draft.opportunity_id);
+        const nextOutcome: OutcomeMetadata = {
+          outcome_id: existing?.outcome_id ?? `outcome_${Date.now()}`,
+          blog_article_generated: existing?.blog_article_generated ?? false,
+          updated_at: nowIso(),
+          ...draft,
+        };
+        const remaining = current.outcomes.filter(o => o.opportunity_id !== draft.opportunity_id);
+        return {
+          ...current,
+          outcomes: [nextOutcome, ...remaining],
+        };
+      },
+      "Opportunity outcome cataloged for long-term leverage."
+    );
+  }
+
+  async function handleGenerateBlog() {
+    if (!selectedOpportunity) return;
+    const outcome = state.outcomes.find(o => o.opportunity_id === selectedOpportunity.opportunity_id);
+    if (!outcome) {
+      setNotice({ tone: "info", message: "Save an outcome before generating a blog asset." });
+      return;
+    }
+
+    try {
+      const { buildBlogAssetZip, createBlogAssetFilename } = await import("./package");
+      const blob = await buildBlogAssetZip({
+        opportunity: selectedOpportunity,
+        outcome,
+        story: selectedCandidateStory,
+      });
+
+      const url = window.URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = createBlogAssetFilename(selectedOpportunity.company_name, selectedOpportunity.role_title) + ".zip";
+      anchor.click();
+      window.URL.revokeObjectURL(url);
+      
+      patchState(
+        current => ({
+          ...current,
+          outcomes: current.outcomes.map(o => o.outcome_id === outcome.outcome_id ? { ...o, blog_article_generated: true } : o)
+        }),
+        "Blog Asset ZIP (Markdown + JSONL) generated successfully."
+      );
+    } catch (e) {
+      setNotice({ tone: "info", message: "Failed to generate blog asset." });
+    }
+  }
+
   const selectedStageIndex = selectedOpportunity
     ? stageOrder.indexOf(selectedOpportunity.current_stage)
     : 0;
@@ -1817,9 +1891,6 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
 
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">
-        Skip to main content
-      </a>
       <AppHeader
         currentPage={currentPage}
         currentMode={state.currentMode}
@@ -1827,8 +1898,40 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
         lastExportedAt={state.lastExportedAt}
         navigateToPage={navigateToPage}
       />
+      {windowWidth <= 768 && (
+        <MobileNavigation
+          activeTab={mobileTab}
+          onTabChange={(tab) => {
+            setMobileTab(tab);
+            if (tab === "admin") setState(c => ({ ...c, currentMode: "admin" }));
+            else setState(c => ({ ...c, currentMode: "user" }));
+          }}
+        />
+      )}
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
 
-      {currentPage === "about" ? (
+      {currentPage === "landing" ? (
+        <LandingPage
+          onStartPursuit={() => navigateToPage("intake")}
+          onOpenAbout={() => navigateToPage("about")}
+        />
+      ) : currentPage === "intake" ? (
+        <IntakeFlow
+          accountDraft={accountDraft}
+          onAccountDraftChange={setAccountDraft}
+          onAccountSubmit={handleAccountSubmit}
+          userDraft={userDraft}
+          onUserDraftChange={setUserDraft}
+          onUserSubmit={handleUserSubmit}
+          opportunityDraft={opportunityDraft}
+          onOpportunityDraftChange={setOpportunityDraft}
+          onOpportunitySubmit={handleOpportunitySubmit}
+          onComplete={() => navigateToPage("workspace")}
+          onCancel={() => navigateToPage("landing")}
+        />
+      ) : currentPage === "about" ? (
         <AboutPage
           navigateToPage={navigateToPage}
           RESUME_PATH={RESUME_PATH}
@@ -2204,240 +2307,9 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
             {state.currentMode === "user" ? (
               <>
                 <section className="record-grid">
-                  <form className="stage-block" onSubmit={handleAccountSubmit}>
-                    <h3>1. Account setup</h3>
-                    <p>Create or switch the enterprise container that owns support tier, region, and governance posture.</p>
-                    <label className="field">
-                      <span>Account name</span>
-                      <input
-                        value={accountDraft.account_name}
-                        onChange={(event) =>
-                          setAccountDraft((current) => ({
-                            ...current,
-                            account_name: event.target.value,
-                          }))
-                        }
-                        required
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Account type</span>
-                      <select
-                        value={accountDraft.account_type}
-                        onChange={(event) =>
-                          setAccountDraft((current) => ({
-                            ...current,
-                            account_type: event.target.value as AccountType,
-                          }))
-                        }
-                      >
-                        <option value="enterprise">Enterprise</option>
-                        <option value="government">Government</option>
-                        <option value="education">Education</option>
-                        <option value="workforce_program">Workforce program</option>
-                        <option value="individual">Individual</option>
-                      </select>
-                    </label>
-                    <label className="field">
-                      <span>Primary region</span>
-                      <input
-                        value={accountDraft.primary_region}
-                        onChange={(event) =>
-                          setAccountDraft((current) => ({
-                            ...current,
-                            primary_region: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Support tier</span>
-                      <input
-                        value={accountDraft.support_tier}
-                        onChange={(event) =>
-                          setAccountDraft((current) => ({
-                            ...current,
-                            support_tier: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <button className="primary-action" type="submit">
-                      Create account
-                    </button>
-                  </form>
-
-                  <form className="stage-block" onSubmit={handleUserSubmit}>
-                    <h3>2. User onboarding</h3>
-                    <p>Capture the human actor, region, accessibility needs, and sponsorship model before lifecycle logic starts.</p>
-                    <label className="field">
-                      <span>Full name</span>
-                      <input
-                        value={userDraft.full_name}
-                        onChange={(event) =>
-                          setUserDraft((current) => ({
-                            ...current,
-                            full_name: event.target.value,
-                          }))
-                        }
-                        required
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Email</span>
-                      <input
-                        type="email"
-                        value={userDraft.email}
-                        onChange={(event) =>
-                          setUserDraft((current) => ({ ...current, email: event.target.value }))
-                        }
-                        required
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Current role</span>
-                      <input
-                        value={userDraft.current_role}
-                        onChange={(event) =>
-                          setUserDraft((current) => ({
-                            ...current,
-                            current_role: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Target role family</span>
-                      <input
-                        value={userDraft.target_role_family}
-                        onChange={(event) =>
-                          setUserDraft((current) => ({
-                            ...current,
-                            target_role_family: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Accessibility needs</span>
-                      <input
-                        value={userDraft.accessibility_needs}
-                        onChange={(event) =>
-                          setUserDraft((current) => ({
-                            ...current,
-                            accessibility_needs: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Sponsorship type</span>
-                      <select
-                        value={userDraft.sponsorship_type}
-                        onChange={(event) =>
-                          setUserDraft((current) => ({
-                            ...current,
-                            sponsorship_type: event.target.value as SponsorshipType,
-                          }))
-                        }
-                      >
-                        <option value="organization_sponsored">Organization sponsored</option>
-                        <option value="self_serve">Self serve</option>
-                        <option value="managed_service">Managed service</option>
-                      </select>
-                    </label>
-                    <button className="primary-action" type="submit">
-                      Create user
-                    </button>
-                  </form>
-
-                  <form className="stage-block" onSubmit={handleOpportunitySubmit}>
-                    <h3>3. Opportunity intake</h3>
-                    <p>Start a real opportunity record with lifecycle stage, source, and supportable metadata.</p>
-                    <label className="field">
-                      <span>Company name</span>
-                      <input
-                        value={opportunityDraft.company_name}
-                        onChange={(event) =>
-                          setOpportunityDraft((current) => ({
-                            ...current,
-                            company_name: event.target.value,
-                          }))
-                        }
-                        required
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Role title</span>
-                      <input
-                        value={opportunityDraft.role_title}
-                        onChange={(event) =>
-                          setOpportunityDraft((current) => ({
-                            ...current,
-                            role_title: event.target.value,
-                          }))
-                        }
-                        required
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Opportunity source</span>
-                      <input
-                        value={opportunityDraft.opportunity_source}
-                        onChange={(event) =>
-                          setOpportunityDraft((current) => ({
-                            ...current,
-                            opportunity_source: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Posting URL</span>
-                      <input
-                        value={opportunityDraft.job_posting_url}
-                        onChange={(event) =>
-                          setOpportunityDraft((current) => ({
-                            ...current,
-                            job_posting_url: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Employment type</span>
-                      <input
-                        value={opportunityDraft.employment_type}
-                        onChange={(event) =>
-                          setOpportunityDraft((current) => ({
-                            ...current,
-                            employment_type: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <label className="field">
-                      <span>Location type</span>
-                      <input
-                        value={opportunityDraft.location_type}
-                        onChange={(event) =>
-                          setOpportunityDraft((current) => ({
-                            ...current,
-                            location_type: event.target.value,
-                          }))
-                        }
-                      />
-                    </label>
-                    <button className="primary-action" type="submit">
-                      Create opportunity
-                    </button>
-                  </form>
-                </section>
-
-                <section className="record-grid">
                   <form className="stage-block" onSubmit={handleArtifactSubmit}>
-                    <h3>4. Document intake and management</h3>
-                    <p>Capture resumes, job descriptions, notes, messages, and generated outputs with lifecycle-aware metadata.</p>
+                    <h3>1. Document intake and management</h3>
+                    <p>Capture resumes, job descriptions, notes, and generated outputs with lifecycle-aware metadata.</p>
                     <label className="field">
                       <span>Artifact type</span>
                       <select
@@ -2503,7 +2375,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                   </form>
 
                   <form className="stage-block" onSubmit={handleProfileSubmit}>
-                    <h3>5. Candidate profile confirmation</h3>
+                    <h3>2. Candidate profile confirmation</h3>
                     <p>Turn extracted data into a reviewable, correctable profile that drives checkpoints and fit analysis.</p>
                     <label className="field">
                       <span>Skills summary</span>
@@ -2527,7 +2399,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                   </form>
 
                   <form className="stage-block" onSubmit={handleCorrespondenceSubmit}>
-                    <h3>6. Correspondence operations</h3>
+                    <h3>3. Correspondence operations</h3>
                     <p>Generate reviewable outreach or internal notes without bypassing approval state or auditability.</p>
                     <label className="field">
                       <span>Channel</span>
@@ -2782,6 +2654,15 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                       </div>
                     ) : null}
                   </div>
+
+                  {selectedOpportunity && (
+                    <OutcomePanel
+                      opportunityId={selectedOpportunity.opportunity_id}
+                      existingOutcome={state.outcomes.find(o => o.opportunity_id === selectedOpportunity.opportunity_id)}
+                      onSubmit={handleOutcomeSubmit}
+                      onGenerateBlog={handleGenerateBlog}
+                    />
+                  )}
 
                   <div className="stage-block">
                     <h3>Structured signal extraction</h3>
