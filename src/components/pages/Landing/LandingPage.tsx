@@ -14,6 +14,9 @@ export function LandingPage({ onStartPursuit, onOpenAbout }: LandingPageProps) {
             <button className="primary-action" type="button" onClick={onStartPursuit}>
               Start my pursuit
             </button>
+            <button className="secondary-action" type="button" onClick={() => window.location.hash = "workspace"}>
+              Go to Workspace 🥱
+            </button>
             <button className="secondary-action" type="button" onClick={onOpenAbout}>
               How it works
             </button>

@@ -3,6 +3,9 @@ import { LandingPage } from "./components/pages/Landing/LandingPage";
 import { IntakeFlow } from "./components/flows/IntakeFlow/IntakeFlow";
 import { OutcomePanel } from "./components/panels/OutcomePanel/OutcomePanel";
 import { OutcomeMetadata } from "./components/panels/OutcomePanel/OutcomePanel.contract";
+import { PrivacyGuard } from "./components/panels/PrivacyGuard/PrivacyGuard";
+import { LeverageIndicator } from "./components/panels/LeverageIndicator/LeverageIndicator";
+import { AiSettingsPanel } from "./components/panels/AiSettingsPanel/AiSettingsPanel";
 import { AppHeader } from "./components/layout/AppHeader/AppHeader";
 import { MobileNavigation } from "./components/layout/MobileNavigation/MobileNavigation";
 import { MobileTab } from "./components/layout/MobileNavigation/MobileNavigation.contract";
@@ -13,6 +16,7 @@ import {
   createCandidateStoryRecord,
   extractSignalsFromText,
   generateCandidateStory,
+  generateStoryWithOpenAI,
   mergeSignalSets,
 } from "./intelligence";
 import { createSeedState } from "./seed";
@@ -24,6 +28,7 @@ import type {
   AppMode,
   AppState,
   ArtifactType,
+  CandidateStory,
   CorrespondenceStatus,
   OpportunityStatus,
   ParseStatus,
@@ -374,6 +379,7 @@ function loadInitialState(): AppState {
         }),
       ),
       outcomes: parsed.outcomes ?? fallback.outcomes,
+      aiSettings: parsed.aiSettings ?? fallback.aiSettings,
       lastExportedAt: parsed.lastExportedAt ?? "",
     };
   } catch {
@@ -383,13 +389,27 @@ function loadInitialState(): AppState {
 
 function App() {
   const [currentPage, setCurrentPage] = useState<AppPage>(() => {
-    if (window.location.hash === "#about") return "about";
-    if (window.location.hash === "#workspace") return "workspace";
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    if (hash.includes("about")) return "about";
+    if (hash.includes("workspace")) return "workspace";
+    if (hash.includes("intake")) return "intake";
     return "landing";
   });
   const [mobileTab, setMobileTab] = useState<MobileTab>("home");
   const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
   const [state, setState] = useState<AppState>(() => loadInitialState());
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.includes("about")) setCurrentPage("about");
+      else if (hash.includes("workspace")) setCurrentPage("workspace");
+      else if (hash.includes("intake")) setCurrentPage("intake");
+      else setCurrentPage("landing");
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -590,13 +610,6 @@ function App() {
 
   const reportingSnapshot = useMemo(() => createReportingSnapshot(state), [state]);
   const integrityReport = useMemo(() => validateAppStateIntegrity(state), [state]);
-  const localLossWarning = useMemo(() => {
-    if (!state.lastExportedAt) {
-      return "This workspace is stored locally on this device only. Export a handoff ZIP if you want durable recovery.";
-    }
-
-    return `Last export package created at ${new Date(state.lastExportedAt).toLocaleString()}. Local browser storage can still be lost if it is cleared.`;
-  }, [state.lastExportedAt]);
 
   const onboardingQueue = state.opportunities.filter(
     (opportunity) =>
@@ -956,6 +969,7 @@ function App() {
         artifactDraft.content_summary,
         selectedOpportunity.company_name,
       ),
+      source_text: artifactDraft.content_summary,
       ...artifactDraft,
     });
     const task = createTask(
@@ -1678,52 +1692,73 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
     });
   }
 
-  function handleGenerateCandidateStory() {
+  async function handleGenerateCandidateStory() {
     if (!selectedOpportunity) {
       setNotice({ tone: "info", message: "Select an opportunity before generating a story." });
       return;
     }
 
-    const nextStory = createCandidateStoryRecord(
-      generateCandidateStory({
-        user: selectedUser,
-        opportunity: selectedOpportunity,
-        profile: selectedProfile,
-        artifacts: opportunityArtifacts,
-        correspondence: opportunityCorrespondence,
-      }),
-    );
-    const checkpoint = createCheckpoint(
-      selectedOpportunity,
-      "Candidate story generation",
-      "Lifecycle evidence was synthesized into a who/what/why/where/when/how narrative.",
-      opportunityArtifacts.length || opportunityCorrespondence.length ? "high" : "medium",
-      "proceed_with_warning",
-      `Story generated from ${nextStory.source_artifact_ids.length} artifacts and ${nextStory.source_correspondence_ids.length} correspondence records.`,
-      "low",
-      "low",
-    );
-    const task = createTask(
-      selectedOpportunity.opportunity_id,
-      "Review candidate story before external use",
-      "Candidate Story Architect",
-      false,
-    );
+    setNotice({ tone: "info", message: "Generating candidate story narrative... 🥱" });
 
-    patchState(
-      (current) => ({
-        ...current,
-        candidateStories: [
-          nextStory,
-          ...current.candidateStories.filter(
-            (story) => story.opportunity_id !== selectedOpportunity.opportunity_id,
-          ),
-        ],
-        checkpoints: [checkpoint, ...current.checkpoints],
-        tasks: [task, ...current.tasks],
-      }),
-      "Candidate story generated from current lifecycle evidence.",
-    );
+    try {
+      let storyDraft: Omit<CandidateStory, "story_id" | "updated_at">;
+
+      if (state.aiSettings.provider === "openai" && state.aiSettings.openai_api_key) {
+        storyDraft = await generateStoryWithOpenAI({
+          apiKey: state.aiSettings.openai_api_key,
+          model: state.aiSettings.model || "gpt-4o-mini",
+          user: selectedUser,
+          opportunity: selectedOpportunity,
+          profile: selectedProfile,
+          artifacts: opportunityArtifacts,
+          correspondence: opportunityCorrespondence,
+        });
+      } else {
+        storyDraft = generateCandidateStory({
+          user: selectedUser,
+          opportunity: selectedOpportunity,
+          profile: selectedProfile,
+          artifacts: opportunityArtifacts,
+          correspondence: opportunityCorrespondence,
+        });
+      }
+
+      const nextStory = createCandidateStoryRecord(storyDraft);
+      const checkpoint = createCheckpoint(
+        selectedOpportunity,
+        "Candidate story generation",
+        "Lifecycle evidence was synthesized into a who/what/why/where/when/how narrative.",
+        opportunityArtifacts.length || opportunityCorrespondence.length ? "high" : "medium",
+        "proceed_with_warning",
+        `Story generated from ${nextStory.source_artifact_ids.length} artifacts and ${nextStory.source_correspondence_ids.length} correspondence records.`,
+        "low",
+        "low",
+      );
+      const task = createTask(
+        selectedOpportunity.opportunity_id,
+        "Review candidate story before external use",
+        "Candidate Story Architect",
+        false,
+      );
+
+      patchState(
+        (current) => ({
+          ...current,
+          candidateStories: [
+            nextStory,
+            ...current.candidateStories.filter(
+              (story) => story.opportunity_id !== selectedOpportunity.opportunity_id,
+            ),
+          ],
+          checkpoints: [checkpoint, ...current.checkpoints],
+          tasks: [task, ...current.tasks],
+        }),
+        "Candidate story generated from current lifecycle evidence. 🥱",
+      );
+      setNotice({ tone: "success", message: "Narrative built from evidence base. 🥱" });
+    } catch (e) {
+      setNotice({ tone: "info", message: `Generation failed: ${(e as Error).message}` });
+    }
   }
 
   function handleSaveCandidateStory() {
@@ -1882,6 +1917,27 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
     }
   }
 
+  async function handleExportSeasonReport() {
+    if (!state.outcomes.length) {
+      setNotice({ tone: "info", message: "No outcomes cataloged yet. 🥱" });
+      return;
+    }
+
+    try {
+      const { buildSeasonReportZip } = await import("./package");
+      const blob = await buildSeasonReportZip(state);
+      const url = window.URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `monyawn-season-report-${Date.now()}.zip`;
+      anchor.click();
+      window.URL.revokeObjectURL(url);
+      setNotice({ tone: "success", message: "Max Yield Season Report generated! 🥱" });
+    } catch (e) {
+      setNotice({ tone: "info", message: "Failed to generate season report." });
+    }
+  }
+
   const selectedStageIndex = selectedOpportunity
     ? stageOrder.indexOf(selectedOpportunity.current_stage)
     : 0;
@@ -1897,6 +1953,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
         modeLabel={modeLabels[state.currentMode]}
         lastExportedAt={state.lastExportedAt}
         navigateToPage={navigateToPage}
+        onModeChange={(mode) => setState((current) => ({ ...current, currentMode: mode }))}
       />
       {windowWidth <= 768 && (
         <MobileNavigation
@@ -1941,41 +1998,35 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
       <main id="main-content" className="workspace">
         <section className="hero hero-wide" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="kicker">www.monyawn.com</p>
+            <p className="kicker">Money + Yawn = Monyawn 🥱</p>
             <h1 id="hero-title">
-              Opportunity platform operations, not just a demo wizard.
+              Operational cockpit for high-stakes career moves. 🥱
             </h1>
             <p className="hero-text">
-              This implementation adds live onboarding, lifecycle records, local
-              CRUD, import and export, document and correspondence operations,
-              staff queues, governance overlays, and admin visibility on top of
-              the SBS reference use case.
+              Turn your job search into a governed, evidence-backed workflow. Monyawn helps you develop your story, manage artifacts, and maintain full control of your data without ever sending it to our servers.
             </p>
-            <div className="warning-callout" role="note" aria-label="Local storage warning">
-              <p className="panel-label">Local-only storage warning</p>
-              <p>{localLossWarning}</p>
-            </div>
+            
+            <PrivacyGuard />
+            <LeverageIndicator 
+              score={completionScore} 
+              label={selectedOpportunity?.current_stage || "Next step"} 
+              isComplete={completionScore === 100}
+            />
+
             <div className="hero-actions">
               <button
                 className="primary-action"
                 type="button"
-                onClick={() => setState((current) => ({ ...current, currentMode: "user" }))}
+                onClick={handleExport}
               >
-                Guided workspace
+                Export ZIP handoff package 🥱
               </button>
               <button
                 className="secondary-action"
                 type="button"
-                onClick={() => setState((current) => ({ ...current, currentMode: "staff" }))}
+                onClick={resetSeedState}
               >
-                Staff operations
-              </button>
-              <button
-                className="secondary-action"
-                type="button"
-                onClick={() => setState((current) => ({ ...current, currentMode: "admin" }))}
-              >
-                Platform admin
+                Reset to seeded state
               </button>
             </div>
             {notice ? (
@@ -2227,10 +2278,19 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                   >
                     Import ZIP or JSON
                   </button>
+                  <button className="secondary-action" type="button" onClick={handleExportSeasonReport}>
+                    Generate Max Yield Season Report 🥱
+                  </button>
                   <button className="secondary-action" type="button" onClick={resetSeedState}>
                     Reset seeded state
                   </button>
                 </div>
+                
+                <AiSettingsPanel 
+                  settings={state.aiSettings} 
+                  onSettingsChange={(settings) => patchState(c => ({ ...c, aiSettings: settings }), "AI Intelligence settings updated. 🥱")}
+                />
+
                 <input
                   ref={fileInputRef}
                   data-testid="workspace-import-input"
@@ -2308,7 +2368,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
               <>
                 <section className="record-grid">
                   <form className="stage-block" onSubmit={handleArtifactSubmit}>
-                    <h3>1. Document intake and management</h3>
+                    <h3>1. Document intake and management 🥱</h3>
                     <p>Capture resumes, job descriptions, notes, and generated outputs with lifecycle-aware metadata.</p>
                     <label className="field">
                       <span>Artifact type</span>
@@ -2370,12 +2430,17 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                       />
                     </label>
                     <button className="primary-action" type="submit">
-                      Add artifact
+                      Add artifact 🥱
                     </button>
+                    {!opportunityArtifacts.length && (
+                      <div className="warning-callout">
+                        <p>No artifacts yet. Start by uploading your resume to build your foundation. 🥱</p>
+                      </div>
+                    )}
                   </form>
 
                   <form className="stage-block" onSubmit={handleProfileSubmit}>
-                    <h3>2. Candidate profile confirmation</h3>
+                    <h3>2. Candidate profile confirmation 🥱</h3>
                     <p>Turn extracted data into a reviewable, correctable profile that drives checkpoints and fit analysis.</p>
                     <label className="field">
                       <span>Skills summary</span>
@@ -2399,7 +2464,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                   </form>
 
                   <form className="stage-block" onSubmit={handleCorrespondenceSubmit}>
-                    <h3>3. Correspondence operations</h3>
+                    <h3>3. Correspondence operations 🥱</h3>
                     <p>Generate reviewable outreach or internal notes without bypassing approval state or auditability.</p>
                     <label className="field">
                       <span>Channel</span>
@@ -2443,8 +2508,13 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                       />
                     </label>
                     <button className="primary-action" type="submit">
-                      Create correspondence draft
+                      Create correspondence draft 🥱
                     </button>
+                    {!opportunityCorrespondence.length && (
+                      <div className="warning-callout">
+                        <p>No messages yet. Capture recruiter notes or outreach drafts here. 🥱</p>
+                      </div>
+                    )}
                   </form>
                 </section>
 
@@ -2612,7 +2682,7 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
                   </form>
 
                   <div className="stage-block">
-                    <h3>7. Candidate story</h3>
+                    <h3>7. Candidate story 🥱</h3>
                     <p>
                       Generate a know-thyself narrative that teaches who, what, why,
                       where, when, and how to communicate from captured lifecycle evidence.
