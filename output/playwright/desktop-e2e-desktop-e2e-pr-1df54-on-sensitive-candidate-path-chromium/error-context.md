@@ -1,0 +1,64 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner "Primary" [ref=e4]:
+    - generic [ref=e5]:
+      - paragraph [ref=e6]: Monyawn 🥱
+      - paragraph [ref=e7]: The local-first platform for high-stakes career moves.
+    - navigation "Page navigation" [ref=e8]:
+      - button "Workspace" [ref=e9] [cursor=pointer]
+      - button "About" [ref=e10] [cursor=pointer]
+      - generic [ref=e11]:
+        - button "USER" [ref=e12] [cursor=pointer]
+        - button "STAFF" [ref=e13] [cursor=pointer]
+        - button "ADMIN" [ref=e14] [cursor=pointer]
+    - generic "Session status" [ref=e15]:
+      - generic [ref=e16]: Guided workspace
+      - generic [ref=e17]: Human-in-the-loop
+      - generic [ref=e18]: Saved locally
+      - generic [ref=e19]: Export recommended
+  - link "Skip to main content" [ref=e20] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=e21]:
+    - region "Landing $100k-$300k+ roles should feel like a yawn." [ref=e22]:
+      - generic [ref=e23]:
+        - paragraph [ref=e24]: Money + Yawn = Monyawn 🥱
+        - heading "Landing $100k-$300k+ roles should feel like a yawn." [level=1] [ref=e25]
+        - paragraph [ref=e26]: You have the skills. We provide the guidance. Monyawn is your local-first guardian angel for high-stakes career moves. Move from ambiguity to outcome with total data sovereignty.
+        - generic [ref=e27]:
+          - button "Start my pursuit" [ref=e28] [cursor=pointer]
+          - button "Go to Workspace 🥱" [ref=e29] [cursor=pointer]
+          - button "How it works" [ref=e30] [cursor=pointer]
+      - generic "Posture" [ref=e31]:
+        - generic [ref=e32]:
+          - paragraph [ref=e33]: Platform Integrity 🥱
+          - list [ref=e34]:
+            - listitem [ref=e35]:
+              - strong [ref=e36]: "Local-Only:"
+              - text: Your data never leaves your device.
+            - listitem [ref=e37]:
+              - strong [ref=e38]: "Export-Ready:"
+              - text: One-click ZIP handoff packages.
+            - listitem [ref=e39]:
+              - strong [ref=e40]: "AI-Native:"
+              - text: Guided coaching for Gen Z and Boomers.
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - paragraph [ref=e43]: Step 01
+        - heading "Guided Intake 🥱" [level=3] [ref=e44]
+        - paragraph [ref=e45]: Securely capture your profile and opportunity details in a calm, step-by-step onboarding flow.
+      - generic [ref=e46]:
+        - paragraph [ref=e47]: Step 02
+        - heading "Evidence Shaping 🥱" [level=3] [ref=e48]
+        - paragraph [ref=e49]: Upload resumes and correspondence. Let our AI-native panel help you tune your narrative.
+      - generic [ref=e50]:
+        - paragraph [ref=e51]: Step 03
+        - heading "Durable Handoff 🥱" [level=3] [ref=e52]
+        - paragraph [ref=e53]: Export a professional, human-readable packet for internal review or final application.
+    - generic [ref=e54]:
+      - paragraph [ref=e55]: Privacy First
+      - paragraph [ref=e56]:
+        - text: Monyawn is built on a \"Zero-Retention\" architecture. We don't store your data on our servers because we don't have servers.
+        - strong [ref=e57]: Everything stays in your browser.
+```
