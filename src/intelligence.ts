@@ -222,6 +222,63 @@ ${interviewCues}
   };
 }
 
+export async function generateStoryWithOpenAI(input: {
+  apiKey: string;
+  model: string;
+  user?: User;
+  opportunity: Opportunity;
+  profile?: CandidateProfile;
+  artifacts: SourceArtifact[];
+  correspondence: CorrespondenceItem[];
+}): Promise<Omit<CandidateStory, "story_id" | "updated_at">> {
+  const systemPrompt = `You are the Monyawn AI Guardian Angel 🥱. Your goal is to help candidates land high-stakes roles ($100k-$300k+) by turning their raw experience into a confident, easy-to-read narrative.
+The brand name "Monyawn" (Money + Yawn) means making what seemed hard feel easy.
+Be direct, professional, yet slightly unbothered (🥱). 
+Focus on evidence-backed proof points.`;
+
+  const userPrompt = `Generate a candidate story for:
+User: ${JSON.stringify(input.user || {})}
+Opportunity: ${JSON.stringify(input.opportunity)}
+Profile: ${JSON.stringify(input.profile || {})}
+Artifacts: ${input.artifacts.map(a => a.source_text).join("\n---\n")}
+Correspondence: ${input.correspondence.map(c => c.body).join("\n---\n")}
+
+Format the output as Markdown with sections: Who, What, Why, Where, When, How, Proof Points, Gaps.`;
+
+  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${input.apiKey}`
+    },
+    body: JSON.stringify({
+      model: input.model || "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt }
+      ],
+      temperature: 0.7
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI API error: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const content = data.choices[0].message.content;
+
+  return {
+    opportunity_id: input.opportunity.opportunity_id,
+    title: `${input.user?.full_name || "Candidate"} story for ${input.opportunity.company_name} (AI Generated 🥱)`,
+    summary: `Premium AI-generated narrative build from ${input.artifacts.length} artifacts and ${input.correspondence.length} messages. 🥱`,
+    markdown: content,
+    status: "review",
+    source_artifact_ids: input.artifacts.map((artifact) => artifact.artifact_id),
+    source_correspondence_ids: input.correspondence.map((item) => item.correspondence_id),
+  };
+}
+
 export function createCandidateStoryRecord(
   story: Omit<CandidateStory, "story_id" | "updated_at">,
 ): CandidateStory {

@@ -12,16 +12,16 @@ Monyawn is designed as a multi-opportunity platform by default. The current prod
 This repository uses **Spatial Business Systems (SBS)** as the active reference use case. SBS is the current example workflow, not the boundary of the product.
 
 ## Current Product Capabilities
-- Guided workspace with user, staff, and admin modes
-- Multi-opportunity local-first workflow model
+- **Money + Yawn Identity 🥱**: Making high-stakes moves feel easy with guided support.
+- **Guided Intake Flow**: Step-by-step onboarding for Account, User, and Opportunity.
+- **Operational Cockpit**: Real-time **Leverage Score 🥱** and **Privacy Guard** visual assurance.
+- **AI Intelligence**: Local rule-based signal extraction or **High-Yield OpenAI Narrative Generation** (optional).
+- **Mobile-Native SPA Feel**: Bottom navigation and horizontal workflow stepper for high-performance mobile use.
 - Candidate story generation and editing
-- Local structured extraction from artifacts and correspondence
-- Stage-aware coaching, glossary, business lifecycle, and document/process guidance
-- Optional sensitive-support paths with local-only defaults
 - ZIP import and export with canonical `session.json`
-- Human-readable Markdown and client-generated PDF handoff artifacts
-- Governance overlays, checkpoints, tasks, escalations, and reporting snapshots
-- Admin-side buyer packet ZIP generation for premium enterprise review flows
+- Markdown and PDF handoff artifacts
+- Governance overlays, checkpoints, and reporting snapshots
+- **Max-Yield Content Factory**: Export outcomes as branded **Monyawn Blog Assets 🥱** (Markdown + JSONL).
 
 ## How Data Works
 - Browser localStorage is convenience persistence only.

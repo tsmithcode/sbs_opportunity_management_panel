@@ -198,7 +198,14 @@ export function getCompletionScore(state: AppState, opportunityId: string): numb
   }
 
   const stageIndex = stageOrder.indexOf(opportunity.current_stage);
-  return Math.round(((Math.max(stageIndex, 0) + 1) / stageOrder.length) * 100);
+  let baseScore = Math.round(((Math.max(stageIndex, 0) + 1) / stageOrder.length) * 100);
+  
+  // Bonus for having an outcome recorded
+  if (state.outcomes.some(o => o.opportunity_id === opportunityId)) {
+    baseScore = Math.min(100, baseScore + 10);
+  }
+
+  return baseScore;
 }
 
 export function getGovernanceOverlays(
@@ -318,6 +325,7 @@ export function createArtifact(input: {
   parse_status: SourceArtifact["parse_status"];
   evidence_note: string;
   content_summary: string;
+  source_text?: string;
   extracted_signals?: SourceArtifact["extracted_signals"];
   version_number?: number;
 }): SourceArtifact {
@@ -325,6 +333,7 @@ export function createArtifact(input: {
     artifact_id: createId("artifact"),
     version_number: input.version_number ?? 1,
     created_at: nowIso(),
+    source_text: input.source_text ?? input.content_summary,
     ...input,
   };
 }

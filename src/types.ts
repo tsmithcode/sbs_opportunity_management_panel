@@ -205,6 +205,7 @@ export type SourceArtifact = {
   version_number: number;
   evidence_note: string;
   content_summary: string;
+  source_text: string;
   extracted_signals?: ExtractedSignalSet;
   created_at: string;
 };
@@ -384,6 +385,12 @@ export type OutcomeMetadata = {
   updated_at: string;
 };
 
+export type AiSettings = {
+  openai_api_key?: string;
+  model?: string;
+  provider: "local" | "openai";
+};
+
 export type AppState = {
   schemaVersion: string;
   accounts: Account[];
@@ -404,6 +411,7 @@ export type AppState = {
   roleEntitlements: RoleEntitlement[];
   releaseArtifactReviews: ReleaseArtifactReviewRecord[];
   outcomes: OutcomeMetadata[];
+  aiSettings: AiSettings;
   selectedAccountId: string;
   selectedUserId: string;
   selectedOpportunityId: string;

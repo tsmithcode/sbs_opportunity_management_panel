@@ -982,6 +982,10 @@ export function createSeedState(): AppState {
     roleEntitlements: [...roleEntitlements, ...habasitRoleEntitlements],
     releaseArtifactReviews: [],
     outcomes: [],
+    aiSettings: {
+      provider: "local",
+      model: "gpt-4o-mini",
+    },
     selectedAccountId: account.account_id,
     selectedUserId: user.user_id,
     selectedOpportunityId: allOpportunities[0].opportunity_id,

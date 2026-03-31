@@ -159,6 +159,24 @@ Use this panel for major product and implementation decisions:
    - age-inclusive UI and workflow pacing
    - overcoming experience-bias in modern hiring
 
+25. LLMOps / AI Intelligence Engineer
+   - OpenAI API optimization and cost-control
+   - prompt engineering for high-yield narratives
+   - token efficiency and batch processing
+   - ensuring AI educational value
+
+26. Content & Research Strategist
+   - converting outcomes (Awards/Denials) into marketing assets
+   - Markdown + JSONL schema design for research yield
+   - story-to-article transformation logic
+   - portfolio and case study development
+
+27. Full-Stack / Distributed Systems Architect
+   - 10/10 rated backend design
+   - local-to-cloud transition governance
+   - multi-user concurrency and real-time sync
+   - high-performance data pipelines for 10+ use cases
+
 ## Decision Rules
 - Use multi-disciplinary reasoning, not single-discipline bias.
 - If experts disagree, surface the tradeoff and choose a default.
