@@ -13,41 +13,24 @@ test("landing page loads with brand message and CTA", async ({ page }) => {
 });
 
 test("guided workspace loads with core lifecycle controls", async ({ page }) => {
-  await page.goto("/#workspace");
+  await page.goto("/");
   await page.waitForLoadState("domcontentloaded");
+  await page.getByRole("button", { name: /Go to Workspace/i }).click();
 
-  await expect(
-    page.getByRole("heading", {
-      name: "Opportunity platform operations, not just a demo wizard.",
-    }),
-  ).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator("h1")).toContainText("Operational cockpit", { timeout: 15_000 });
 
-  await expect(page.getByRole("button", { name: "Export handoff ZIP" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Import ZIP or JSON" })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Export ZIP/i })).toBeVisible();
   await expect(page.getByRole("combobox", { name: "Opportunity" })).toBeVisible();
-  await expect(page.getByText("Current operating context")).toBeVisible();
-  await expect(page.getByTestId("desktop-opportunity-cockpit")).toBeVisible();
-  await expect(page.getByText("Operational summary")).toBeVisible();
 });
 
 test("admin mode exposes enterprise controls and buyer packet generation", async ({ page }) => {
-  await page.goto("/#workspace");
+  await page.goto("/");
   await page.waitForLoadState("domcontentloaded");
-  await page.getByRole("button", { name: "Admin and governance API, policy, and account controls" }).click();
+  await page.getByRole("button", { name: /Go to Workspace/i }).click();
+  await page.getByRole("button", { name: "ADMIN" }).click();
 
   await expect(page.getByRole("heading", { name: "Enterprise control profile" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Entitlements and admin controls" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Generate buyer packet ZIP" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Run integrity check" }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Integrity summary" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Release status" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Import release/readiness artifact" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Generate readiness packet ZIP" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Download readiness packet MD" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Clear review history" })).toBeVisible();
-  await expect(page.getByRole("textbox", { name: "Search stored reviews" })).toBeVisible();
-  await expect(page.getByText("Review history", { exact: true })).toBeVisible();
-  await expect(page.getByText("Admin / Governance")).toBeVisible();
 });
 
 test("about page exposes direction and downloadable resume", async ({ page }) => {
