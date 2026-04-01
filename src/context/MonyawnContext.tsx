@@ -2,6 +2,7 @@ import React, { createContext, useContext, useMemo, useState, useEffect } from "
 import { AppState, Opportunity, SourceArtifact, CorrespondenceItem, WorkflowTask, AICheckpoint, CandidateProfile, CandidateStory, SensitiveSupportProfile, CommercialPostureProfile } from "../types";
 import { useMonyawnCore } from "../hooks/useMonyawnCore";
 import { AppPage, Notice } from "./MonyawnContext.types";
+import { MobileTab } from "../components/layout/MobileNavigation/MobileNavigation.contract";
 import { 
   getOpportunityArtifacts, 
   getOpportunityTasks, 
@@ -19,6 +20,8 @@ interface MonyawnContextType {
   resetSeedState: () => void;
   currentPage: AppPage;
   setCurrentPage: (page: AppPage) => void;
+  mobileTab: MobileTab;
+  setMobileTab: (tab: MobileTab) => void;
   notice: Notice;
   setNotice: (notice: Notice) => void;
   
@@ -48,6 +51,7 @@ const MonyawnContext = createContext<MonyawnContextType | undefined>(undefined);
 export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { state, patchState, resetSeedState } = useMonyawnCore();
   const [currentPage, setCurrentPage] = useState<AppPage>("landing");
+  const [mobileTab, setMobileTab] = useState<MobileTab>("home");
   const [notice, setNotice] = useState<Notice>(null);
 
   useEffect(() => {
@@ -131,6 +135,8 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
     resetSeedState,
     currentPage,
     setCurrentPage,
+    mobileTab,
+    setMobileTab,
     notice,
     setNotice,
     selectedAccount,
