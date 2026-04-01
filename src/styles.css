@@ -343,6 +343,7 @@ a {
   gap: 0.8rem;
   flex-wrap: wrap;
   margin-top: 1.6rem;
+  margin-bottom: 1.5rem;
 }
 
 .primary-action,
