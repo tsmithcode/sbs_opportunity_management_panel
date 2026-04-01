@@ -95,6 +95,7 @@ test("release artifact review history survives handoff export and import", async
   const handoffPath = testInfo.outputPath(handoffDownload.suggestedFilename());
   await handoffDownload.saveAs(handoffPath);
 
+  await page.getByRole("button", { name: /Go to Workspace/i }).click();
   await page.getByRole("button", { name: "Reset seeded state" }).click();
   await page.locator('input[type="file"]').first().setInputFiles(handoffPath);
   await page.getByRole("button", { name: "Admin and governance API, policy, and account controls" }).click();

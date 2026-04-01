@@ -31,10 +31,11 @@ async function screenshot(page: Page, pass: "web" | "mobile", name: string, full
 async function resetWorkspace(page: Page) {
   await page.goto("/");
   await page.waitForLoadState("domcontentloaded");
+  await page.getByRole("button", { name: /Go to Workspace/i }).click();
   await page.getByRole("button", { name: "Reset seeded state" }).click();
   await expect(
     page.getByRole("heading", {
-      name: "Opportunity platform operations, not just a demo wizard.",
+      name: "Operational cockpit for high-stakes career moves. 🥱",
     }),
   ).toBeVisible();
 }
