@@ -6,4 +6,7 @@ export interface AppHeaderProps {
   modeLabel: string;
   lastExportedAt: string;
   navigateToPage: (page: AppPage) => void;
+  opportunities?: { id: string; name: string }[];
+  selectedOpportunityId?: string;
+  onOpportunitySelect?: (id: string) => void;
 }

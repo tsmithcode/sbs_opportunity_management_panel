@@ -20,14 +20,15 @@ export interface UserDraft {
   sponsorship_type: SponsorshipType;
 }
 
-export interface OpportunityDraft {
+export type OpportunityDraft = {
+  pathway: "w2" | "1099";
   company_name: string;
   role_title: string;
   opportunity_source: string;
   job_posting_url: string;
   employment_type: string;
   location_type: string;
-}
+};
 
 export interface IntakeFlowProps {
   accountDraft: AccountDraft;

@@ -103,6 +103,7 @@ type UserDraft = {
 };
 
 type OpportunityDraft = {
+  pathway: "w2" | "1099";
   company_name: string;
   role_title: string;
   opportunity_source: string;
@@ -186,6 +187,7 @@ const defaultUserDraft: UserDraft = {
 };
 
 const defaultOpportunityDraft: OpportunityDraft = {
+  pathway: "w2",
   company_name: "",
   role_title: "",
   opportunity_source: "",
@@ -1953,7 +1955,10 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
         modeLabel={modeLabels[state.currentMode]}
         lastExportedAt={state.lastExportedAt}
         navigateToPage={navigateToPage}
-        onModeChange={(mode) => setState((current) => ({ ...current, currentMode: mode }))}
+        onModeChange={(mode: AppMode) => setState((current) => ({ ...current, currentMode: mode }))}
+        opportunities={state.opportunities.map(o => ({id: o.opportunity_id, name: `${o.company_name} - ${o.role_title}`}))}
+        selectedOpportunityId={state.selectedOpportunityId}
+        onOpportunitySelect={(id) => setState(c => ({...c, selectedOpportunityId: id}))}
       />
       {windowWidth <= 768 && (
         <MobileNavigation
@@ -1994,9 +1999,44 @@ ${releaseStatus.expertOwners.map((item) => `- \`${item}\``).join("\n")}
           RESUME_PATH={RESUME_PATH}
           setNotice={setNotice}
         />
+      ) : !selectedOpportunity ? (
+        <main id="main-content" className="workspace">
+          <section className="hero hero-wide" aria-labelledby="hero-title">
+            <div className="hero-copy">
+              <p className="kicker">No Active Opportunity</p>
+              <h1 id="hero-title">
+                Ready to start your next pursuit? 🥱
+              </h1>
+              <p className="hero-text">
+                You haven't selected an opportunity yet. You can start a new intake flow, restore from a previous ZIP export, or load the seeded demo data to explore the platform.
+              </p>
+
+              <div className="hero-actions" style={{ marginTop: '2rem' }}>
+                <button className="primary-action" type="button" onClick={() => navigateToPage("intake")}>
+                  Start new intake 🥱
+                </button>
+                <label className="secondary-action" style={{ cursor: 'pointer' }}>
+                  Restore from ZIP
+                  <input type="file" accept=".zip" style={{ display: 'none' }} onChange={handleImport} />
+                </label>
+                <button className="secondary-action" type="button" onClick={() => {
+                  setState(createSeedState());
+                  setNotice({ tone: "success", message: "Demo data loaded." });
+                }}>
+                  Load demo data
+                </button>
+              </div>
+
+              {notice && (
+                <div className={`notice notice-${notice.tone}`} role="status" style={{ marginTop: '2rem' }}>
+                  {notice.message}
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
       ) : (
-      <main id="main-content" className="workspace">
-        <section className="hero hero-wide" aria-labelledby="hero-title">
+        <main id="main-content" className="workspace">        <section className="hero hero-wide" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="kicker">Money + Yawn = Monyawn 🥱</p>
             <h1 id="hero-title">

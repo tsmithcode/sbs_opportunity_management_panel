@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useMonyawn } from "../context/MonyawnContext";
 import { ArtifactDraft, defaultArtifactDraft } from "../context/MonyawnContext.types";
-import { createArtifact, createTask, nowIso } from "../workflow";
-import { extractSignalsFromText } from "../intelligence";
+import { createArtifact, createTask } from "../workflow";
 
 export function useArtifactOperations() {
-  const { state, patchState, selectedOpportunity, setNotice } = useMonyawn();
+  const { patchState, selectedOpportunity, setNotice } = useMonyawn();
   const [artifactDraft, setArtifactDraft] = useState<ArtifactDraft>(defaultArtifactDraft);
 
   const handleArtifactSubmit = (e: React.FormEvent) => {
@@ -17,7 +16,6 @@ export function useArtifactOperations() {
 
     const nextArtifact = createArtifact({
       opportunity_id: selectedOpportunity.opportunity_id,
-      content_summary: artifactDraft.content_summary,
       ...artifactDraft,
     });
     

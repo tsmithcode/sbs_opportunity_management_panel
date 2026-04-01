@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from "react";
-import { AppState, AppMode, Opportunity, Artifact, Correspondence, Task, Checkpoint, CandidateProfile } from "../types";
+import { AppState, Opportunity, SourceArtifact, CorrespondenceItem, WorkflowTask, AICheckpoint, CandidateProfile, CandidateStory, SensitiveSupportProfile, CommercialPostureProfile } from "../types";
 import { useMonyawnCore } from "../hooks/useMonyawnCore";
 import { AppPage, Notice } from "./MonyawnContext.types";
 import { 
@@ -11,6 +11,7 @@ import {
   getOpportunityCandidateStory,
   getCompletionScore
 } from "../workflow";
+import { validateAppStateIntegrity } from "../integrity";
 
 interface MonyawnContextType {
   state: AppState;
@@ -26,15 +27,20 @@ interface MonyawnContextType {
   selectedUser: any;
   selectedOpportunity: Opportunity | undefined;
   selectedProfile: CandidateProfile | undefined;
+  selectedCommercialPosture: CommercialPostureProfile | undefined;
+  selectedCandidateStory: CandidateStory | undefined;
+  selectedSensitiveSupport: SensitiveSupportProfile | undefined;
   
   // Filtered Lists
-  opportunityArtifacts: Artifact[];
-  opportunityTasks: Task[];
-  opportunityCheckpoints: Checkpoint[];
-  opportunityCorrespondence: Correspondence[];
+  opportunityArtifacts: SourceArtifact[];
+  opportunityTasks: WorkflowTask[];
+  opportunityCheckpoints: AICheckpoint[];
+  opportunityCorrespondence: CorrespondenceItem[];
   
   // Computed
   completionScore: number;
+  integrityReport: { errors: string[]; warnings: string[] };
+  lastIntegrityRunAt: string;
 }
 
 const MonyawnContext = createContext<MonyawnContextType | undefined>(undefined);
@@ -76,6 +82,21 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
     [state.candidateProfiles, state.selectedOpportunityId]
   );
 
+  const selectedCommercialPosture = useMemo(() => 
+    state.commercialPostures?.find(p => p.opportunity_id === state.selectedOpportunityId), 
+    [state.commercialPostures, state.selectedOpportunityId]
+  );
+
+  const selectedCandidateStory = useMemo(() => 
+    selectedOpportunity ? getOpportunityCandidateStory(state, selectedOpportunity.opportunity_id) : undefined, 
+    [selectedOpportunity, state]
+  );
+
+  const selectedSensitiveSupport = useMemo(() => 
+    selectedOpportunity ? getOpportunitySensitiveSupport(state, selectedOpportunity.opportunity_id) : undefined, 
+    [selectedOpportunity, state]
+  );
+
   const opportunityArtifacts = useMemo(() => 
     selectedOpportunity ? getOpportunityArtifacts(state, selectedOpportunity.opportunity_id) : [], 
     [selectedOpportunity, state]
@@ -101,6 +122,9 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
     [selectedOpportunity, state]
   );
 
+  const integrityReport = useMemo(() => validateAppStateIntegrity(state), [state]);
+  const lastIntegrityRunAt = state.lastExportedAt || "";
+
   const value = {
     state,
     patchState,
@@ -113,11 +137,16 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
     selectedUser,
     selectedOpportunity,
     selectedProfile,
+    selectedCommercialPosture,
+    selectedCandidateStory,
+    selectedSensitiveSupport,
     opportunityArtifacts,
     opportunityTasks,
     opportunityCheckpoints,
     opportunityCorrespondence,
-    completionScore
+    completionScore,
+    integrityReport,
+    lastIntegrityRunAt
   };
 
   return <MonyawnContext.Provider value={value}>{children}</MonyawnContext.Provider>;

@@ -1,16 +1,11 @@
 import {
   AccountType,
-  AppMode,
-  AppState,
   ArtifactType,
-  CandidateStory,
-  CorrespondenceStatus,
-  OpportunityStatus,
+  OpportunityPathway,
   ParseStatus,
   ReviewStatus,
   SensitiveSupportType,
   SponsorshipType,
-  TaskStatus,
 } from "../types";
 
 export type AppPage = "landing" | "intake" | "workspace" | "about";
@@ -46,6 +41,7 @@ export type UserDraft = {
 };
 
 export type OpportunityDraft = {
+  pathway: OpportunityPathway;
   company_name: string;
   role_title: string;
   opportunity_source: string;
@@ -129,6 +125,7 @@ export const defaultUserDraft: UserDraft = {
 };
 
 export const defaultOpportunityDraft: OpportunityDraft = {
+  pathway: "w2",
   company_name: "",
   role_title: "",
   opportunity_source: "",

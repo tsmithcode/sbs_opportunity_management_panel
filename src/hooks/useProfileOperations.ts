@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useMonyawn } from "../context/MonyawnContext";
 import { ProfileDraft } from "../context/MonyawnContext.types";
 import { createCheckpoint, nowIso } from "../workflow";
@@ -21,6 +21,7 @@ export function useProfileOperations() {
     const nextProfile = {
       profile_id: selectedProfile?.profile_id || `profile_${Date.now()}`,
       opportunity_id: selectedOpportunity.opportunity_id,
+      user_id: state.selectedUserId,
       ...draft,
       user_corrected: true,
       updated_at: nowIso(),

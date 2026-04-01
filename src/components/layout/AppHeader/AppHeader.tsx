@@ -1,12 +1,12 @@
 import { AppHeaderProps } from "./AppHeader.contract";
 
-export function AppHeader({ currentPage, currentMode, modeLabel, lastExportedAt, navigateToPage, onModeChange }: AppHeaderProps & { onModeChange?: (mode: any) => void }) {
+export function AppHeader({ currentPage, currentMode, modeLabel, lastExportedAt, navigateToPage, onModeChange, opportunities = [], selectedOpportunityId, onOpportunitySelect }: AppHeaderProps & { onModeChange?: (mode: any) => void }) {
   return (
     <header className="topbar" aria-label="Primary">
-      <div>
+      <div className="brand-area">
         <p className="brand-mark">Monyawn 🥱</p>
-        <p className="brand-subtitle">
-          The local-first platform for high-stakes career moves.
+        <p className="brand-subtitle hide-on-mobile">
+          Local-first career decision support.
         </p>
       </div>
       <nav className="topbar-nav" aria-label="Page navigation">
@@ -24,22 +24,12 @@ export function AppHeader({ currentPage, currentMode, modeLabel, lastExportedAt,
         >
           About
         </button>
-        <div className="mode-switcher hide-on-mobile" style={{ marginLeft: '1rem', display: 'flex', gap: '0.25rem', background: 'rgba(0,0,0,0.05)', padding: '0.25rem', borderRadius: '0.5rem' }}>
+        <div className="mode-switcher hide-on-mobile">
           {(['user', 'staff', 'admin'] as const).map(m => (
             <button
               key={m}
               className={`mode-button ${currentMode === m ? 'is-active' : ''}`}
               onClick={() => onModeChange?.(m)}
-              style={{
-                background: currentMode === m ? 'var(--accent)' : 'transparent',
-                color: currentMode === m ? 'white' : 'var(--muted)',
-                border: 'none',
-                padding: '0.3rem 0.6rem',
-                borderRadius: '0.4rem',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                cursor: 'pointer'
-              }}
             >
               {m.toUpperCase()}
             </button>
@@ -47,12 +37,21 @@ export function AppHeader({ currentPage, currentMode, modeLabel, lastExportedAt,
         </div>
       </nav>
       <div className="topbar-actions" aria-label="Session status">
-        <span className="status-chip">{modeLabel}</span>
-        <span className="status-chip hide-on-mobile">Human-in-the-loop</span>
-        <span className="status-chip hide-on-mobile">Saved locally</span>
-        <span className="status-chip hide-on-mobile">
-          {lastExportedAt ? "ZIP export ready" : "Export recommended"}
-        </span>
+        {opportunities.length > 0 && onOpportunitySelect && (
+          <select 
+            value={selectedOpportunityId || ""} 
+            onChange={(e) => onOpportunitySelect(e.target.value)}
+            className="status-chip"
+            aria-label="Switch Opportunity"
+          >
+            <option value="" disabled>Select...</option>
+            {opportunities.map(opp => (
+              <option key={opp.id} value={opp.id}>{opp.name}</option>
+            ))}
+          </select>
+        )}
+        <span className="status-chip hide-on-mobile">{modeLabel}</span>
+        <span className="status-chip hide-on-mobile">{lastExportedAt ? "ZIP ready" : "Export advised"}</span>
       </div>
     </header>
   );

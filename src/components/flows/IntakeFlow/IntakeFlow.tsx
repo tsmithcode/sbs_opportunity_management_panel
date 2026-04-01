@@ -84,6 +84,13 @@ export function IntakeFlow({
               <h3>3. Opportunity Details</h3>
               <p>What is the role and company?</p>
               <label className="field">
+                <span>Pathway</span>
+                <select value={opportunityDraft.pathway} onChange={e => onOpportunityDraftChange({ ...opportunityDraft, pathway: e.target.value as "w2" | "1099" })}>
+                  <option value="w2">W2 Employment / Career Progression</option>
+                  <option value="1099">1099 Consulting / CAD Guardian / B2B</option>
+                </select>
+              </label>
+              <label className="field">
                 <span>Company Name</span>
                 <input value={opportunityDraft.company_name} onChange={e => onOpportunityDraftChange({ ...opportunityDraft, company_name: e.target.value })} required />
               </label>
