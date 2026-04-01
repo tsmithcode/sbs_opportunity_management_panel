@@ -284,6 +284,7 @@ export function createOpportunity(input: {
   account_id: string;
   user_id: string;
   use_case_id: string;
+  pathway: "w2" | "1099";
   company_name: string;
   role_title: string;
   opportunity_source: string;

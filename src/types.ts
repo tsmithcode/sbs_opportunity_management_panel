@@ -29,6 +29,8 @@ export type OpportunityStatus =
   | "closed_lost"
   | "withdrawn";
 
+export type OpportunityPathway = "w2" | "1099";
+
 export type ArtifactType =
   | "resume"
   | "job_description"
@@ -37,6 +39,9 @@ export type ArtifactType =
   | "offer"
   | "debrief"
   | "generated_output"
+  | "sow"
+  | "proposal"
+  | "rate_sheet"
   | "other";
 
 export type ReviewStatus =
@@ -182,6 +187,7 @@ export type Opportunity = {
   account_id: string;
   user_id: string;
   use_case_id: string;
+  pathway: OpportunityPathway;
   company_name: string;
   role_title: string;
   opportunity_source: string;
@@ -219,6 +225,17 @@ export type CandidateProfile = {
   domain_strengths: string;
   declared_gaps: string;
   user_corrected: boolean;
+  updated_at: string;
+};
+
+export type CommercialPostureProfile = {
+  posture_id: string;
+  opportunity_id: string;
+  target_rate: string;
+  engagement_type: "fixed_bid" | "time_and_materials" | "retainer";
+  availability: string;
+  sow_status: "drafting" | "proposed" | "negotiating" | "signed" | "not_started";
+  notes: string;
   updated_at: string;
 };
 
@@ -398,6 +415,7 @@ export type AppState = {
   opportunities: Opportunity[];
   artifacts: SourceArtifact[];
   candidateProfiles: CandidateProfile[];
+  commercialPostures: CommercialPostureProfile[];
   events: StageEvent[];
   checkpoints: AICheckpoint[];
   tasks: WorkflowTask[];
