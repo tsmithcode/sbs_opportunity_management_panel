@@ -88,35 +88,37 @@ a {
 .topbar {
   display: flex;
   justify-content: space-between;
-  align-items: start;
-  gap: 1rem;
-  padding: 1.2rem 1.4rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.85rem 1.4rem;
   border-bottom: 1px solid rgba(24, 32, 40, 0.08);
+  background: var(--surface-soft);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.brand-mark,
-.panel-label,
-.kicker,
-.step-nav-label,
-.review-label,
-.section-label,
-.stage-eyebrow,
-.metric-label {
-  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.brand-area {
+  display: flex;
+  flex-direction: column;
 }
 
 .brand-mark {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.95rem;
   color: var(--accent-strong);
+  font-weight: 700;
 }
 
 .brand-subtitle {
-  margin: 0.2rem 0 0;
+  margin: 0;
+  font-size: 0.75rem;
   color: var(--muted);
-  max-width: 34rem;
+  max-width: 20rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .topbar-actions,
@@ -132,6 +134,32 @@ a {
   gap: 0.65rem;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.mode-switcher {
+  display: flex;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.25rem;
+  border-radius: 0.6rem;
+}
+
+.mode-button {
+  border: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  color: var(--muted);
+}
+
+.mode-button.is-active {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .status-chip {
