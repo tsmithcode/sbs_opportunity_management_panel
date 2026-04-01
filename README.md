@@ -16,6 +16,8 @@ This repository uses **Spatial Business Systems (SBS)** as the active reference 
 - **Guided Intake Flow**: Step-by-step onboarding for Account, User, and Opportunity.
 - **Operational Cockpit**: Real-time **Leverage Score 🥱** and **Privacy Guard** visual assurance.
 - **AI Intelligence**: Local rule-based signal extraction or **High-Yield OpenAI Narrative Generation** (optional).
+- **Multi-Opportunity Support**: Switch between multiple opportunities dynamically via the top navigation bar.
+- **Resilient Recovery States**: Explicit empty state to guide the user to start an intake, restore from ZIP, or load demo data.
 - **Mobile-Native SPA Feel**: Bottom navigation and horizontal workflow stepper for high-performance mobile use.
 - Candidate story generation and editing
 - ZIP import and export with canonical `session.json`

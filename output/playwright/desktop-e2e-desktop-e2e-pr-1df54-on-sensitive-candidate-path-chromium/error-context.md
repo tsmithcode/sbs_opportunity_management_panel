@@ -14,51 +14,454 @@
         - button "STAFF" [ref=e13] [cursor=pointer]
         - button "ADMIN" [ref=e14] [cursor=pointer]
     - generic "Session status" [ref=e15]:
-      - generic [ref=e16]: Guided workspace
-      - generic [ref=e17]: Human-in-the-loop
-      - generic [ref=e18]: Saved locally
-      - generic [ref=e19]: Export recommended
-  - link "Skip to main content" [ref=e20] [cursor=pointer]:
+      - combobox "Switch Opportunity" [ref=e16]:
+        - option "Select an Opportunity..." [disabled]
+        - option "Spatial Business Systems - Software Engineer, Design Tools" [selected]
+        - option "Spatial Business Systems - Implementation Engineer, Grid Design Tools"
+        - option "Spatial Business Systems - Senior Design Tools Engineer"
+        - option "Habasit America - Application Engineer, Conveyor Solutions"
+        - option "Habasit America - Fabrication Technician, Timing Belt Operations"
+        - option "Habasit America - Customer Operations And Continuous Improvement Lead"
+      - generic [ref=e17]: Guided workspace
+      - generic [ref=e18]: Human-in-the-loop
+      - generic [ref=e19]: Saved locally
+      - generic [ref=e20]: Export recommended
+  - link "Skip to main content" [ref=e21] [cursor=pointer]:
     - /url: "#main-content"
-  - main [ref=e21]:
-    - region "Landing $100k-$300k+ roles should feel like a yawn." [ref=e22]:
-      - generic [ref=e23]:
-        - paragraph [ref=e24]: Money + Yawn = Monyawn 🥱
-        - heading "Landing $100k-$300k+ roles should feel like a yawn." [level=1] [ref=e25]
-        - paragraph [ref=e26]: You have the skills. We provide the guidance. Monyawn is your local-first guardian angel for high-stakes career moves. Move from ambiguity to outcome with total data sovereignty.
-        - generic [ref=e27]:
-          - button "Start my pursuit" [ref=e28] [cursor=pointer]
-          - button "Go to Workspace 🥱" [ref=e29] [cursor=pointer]
-          - button "How it works" [ref=e30] [cursor=pointer]
-      - generic "Posture" [ref=e31]:
-        - generic [ref=e32]:
-          - paragraph [ref=e33]: Platform Integrity 🥱
-          - list [ref=e34]:
-            - listitem [ref=e35]:
-              - strong [ref=e36]: "Local-Only:"
-              - text: Your data never leaves your device.
-            - listitem [ref=e37]:
-              - strong [ref=e38]: "Export-Ready:"
-              - text: One-click ZIP handoff packages.
-            - listitem [ref=e39]:
-              - strong [ref=e40]: "AI-Native:"
-              - text: Guided coaching for Gen Z and Boomers.
-    - generic [ref=e41]:
-      - generic [ref=e42]:
-        - paragraph [ref=e43]: Step 01
-        - heading "Guided Intake 🥱" [level=3] [ref=e44]
-        - paragraph [ref=e45]: Securely capture your profile and opportunity details in a calm, step-by-step onboarding flow.
-      - generic [ref=e46]:
-        - paragraph [ref=e47]: Step 02
-        - heading "Evidence Shaping 🥱" [level=3] [ref=e48]
-        - paragraph [ref=e49]: Upload resumes and correspondence. Let our AI-native panel help you tune your narrative.
-      - generic [ref=e50]:
-        - paragraph [ref=e51]: Step 03
-        - heading "Durable Handoff 🥱" [level=3] [ref=e52]
-        - paragraph [ref=e53]: Export a professional, human-readable packet for internal review or final application.
-    - generic [ref=e54]:
-      - paragraph [ref=e55]: Privacy First
-      - paragraph [ref=e56]:
-        - text: Monyawn is built on a \"Zero-Retention\" architecture. We don't store your data on our servers because we don't have servers.
-        - strong [ref=e57]: Everything stays in your browser.
+  - main [ref=e22]:
+    - region "Operational cockpit for high-stakes career moves. 🥱" [ref=e23]:
+      - generic [ref=e24]:
+        - paragraph [ref=e25]: Money + Yawn = Monyawn 🥱
+        - heading "Operational cockpit for high-stakes career moves. 🥱" [level=1] [ref=e26]
+        - paragraph [ref=e27]: Turn your job search into a governed, evidence-backed workflow. Monyawn helps you develop your story, manage artifacts, and maintain full control of your data without ever sending it to our servers.
+        - generic [ref=e28]:
+          - generic [ref=e29]: 🛡️
+          - generic [ref=e30]:
+            - paragraph [ref=e31]: Privacy Guard Active
+            - paragraph [ref=e32]:
+              - text: Your data is currently stored
+              - strong [ref=e33]: locally
+              - text: in your browser. No data ever leaves your device.
+        - generic [ref=e34]:
+          - generic [ref=e35]:
+            - generic [ref=e36]: Leverage Score 🥱
+            - generic [ref=e37]: 20%
+          - paragraph [ref=e40]: "Next: intake_complete"
+        - generic [ref=e41]:
+          - button "Export ZIP handoff package 🥱" [ref=e42] [cursor=pointer]
+          - button "Reset to seeded state" [ref=e43] [cursor=pointer]
+      - generic "Platform posture" [ref=e44]:
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - paragraph [ref=e47]: Current platform posture
+            - heading "Operational confidence at a glance" [level=3] [ref=e48]
+          - generic [ref=e49]: desktop-first discipline
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - generic [ref=e52]: Active opportunities
+            - strong [ref=e53]: "4"
+          - generic [ref=e54]:
+            - generic [ref=e55]: Open escalations
+            - strong [ref=e56]: "1"
+          - generic [ref=e57]:
+            - generic [ref=e58]: Review queue
+            - strong [ref=e59]: "18"
+          - generic [ref=e60]:
+            - generic [ref=e61]: Completion
+            - strong [ref=e62]: 20%
+        - list [ref=e63]:
+          - listitem [ref=e64]: Canonical workflow entities persisted in local state
+          - listitem [ref=e65]: Progressive disclosure across user, staff, and admin views
+          - listitem [ref=e66]: Review gates, escalations, and reporting visible in-product
+    - region "Mode selection" [ref=e67]:
+      - generic [ref=e68]:
+        - paragraph [ref=e69]: Operating surface
+        - heading "Choose one working lane, not three competing dashboards" [level=3] [ref=e70]
+      - generic [ref=e71]:
+        - button "Guided workspace Primary guided workflow" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]: Guided workspace
+          - generic [ref=e74]: Primary guided workflow
+        - button "Staff operations Queues and execution" [ref=e75] [cursor=pointer]:
+          - generic [ref=e76]: Staff operations
+          - generic [ref=e77]: Queues and execution
+        - button "Admin and governance API, policy, and account controls" [ref=e78] [cursor=pointer]:
+          - generic [ref=e79]: Admin and governance
+          - generic [ref=e80]: API, policy, and account controls
+    - region "Platform workspace" [ref=e81]:
+      - complementary [ref=e82]:
+        - generic [ref=e83]:
+          - paragraph [ref=e84]: Lifecycle
+          - paragraph [ref=e85]: 2 of 10 stages
+        - list [ref=e86]:
+          - listitem [ref=e87]:
+            - button "01 Intake started Customer Success Lead" [ref=e88] [cursor=pointer]:
+              - generic [ref=e89]: "01"
+              - generic [ref=e90]:
+                - generic [ref=e91]: Intake started
+                - generic [ref=e92]: Customer Success Lead
+          - listitem [ref=e93]:
+            - button "02 Intake complete Data Steward / Data Quality Lead" [ref=e94] [cursor=pointer]:
+              - generic [ref=e95]: "02"
+              - generic [ref=e96]:
+                - generic [ref=e97]: Intake complete
+                - generic [ref=e98]: Data Steward / Data Quality Lead
+          - listitem [ref=e99]:
+            - button "03 Fit review Opportunity Strategist" [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]: "03"
+              - generic [ref=e102]:
+                - generic [ref=e103]: Fit review
+                - generic [ref=e104]: Opportunity Strategist
+          - listitem [ref=e105]:
+            - button "04 Positioning Resume And Positioning Architect" [ref=e106] [cursor=pointer]:
+              - generic [ref=e107]: "04"
+              - generic [ref=e108]:
+                - generic [ref=e109]: Positioning
+                - generic [ref=e110]: Resume And Positioning Architect
+          - listitem [ref=e111]:
+            - button "05 Outreach ready CRM / Correspondence Operations Lead" [ref=e112] [cursor=pointer]:
+              - generic [ref=e113]: "05"
+              - generic [ref=e114]:
+                - generic [ref=e115]: Outreach ready
+                - generic [ref=e116]: CRM / Correspondence Operations Lead
+          - listitem [ref=e117]:
+            - button "06 Interview active Technical Interview Coach" [ref=e118] [cursor=pointer]:
+              - generic [ref=e119]: "06"
+              - generic [ref=e120]:
+                - generic [ref=e121]: Interview active
+                - generic [ref=e122]: Technical Interview Coach
+          - listitem [ref=e123]:
+            - button "07 Debrief captured Workflow Analyst" [ref=e124] [cursor=pointer]:
+              - generic [ref=e125]: "07"
+              - generic [ref=e126]:
+                - generic [ref=e127]: Debrief captured
+                - generic [ref=e128]: Workflow Analyst
+          - listitem [ref=e129]:
+            - button "08 Offer review Compensation And Offer Analyst" [ref=e130] [cursor=pointer]:
+              - generic [ref=e131]: "08"
+              - generic [ref=e132]:
+                - generic [ref=e133]: Offer review
+                - generic [ref=e134]: Compensation And Offer Analyst
+          - listitem [ref=e135]:
+            - button "09 Closed won Implementation Program Manager" [ref=e136] [cursor=pointer]:
+              - generic [ref=e137]: "09"
+              - generic [ref=e138]:
+                - generic [ref=e139]: Closed won
+                - generic [ref=e140]: Implementation Program Manager
+          - listitem [ref=e141]:
+            - button "10 Closed lost Workflow Analyst" [ref=e142] [cursor=pointer]:
+              - generic [ref=e143]: "10"
+              - generic [ref=e144]:
+                - generic [ref=e145]: Closed lost
+                - generic [ref=e146]: Workflow Analyst
+        - generic [ref=e147]:
+          - paragraph [ref=e148]: Governance overlays
+          - list [ref=e149]:
+            - listitem [ref=e150]: Human review enforced for high-stakes outputs
+            - listitem [ref=e151]: Evidence and confidence shown before recommendation
+            - listitem [ref=e152]: "Enterprise account: keep implementation logging, export paths, and reviewer assignment visible."
+      - generic [ref=e153]:
+        - generic [ref=e154]:
+          - generic [ref=e155]:
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - paragraph [ref=e158]: Current operating context
+                - heading "Spatial Business Systems • Software Engineer, Design Tools" [level=2] [ref=e159]
+                - paragraph [ref=e160]: Artifacts and candidate profile have enough evidence to proceed.
+              - generic [ref=e161]:
+                - generic [ref=e162]: "stage: Intake complete"
+                - generic [ref=e163]: "source: Recruiter outreach"
+                - generic [ref=e164]: Remote
+                - generic [ref=e165]: Full-time
+            - complementary "Desktop status rail" [ref=e166]:
+              - article [ref=e167]:
+                - paragraph [ref=e168]: Handoff readiness
+                - heading "2 blocking tasks" [level=4] [ref=e169]
+                - paragraph [ref=e170]: "Last export: No ZIP created yet"
+              - article [ref=e171]:
+                - paragraph [ref=e172]: Review controls
+                - heading "0 visible" [level=4] [ref=e173]
+                - paragraph [ref=e174]: "Blocking tasks: 2. Escalations: 0. Memos: 1."
+          - generic [ref=e175]:
+            - generic [ref=e176]:
+              - generic [ref=e177]:
+                - generic [ref=e178]: Account
+                - combobox "Account" [ref=e179]:
+                  - option "SBS Pilot Account" [selected]
+                  - option "Habasit America - Suwanee 30 Day Sample"
+              - generic [ref=e180]:
+                - generic [ref=e181]: User
+                - combobox "User" [ref=e182]:
+                  - option "Thomas Smith" [selected]
+                  - option "Ava Coleman"
+                  - option "Darius Reed"
+                  - option "Melissa Grant"
+              - generic [ref=e183]:
+                - generic [ref=e184]: Opportunity
+                - combobox "Opportunity" [ref=e185]:
+                  - option "Spatial Business Systems • Software Engineer, Design Tools" [selected]
+                  - option "Spatial Business Systems • Implementation Engineer, Grid Design Tools"
+                  - option "Spatial Business Systems • Senior Design Tools Engineer"
+                  - option "Habasit America • Application Engineer, Conveyor Solutions"
+                  - option "Habasit America • Fabrication Technician, Timing Belt Operations"
+                  - option "Habasit America • Customer Operations And Continuous Improvement Lead"
+            - generic [ref=e186]:
+              - button "Advance stage" [ref=e187] [cursor=pointer]
+              - button "Close as lost" [ref=e188] [cursor=pointer]
+              - button "Export handoff ZIP" [ref=e189] [cursor=pointer]
+              - button "Run integrity check" [ref=e190] [cursor=pointer]
+              - button "Import ZIP or JSON" [ref=e191] [cursor=pointer]
+              - button "Generate Max Yield Season Report 🥱" [ref=e192] [cursor=pointer]
+              - button "Reset seeded state" [active] [ref=e193] [cursor=pointer]
+            - generic [ref=e194]:
+              - heading "AI Intelligence Settings 🥱" [level=3] [ref=e195]
+              - paragraph [ref=e196]: Configure how Monyawn processes your narrative. Local rule-based processing is always free and private. 🥱
+              - generic [ref=e198]:
+                - generic [ref=e199]: AI Provider
+                - combobox "AI Provider" [ref=e200]:
+                  - option "Local Rules (Private & Free)" [selected]
+                  - option "OpenAI API (Higher Yield)"
+            - button "Choose File" [ref=e201]
+          - generic "Opportunity cockpit" [ref=e202]:
+            - article [ref=e203]:
+              - paragraph [ref=e204]: Operational summary
+              - heading "Story and evidence are in motion" [level=4] [ref=e205]
+              - paragraph [ref=e206]: 2 artifacts and 1 correspondence records are already backing the narrative for this opportunity.
+              - generic [ref=e207]:
+                - generic [ref=e208]: "artifacts: 2"
+                - generic [ref=e209]: "correspondence: 1"
+                - generic [ref=e210]: "tasks: 2"
+            - article [ref=e211]:
+              - paragraph [ref=e212]: Sensitive support boundary
+              - heading "Support path disabled" [level=4] [ref=e213]
+              - paragraph [ref=e214]: No sensitive support data is being tracked for this opportunity.
+            - article [ref=e215]:
+              - paragraph [ref=e216]: Integrity status
+              - heading "2 warnings" [level=4] [ref=e217]
+              - paragraph [ref=e218]: Last checked 4/1/2026, 8:27:23 AM.
+            - article [ref=e219]:
+              - paragraph [ref=e220]: Current stage owner
+              - heading "Data Steward / Data Quality Lead" [level=4] [ref=e221]
+              - paragraph [ref=e222]: Artifacts and candidate profile have enough evidence to proceed.
+        - generic [ref=e223]:
+          - generic [ref=e224]:
+            - heading "1. Document intake and management 🥱" [level=3] [ref=e225]
+            - paragraph [ref=e226]: Capture resumes, job descriptions, notes, and generated outputs with lifecycle-aware metadata.
+            - generic [ref=e227]:
+              - generic [ref=e228]: Artifact type
+              - combobox "Artifact type" [ref=e229]:
+                - option "Resume" [selected]
+                - option "Job description"
+                - option "Message"
+                - option "Note"
+                - option "Offer"
+                - option "Debrief"
+                - option "Generated output"
+                - option "Other"
+            - generic [ref=e230]:
+              - generic [ref=e231]: Source label
+              - textbox "Source label" [ref=e232]
+            - generic [ref=e233]:
+              - generic [ref=e234]: Evidence note
+              - textbox "Evidence note" [ref=e235]
+            - generic [ref=e236]:
+              - generic [ref=e237]: Content summary
+              - textbox "Content summary" [ref=e238]
+            - button "Add artifact 🥱" [ref=e239] [cursor=pointer]
+          - generic [ref=e240]:
+            - heading "2. Candidate profile confirmation 🥱" [level=3] [ref=e241]
+            - paragraph [ref=e242]: Turn extracted data into a reviewable, correctable profile that drives checkpoints and fit analysis.
+            - generic [ref=e243]:
+              - generic [ref=e244]: Skills summary
+              - textbox "Skills summary" [ref=e245]: C#, .NET, Autodesk ecosystem, CAD tooling, performance-sensitive workflows
+            - generic [ref=e246]:
+              - generic [ref=e247]: Experience level
+              - textbox "Experience level" [ref=e248]: Senior IC with architecture depth
+            - generic [ref=e249]:
+              - generic [ref=e250]: Domain strengths
+              - textbox "Domain strengths" [ref=e251]: Desktop software, Autodesk integrations, enterprise design systems
+            - generic [ref=e252]:
+              - generic [ref=e253]: Declared gaps
+              - textbox "Declared gaps" [ref=e254]: Revit API depth needs explicit ramp narrative
+            - button "Save profile" [ref=e255] [cursor=pointer]
+          - generic [ref=e256]:
+            - heading "3. Correspondence operations 🥱" [level=3] [ref=e257]
+            - paragraph [ref=e258]: Generate reviewable outreach or internal notes without bypassing approval state or auditability.
+            - generic [ref=e259]:
+              - generic [ref=e260]: Channel
+              - combobox "Channel" [ref=e261]:
+                - option "Email" [selected]
+                - option "LinkedIn"
+                - option "Internal note"
+            - generic [ref=e262]:
+              - generic [ref=e263]: Subject
+              - textbox "Subject" [ref=e264]
+            - generic [ref=e265]:
+              - generic [ref=e266]: Body
+              - textbox "Body" [ref=e267]
+            - button "Create correspondence draft 🥱" [ref=e268] [cursor=pointer]
+        - generic [ref=e269]:
+          - generic [ref=e270]:
+            - heading "Optional stage coaching" [level=3] [ref=e271]
+            - paragraph [ref=e272]: This support stays inside the current workflow step, stays hidden until opened, and can be skipped completely.
+            - generic [ref=e273]:
+              - group [ref=e274]:
+                - generic "Intake complete coaching pack" [ref=e275] [cursor=pointer]
+              - group [ref=e276]:
+                - generic "Glossary for this stage" [ref=e277] [cursor=pointer]
+              - group [ref=e278]:
+                - generic "Business lifecycle context" [ref=e279] [cursor=pointer]
+              - group [ref=e280]:
+                - generic "Document and process guidance" [ref=e281] [cursor=pointer]
+              - group [ref=e282]:
+                - generic "Compensation stack coaching" [ref=e283] [cursor=pointer]
+          - generic [ref=e284]:
+            - heading "Optional sensitive support path" [level=3] [ref=e285]
+            - paragraph [ref=e286]: This section is fully optional. It stays local to this device and is excluded from export unless you explicitly include it.
+            - generic [ref=e287]:
+              - checkbox "Enable local-only support guidance for this opportunity" [ref=e288]
+              - generic [ref=e289]: Enable local-only support guidance for this opportunity
+            - generic [ref=e290]:
+              - generic [ref=e291]:
+                - checkbox "Layoff support" [disabled] [ref=e292]
+                - generic [ref=e293]: Layoff support
+              - generic [ref=e294]:
+                - checkbox "Termination recovery support" [disabled] [ref=e295]
+                - generic [ref=e296]: Termination recovery support
+              - generic [ref=e297]:
+                - checkbox "Abrupt exit support" [disabled] [ref=e298]
+                - generic [ref=e299]: Abrupt exit support
+              - generic [ref=e300]:
+                - checkbox "Criminal history support" [disabled] [ref=e301]
+                - generic [ref=e302]: Criminal history support
+              - generic [ref=e303]:
+                - checkbox "Re-entry support" [disabled] [ref=e304]
+                - generic [ref=e305]: Re-entry support
+              - generic [ref=e306]:
+                - checkbox "Background concern support" [disabled] [ref=e307]
+                - generic [ref=e308]: Background concern support
+            - generic [ref=e309]:
+              - generic [ref=e310]: Private notes
+              - textbox "Private notes" [disabled] [ref=e311]:
+                - /placeholder: Only capture what helps you plan. This is not required.
+            - generic [ref=e312]:
+              - generic [ref=e313]: Encouragement and practical next-step plan
+              - textbox "Encouragement and practical next-step plan" [disabled] [ref=e314]:
+                - /placeholder: Record a calm next-step plan for yourself.
+            - generic [ref=e315]:
+              - checkbox "Include this support profile in ZIP export" [disabled] [ref=e316]
+              - generic [ref=e317]: Include this support profile in ZIP export
+            - button "Save support settings" [ref=e318] [cursor=pointer]
+          - generic [ref=e319]:
+            - heading "7. Candidate story 🥱" [level=3] [ref=e320]
+            - paragraph [ref=e321]: Generate a know-thyself narrative that teaches who, what, why, where, when, and how to communicate from captured lifecycle evidence.
+            - generic [ref=e322]:
+              - button "Generate story" [ref=e323] [cursor=pointer]
+              - button "Save edits" [ref=e324] [cursor=pointer]
+            - generic [ref=e325]:
+              - generic [ref=e326]: Candidate story markdown
+              - textbox "Candidate story markdown" [ref=e327]:
+                - /placeholder: Generate a candidate story to create an editable narrative.
+                - text: "# Candidate story for Spatial Business Systems ## Story Summary Software Engineer, Design Tools narrative built from lifecycle evidence, structured signals, and profile context. ## Who I am Senior IC with architecture depth. My current narrative shows that I bring C#, .NET, Autodesk ecosystem, CAD tooling, performance-sensitive workflows. ## What I am pursuing the Software Engineer, Design Tools opportunity at Spatial Business Systems with a focus on clear, supportable evidence rather than generic claims. ## Why This opportunity matters because it connects through Recruiter outreach and aligns to the target role of Software Engineer, Design Tools. ## Where I create value in Remote. ## When The current timeline signals include upcoming milestones are still being clarified. ## How I communicate and execute by leaning on Desktop software, Autodesk integrations, enterprise design systems. ## Proof Points Experience or signal linked to Spatial Business Systems, Experience or signal linked to Autodesk-heavy engineering evidence ready, Experience or signal linked to Revit API emphasis and Autodesk platform ## Gaps To Address Revit API depth needs explicit ramp narrative ## Interview And Outreach Cues No interview-specific signals captured yet. ## Structured Signals - Names: None captured - Emails: None captured - Phones: None captured - Companies: Spatial Business Systems, Autodesk-heavy engineering evidence ready, Revit API emphasis and Autodesk platform - Locations: None captured - Contingencies: None captured"
+            - generic [ref=e328]:
+              - generic [ref=e329]: review
+              - generic [ref=e330]: "artifacts: 2"
+              - generic [ref=e331]: "correspondence: 1"
+          - generic [ref=e332]:
+            - heading "Opportunity Resolution 🥱" [level=3] [ref=e333]
+            - paragraph [ref=e334]: Turn this outcome into easy leverage for your next high-stakes move.
+            - generic [ref=e335]:
+              - generic [ref=e336]:
+                - generic [ref=e337]: Resolution 🥱
+                - combobox "Resolution 🥱" [ref=e338]:
+                  - option "Awarded / Offer Accepted 🥱" [selected]
+                  - option "Denied / Offer Declined"
+                  - option "Withdrawn"
+              - generic [ref=e339]:
+                - generic [ref=e340]: Lessons Learned
+                - textbox "Lessons Learned" [ref=e341]:
+                  - /placeholder: What did this process teach you about your narrative or technical fit?
+              - generic [ref=e342]:
+                - generic [ref=e343]: Market Intelligence
+                - textbox "Market Intelligence" [ref=e344]:
+                  - /placeholder: Any insights on company culture, tech stack, or hiring trends?
+              - generic [ref=e345]:
+                - generic [ref=e346]: Content Potential
+                - combobox "Content Potential" [ref=e347]:
+                  - option "Low - Internal Only"
+                  - option "Medium - Great for Portfolio" [selected]
+                  - option "High - Blog / Marketing Asset"
+              - generic [ref=e348]:
+                - button "Save Outcome" [ref=e349] [cursor=pointer]
+                - button "Generate Blog Asset (Markdown + JSONL)" [disabled] [ref=e350]
+          - generic [ref=e351]:
+            - heading "Structured signal extraction" [level=3] [ref=e352]
+            - paragraph [ref=e353]: Parsed signals stay local and help build profile, timing, interview, and contact awareness for this opportunity.
+            - generic [ref=e354]:
+              - article [ref=e355]:
+                - paragraph [ref=e356]: Contacts and entities
+                - paragraph [ref=e357]: "Names: None yet"
+                - paragraph [ref=e358]: "Emails: None yet"
+                - paragraph [ref=e359]: "Phones: None yet"
+                - paragraph [ref=e360]: "Companies: Spatial Business Systems, Autodesk-heavy engineering evidence ready, Revit API emphasis and Autodesk platform"
+              - article [ref=e361]:
+                - paragraph [ref=e362]: Timing and interview cues
+                - paragraph [ref=e363]: "Dates: None yet"
+                - paragraph [ref=e364]: "Times: None yet"
+                - paragraph [ref=e365]: "Interviews: None yet"
+                - paragraph [ref=e366]: "Contingencies: None yet"
+          - generic [ref=e367]:
+            - heading "Documents and evidence" [level=3] [ref=e368]
+            - table [ref=e370]:
+              - rowgroup [ref=e371]:
+                - row "Artifact Type Version Parse Review Signals" [ref=e372]:
+                  - columnheader "Artifact" [ref=e373]
+                  - columnheader "Type" [ref=e374]
+                  - columnheader "Version" [ref=e375]
+                  - columnheader "Parse" [ref=e376]
+                  - columnheader "Review" [ref=e377]
+                  - columnheader "Signals" [ref=e378]
+              - rowgroup [ref=e379]:
+                - row "Spatial Business Systems resume package resume v1 complete User reviewed 0" [ref=e380]:
+                  - cell "Spatial Business Systems resume package" [ref=e381]
+                  - cell "resume" [ref=e382]
+                  - cell "v1" [ref=e383]
+                  - cell "complete" [ref=e384]
+                  - cell "User reviewed" [ref=e385]:
+                    - combobox [ref=e386]:
+                      - option "Unreviewed"
+                      - option "User reviewed" [selected]
+                      - option "Approved"
+                      - option "Rejected"
+                      - option "Archived"
+                  - cell "0" [ref=e387]
+                - row "Spatial Business Systems opportunity description job_description v1 complete User reviewed 0" [ref=e388]:
+                  - cell "Spatial Business Systems opportunity description" [ref=e389]
+                  - cell "job_description" [ref=e390]
+                  - cell "v1" [ref=e391]
+                  - cell "complete" [ref=e392]
+                  - cell "User reviewed" [ref=e393]:
+                    - combobox [ref=e394]:
+                      - option "Unreviewed"
+                      - option "User reviewed" [selected]
+                      - option "Approved"
+                      - option "Rejected"
+                      - option "Archived"
+                  - cell "0" [ref=e395]
+          - generic [ref=e396]:
+            - heading "AI checkpoints and review gates" [level=3] [ref=e397]
+            - generic [ref=e398]:
+              - article [ref=e399]:
+                - paragraph [ref=e400]: Intake evidence review
+                - heading "proceed with warning" [level=4] [ref=e401]
+                - paragraph [ref=e402]: Resume and job description are present. Intake is nearly complete, but profile review and fit routing still need confirmation.
+                - generic [ref=e403]:
+                  - generic [ref=e404]: medium
+                  - generic [ref=e405]: "reviewer: Customer Success Lead"
+              - article [ref=e406]:
+                - paragraph [ref=e407]: Seeded intake complete
+                - heading "proceed" [level=4] [ref=e408]
+                - paragraph [ref=e409]: Reference sample progressed into intake complete.
+                - generic [ref=e410]:
+                  - generic [ref=e411]: high
+                  - generic [ref=e412]: "reviewer: Data Steward / Data Quality Lead"
 ```
