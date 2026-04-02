@@ -137,13 +137,61 @@ export function useDataTransformOps() {
 
   const resetSeedState = () => {
     patchState(() => createSeedState(), "Reset to reference state.");
-    setNotice({ tone: "success", message: "Reset to the seeded SBS reference state." });
+    setNotice({ tone: "success", message: "Reset to the seeded Monyawn reference state." });
+  };
+
+  const handlePremiumDiligencePacketExport = async () => {
+    if (!state.selectedOpportunityId) {
+      setNotice({ tone: "info", message: "Select an opportunity first." });
+      return;
+    }
+    const opportunity = state.opportunities.find(o => o.opportunity_id === state.selectedOpportunityId);
+    if (!opportunity) return;
+
+    const { buildPremiumDiligencePacketPdf } = await import("../package/pdf");
+    const pdfData = await buildPremiumDiligencePacketPdf(state, opportunity);
+    const blob = new Blob([pdfData], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `Diligence_Packet_${opportunity.company_name.replace(/\s+/g, "_")}.pdf`;
+    anchor.click();
+    window.URL.revokeObjectURL(url);
+    setNotice({ tone: "success", message: "Premium Diligence Packet PDF generated." });
+  };
+
+  const handleSharePlay = async () => {
+    if (!state.selectedOpportunityId) {
+      setNotice({ tone: "info", message: "Select an opportunity first." });
+      return;
+    }
+    const opportunity = state.opportunities.find(o => o.opportunity_id === state.selectedOpportunityId);
+    if (!opportunity) return;
+
+    const shareText = `Monyawn Play: ${opportunity.role_title} at ${opportunity.company_name}\n\nEvidence-backed status: ${state.candidateStories.find(s => s.opportunity_id === opportunity.opportunity_id) ? "Story locked" : "Intake in progress"}\n\nManaged via Monyawn 🥱`;
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Monyawn Play: ${opportunity.company_name}`,
+          text: shareText,
+          url: window.location.origin,
+        });
+      } catch (err) {
+        // User cancelled or share failed
+      }
+    } else {
+      await navigator.clipboard.writeText(shareText + "\n" + window.location.origin);
+      setNotice({ tone: "success", message: "Professional summary copied to clipboard." });
+    }
   };
 
   return {
     handleExport,
     handleBuyerPacketExport,
+    handlePremiumDiligencePacketExport,
     handleReleaseReadinessPacketExport,
+    handleSharePlay,
     handleImport,
     handleReleaseArtifactImport,
     resetSeedState

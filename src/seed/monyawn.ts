@@ -1,15 +1,15 @@
 import { buildSeedOpportunity } from "./base";
 import { SeedBundle } from "./types";
 
-export function buildSbsBundles(accountId: string, userId: string): SeedBundle[] {
+export function buildMonyawnBundles(accountId: string, userId: string): SeedBundle[] {
   return [
     buildSeedOpportunity({
       accountId,
       userId,
-      companyName: "Spatial Business Systems",
+      companyName: "Monyawn Pilot",
       roleTitle: "Software Engineer, Design Tools",
       source: "Recruiter outreach",
-      postingUrl: "https://example.com/sbs-design-tools",
+      postingUrl: "https://example.com/monyawn-design-tools",
       stageSteps: 1,
       profile: {
         skillsSummary:
@@ -27,17 +27,17 @@ export function buildSbsBundles(accountId: string, userId: string): SeedBundle[]
       memoType: "fit",
       memoSummary:
         "Proceed into fit review with explicit Revit-gap mitigation and seniority framing controls.",
-      correspondenceSubject: "SBS intake follow-up draft",
+      correspondenceSubject: "Monyawn intake follow-up draft",
       correspondenceBody:
         "Thank you for the outreach. I have strong Autodesk platform experience and would like to continue the conversation about the design tools role.",
     }),
     buildSeedOpportunity({
       accountId,
       userId,
-      companyName: "Spatial Business Systems",
+      companyName: "Monyawn Grid",
       roleTitle: "Implementation Engineer, Grid Design Tools",
       source: "Hiring manager referral",
-      postingUrl: "https://example.com/sbs-grid-tools",
+      postingUrl: "https://example.com/monyawn-grid-tools",
       stageSteps: 3,
       profile: {
         skillsSummary:
@@ -55,17 +55,17 @@ export function buildSbsBundles(accountId: string, userId: string): SeedBundle[]
       memoType: "positioning",
       memoSummary:
         "Positioning is viable if messaging emphasizes immediate delivery value over title inflation.",
-      correspondenceSubject: "SBS positioning review draft",
+      correspondenceSubject: "Monyawn positioning review draft",
       correspondenceBody:
         "I can contribute quickly in Autodesk-centric engineering workflows while staying hands-on and execution-focused.",
     }),
     buildSeedOpportunity({
       accountId,
       userId,
-      companyName: "Spatial Business Systems",
+      companyName: "Monyawn Advanced",
       roleTitle: "Senior Design Tools Engineer",
       source: "Panel continuation",
-      postingUrl: "https://example.com/sbs-senior-design-tools",
+      postingUrl: "https://example.com/monyawn-senior-design-tools",
       stageSteps: 6,
       profile: {
         skillsSummary:
@@ -83,7 +83,7 @@ export function buildSbsBundles(accountId: string, userId: string): SeedBundle[]
       memoType: "offer",
       memoSummary:
         "Offer-review sample should demonstrate high-stakes guidance, compensation calibration, and explicit human review.",
-      correspondenceSubject: "SBS late-stage follow-up",
+      correspondenceSubject: "Monyawn late-stage follow-up",
       correspondenceBody:
         "I appreciate the continued conversation. I would like to make sure scope, level, and compensation reflect both immediate contribution and long-term fit.",
       addEscalation: {

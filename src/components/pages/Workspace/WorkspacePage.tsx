@@ -92,7 +92,13 @@ export function WorkspacePage() {
 
   const [activeStep, setActiveStep] = useState<WorkspaceStep>("artifacts");
 
-  const { handleExport, handleImport, resetSeedState } = useDataTransformOps();
+  const { 
+    handleExport, 
+    handleImport, 
+    resetSeedState,
+    handlePremiumDiligencePacketExport,
+    handleSharePlay
+  } = useDataTransformOps();
   const { handleAdvanceStage, handleCloseLost } = useOpportunityOps();
 
   if (!selectedOpportunity) {
@@ -435,6 +441,12 @@ export function WorkspacePage() {
                     ? `When this looks right, move to ${nextStepLabel}.`
                     : "When this is done, hit the stage controls above to level up the play."}
                 </p>
+                <button 
+                  className="mt-4 w-full bg-brand-accent text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-brand-accent-strong transition-all shadow-sm active:scale-95"
+                  onClick={handleSharePlay}
+                >
+                  Share this play 🥱
+                </button>
               </div>
             </div>
           </section>
@@ -471,6 +483,9 @@ export function WorkspacePage() {
             </button>
             <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleExport}>
               Export the ZIP
+            </button>
+            <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handlePremiumDiligencePacketExport}>
+              Premium PDF 🥱
             </button>
           </div>
 

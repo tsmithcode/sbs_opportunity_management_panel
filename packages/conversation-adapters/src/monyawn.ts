@@ -278,7 +278,7 @@ export function commitMonyawnConversationResult(input: {
     opportunity = createOpportunity({
       account_id: selectedAccountId,
       user_id: selectedUserId,
-      use_case_id: "sbs",
+      use_case_id: "monyawn",
       ...opportunityDraft,
       company_name: trimmedCompany,
       role_title: trimmedRole,

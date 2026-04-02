@@ -29,7 +29,7 @@ export function useOpportunityOps() {
     const opportunity = createOpportunity({
       account_id: state.selectedAccountId,
       user_id: state.selectedUserId,
-      use_case_id: "sbs",
+      use_case_id: "monyawn",
       ...draft,
     });
     

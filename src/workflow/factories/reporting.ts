@@ -26,7 +26,7 @@ export function createReportingSnapshot(state: AppState): ReportingSnapshot {
   return {
     snapshot_id: createId("snapshot"),
     account_id: state.selectedAccountId,
-    use_case_id: "sbs",
+    use_case_id: "monyawn",
     period_start: state.lastSavedAt,
     period_end: nowIso(),
     active_opportunities: activeOpportunities.length,

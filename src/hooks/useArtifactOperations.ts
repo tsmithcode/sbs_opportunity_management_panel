@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useMonyawn } from "../context/MonyawnContext";
 import { ArtifactDraft, defaultArtifactDraft } from "../context/MonyawnContext.types";
 import { createArtifact, createTask } from "../workflow";
+import { extractSignalsFromText } from "../intelligence/signals";
 
 export function useArtifactOperations() {
-  const { patchState, selectedOpportunity, setNotice } = useMonyawn();
+  const { patchState, selectedOpportunity, selectedProfile, setNotice } = useMonyawn();
   const [artifactDraft, setArtifactDraft] = useState<ArtifactDraft>(defaultArtifactDraft);
 
   const handleArtifactSubmit = (e: React.FormEvent) => {
@@ -35,8 +36,21 @@ export function useArtifactOperations() {
       `Proof '${artifactDraft.source_label}' added.`,
     );
     
+    // Auto-extraction if there's text
+    if (artifactDraft.source_text?.trim() && selectedProfile) {
+      const signals = extractSignalsFromText(artifactDraft.source_text, selectedOpportunity.company_name);
+      
+      if (signals.companies.length || signals.names.length) {
+        setNotice({ 
+          tone: "success", 
+          message: `Proof recorded. AI extracted ${signals.companies.length} entities and ${signals.emails.length} contacts.` 
+        });
+      }
+    } else {
+      setNotice({ tone: "success", message: "Proof recorded." });
+    }
+
     setArtifactDraft(defaultArtifactDraft);
-    setNotice({ tone: "success", message: "Proof recorded." });
   };
 
   return {

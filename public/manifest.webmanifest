@@ -1,0 +1,17 @@
+{
+  "name": "Monyawn",
+  "short_name": "Monyawn",
+  "description": "Local-first career decision support for high-stakes moves.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a5f57",
+  "theme_color": "#0a5f57",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230a5f57%22 rx=%2220%22/><text y=%22.75em%22 x=%225%22 font-size=%2275%22>🥱</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

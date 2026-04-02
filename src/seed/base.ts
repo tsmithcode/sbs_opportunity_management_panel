@@ -56,7 +56,7 @@ export function buildSeedOpportunity(input: {
   const opportunity = createOpportunity({
     account_id: input.accountId,
     user_id: input.userId,
-    use_case_id: "sbs",
+    use_case_id: "monyawn",
     pathway: "w2",
     company_name: input.companyName,
     role_title: input.roleTitle,

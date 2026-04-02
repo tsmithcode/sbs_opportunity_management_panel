@@ -13,12 +13,12 @@ import {
   createRoleEntitlement,
   nowIso,
 } from "../workflow";
-import { buildSbsBundles } from "./sbs";
+import { buildMonyawnBundles } from "./monyawn";
 import { buildHabasitAccountsAndUsers, buildHabasitBundles } from "./habasit";
 
 export function createSeedState(): AppState {
   const account = createAccount({
-    account_name: "SBS Pilot Account",
+    account_name: "Monyawn Pilot Account",
     account_type: "enterprise",
     primary_region: "United States",
     support_tier: "Enterprise Premium Governance",
@@ -42,7 +42,7 @@ export function createSeedState(): AppState {
     updated_at: userTimestamp,
   };
 
-  const seededBundles = buildSbsBundles(account.account_id, user.user_id);
+  const seededBundles = buildMonyawnBundles(account.account_id, user.user_id);
   const { habasitAccount, habasitUsers } = buildHabasitAccountsAndUsers();
   const habasitBundles = buildHabasitBundles(habasitAccount, habasitUsers);
 

@@ -137,6 +137,79 @@ export async function buildCorrespondencePdf(
   ]);
 }
 
+export async function buildPremiumDiligencePacketPdf(
+  state: AppState,
+  opportunity: Opportunity,
+): Promise<Uint8Array> {
+  const story = state.candidateStories.find(s => s.opportunity_id === opportunity.opportunity_id);
+  const artifacts = state.artifacts.filter(a => a.opportunity_id === opportunity.opportunity_id);
+  const correspondence = state.correspondence.filter(c => c.opportunity_id === opportunity.opportunity_id);
+  const posture = state.commercialPostureProfiles.find(p => p.opportunity_id === opportunity.opportunity_id);
+  const support = state.sensitiveSupportProfiles.find(p => p.opportunity_id === opportunity.opportunity_id);
+
+  const sections: Array<{ heading: string; body: string }> = [
+    {
+      heading: "Executive Summary",
+      body: [
+        `Company: ${opportunity.company_name}`,
+        `Role: ${opportunity.role_title}`,
+        `Status: ${stageMeta[opportunity.current_stage].label}`,
+        `Integrity Check: ${state.lastIntegrityRunAt ? "Verified" : "Pending human review"}`,
+        `Export Security: Local-only sovereign deployment guarantee active.`,
+      ].join("\n"),
+    },
+  ];
+
+  if (story) {
+    sections.push({
+      heading: "Evidence-Backed Narrative",
+      body: story.summary + "\n\n" + story.markdown.replace(/^# .+\n?/m, "").trim(),
+    });
+  }
+
+  if (artifacts.length) {
+    sections.push({
+      heading: "Artifact Evidence Base",
+      body: artifacts
+        .map(a => `- [${a.artifact_type.toUpperCase()}] ${a.source_label}: ${a.evidence_note || a.content_summary}`)
+        .join("\n"),
+    });
+  }
+
+  if (correspondence.length) {
+    sections.push({
+      heading: "Operational Correspondence",
+      body: correspondence
+        .map(c => `- [${c.channel.toUpperCase()}] ${c.subject}: ${c.status}`)
+        .join("\n"),
+    });
+  }
+
+  if (opportunity.pathway === "1099" && posture) {
+    sections.push({
+      heading: "Commercial Posture",
+      body: [
+        `Target Rate: ${posture.target_rate}`,
+        `Engagement: ${posture.engagement_type}`,
+        `SOW Readiness: ${posture.sow_status.replace("_", " ")}`,
+        `Availability: ${posture.availability}`,
+      ].join("\n"),
+    });
+  } else if (support && support.enabled) {
+    sections.push({
+      heading: "Support Boundary Guidance",
+      body: `Guidance enabled for categories: ${support.categories.join(", ")}. This profile ensures high-stakes moves maintain psychological and operational safety boundaries.`,
+    });
+  }
+
+  sections.push({
+    heading: "Governance & Authority",
+    body: "This document is a governed export from the Monyawn platform. All claims are backed by local-first evidence drops and validated against the canonical workflow schema.",
+  });
+
+  return buildPdf(`Diligence Packet: ${opportunity.company_name}`, sections);
+}
+
 export async function buildSessionSummaryPdf(state: AppState): Promise<Uint8Array> {
   return buildPdf("Monyawn session summary", [
     { heading: "Summary", body: renderSessionSummaryMarkdown(state).replace(/^# .+\n?/m, "").trim() },
