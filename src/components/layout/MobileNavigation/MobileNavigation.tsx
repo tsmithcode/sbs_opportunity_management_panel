@@ -9,16 +9,16 @@ export function MobileNavigation({ activeTab, onTabChange }: MobileNavigationPro
   ];
 
   return (
-    <nav className="mobile-nav" aria-label="Mobile navigation">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 bg-brand-surface-soft backdrop-blur-md border-t border-black/10 flex justify-around items-center px-4 z-50 md:hidden" aria-label="Mobile navigation">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           type="button"
-          className={`mobile-nav-item${activeTab === tab.id ? " is-active" : ""}`}
+          className={`flex flex-col items-center justify-center gap-1 flex-1 h-full transition-colors ${activeTab === tab.id ? "text-brand-accent" : "text-brand-muted hover:text-brand-ink"}`}
           onClick={() => onTabChange(tab.id)}
         >
-          <span className="mobile-nav-icon" aria-hidden="true">{tab.icon}</span>
-          <span className="mobile-nav-label">{tab.label}</span>
+          <span className="text-xl leading-none" aria-hidden="true">{tab.icon}</span>
+          <span className="text-[10px] font-medium">{tab.label}</span>
         </button>
       ))}
     </nav>

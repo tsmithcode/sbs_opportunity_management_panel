@@ -8,7 +8,7 @@ import {
   SponsorshipType,
 } from "../types";
 
-export type AppPage = "landing" | "intake" | "workspace" | "about";
+export type AppPage = "login" | "start" | "signal" | "confirm" | "intake" | "workspace" | "about";
 
 export type Notice = { tone: "success" | "info"; message: string } | null;
 

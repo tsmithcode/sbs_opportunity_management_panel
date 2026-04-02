@@ -19,23 +19,30 @@ export function OutcomePanel({ opportunityId, existingOutcome, onSubmit, onGener
   };
 
   return (
-    <div className="stage-block outcome-panel">
-      <h3>Opportunity Resolution 🥱</h3>
-      <p>Turn this outcome into easy leverage for your next high-stakes move.</p>
+    <div className="flex flex-col gap-6 p-8 rounded-3xl bg-white/40 border border-black/5 shadow-brand-shadow">
+      <div>
+        <h3 className="text-2xl font-bold text-brand-ink mb-1">Opportunity Resolution 🥱</h3>
+        <p className="text-sm text-brand-muted">Turn this outcome into easy leverage for your next high-stakes move.</p>
+      </div>
       
-      <form onSubmit={handleSubmit} className="field-stack">
-        <label className="field">
-          <span>Resolution 🥱</span>
-          <select value={resolution} onChange={e => setResolution(e.target.value as any)}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Resolution 🥱</span>
+          <select 
+            className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
+            value={resolution} 
+            onChange={e => setResolution(e.target.value as any)}
+          >
             <option value="awarded">Awarded / Offer Accepted 🥱</option>
             <option value="denied">Denied / Offer Declined</option>
             <option value="withdrawn">Withdrawn</option>
           </select>
         </label>
 
-        <label className="field">
-          <span>Lessons Learned</span>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Lessons Learned</span>
           <textarea 
+            className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
             rows={3} 
             value={lessons} 
             onChange={e => setLessons(e.target.value)} 
@@ -43,9 +50,10 @@ export function OutcomePanel({ opportunityId, existingOutcome, onSubmit, onGener
           />
         </label>
 
-        <label className="field">
-          <span>Market Intelligence</span>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Market Intelligence</span>
           <textarea 
+            className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
             rows={3} 
             value={marketIntel} 
             onChange={e => setMarketIntel(e.target.value)} 
@@ -53,19 +61,23 @@ export function OutcomePanel({ opportunityId, existingOutcome, onSubmit, onGener
           />
         </label>
 
-        <label className="field">
-          <span>Content Potential</span>
-          <select value={contentPotential} onChange={e => setContentPotential(e.target.value as any)}>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Content Potential</span>
+          <select 
+            className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
+            value={contentPotential} 
+            onChange={e => setContentPotential(e.target.value as any)}
+          >
             <option value="low">Low - Internal Only</option>
             <option value="medium">Medium - Great for Portfolio</option>
             <option value="high">High - Blog / Marketing Asset</option>
           </select>
         </label>
 
-        <div className="platform-button-row" style={{ marginTop: '1.5rem' }}>
-          <button className="primary-action" type="submit">Save Outcome</button>
+        <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-black/5">
+          <button className="bg-brand-accent text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Save Outcome</button>
           <button 
-            className="secondary-action" 
+            className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" 
             type="button" 
             onClick={onGenerateBlog}
             disabled={!lessons}

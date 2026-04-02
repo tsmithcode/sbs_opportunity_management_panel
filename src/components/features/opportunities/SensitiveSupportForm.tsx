@@ -48,63 +48,81 @@ export const SensitiveSupportForm: React.FC = () => {
   };
 
   return (
-    <form className="stage-block col-span-2" onSubmit={handleSubmit}>
-      <h3>Optional sensitive support path</h3>
-      <p>
-        This section is fully optional. It stays local to this device and
-        is excluded from export unless you explicitly include it.
-      </p>
-      <label className="checkbox-field">
+    <form className="flex flex-col gap-6 p-6 sm:p-8 lg:p-9 rounded-[2rem] bg-white/60 border border-black/5 shadow-brand-shadow" onSubmit={handleSubmit}>
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Private support</p>
+        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Optional sensitive support path</h3>
+        <p className="text-sm text-brand-muted leading-relaxed">
+          This section is fully optional. It stays local to this device and
+          is excluded from export unless you explicitly include it.
+        </p>
+      </div>
+      
+      <label className="flex items-center gap-3 p-4 rounded-[1.5rem] border border-black/5 bg-brand-surface-strong/50 hover:bg-brand-surface-strong transition-all cursor-pointer">
         <input
           type="checkbox"
+          className="w-5 h-5 rounded border-black/20 text-brand-accent focus:ring-brand-accent transition-all cursor-pointer"
           checked={draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, enabled: event.target.checked }))}
         />
-        <span>Enable local-only support guidance for this opportunity</span>
+        <span className="text-sm font-medium text-brand-ink">Enable local-only support guidance for this opportunity</span>
       </label>
-      <div className="support-grid">
+
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
         {(Object.keys(supportTemplates) as SensitiveSupportType[]).map((key) => (
-          <label key={key} className="checkbox-field">
+          <label key={key} className={`flex items-center gap-3 p-3 rounded-[1.25rem] border transition-all cursor-pointer ${draft.enabled ? 'border-black/5 bg-brand-surface-strong/50 hover:bg-brand-surface-strong' : 'border-transparent bg-black/5 opacity-50 cursor-not-allowed'}`}>
             <input
               type="checkbox"
+              className="w-4 h-4 rounded border-black/20 text-brand-accent focus:ring-brand-accent transition-all cursor-pointer disabled:cursor-not-allowed"
               checked={draft.categories.includes(key)}
               disabled={!draft.enabled}
               onChange={(event) => toggleCategory(key, event.target.checked)}
             />
-            <span>{supportTemplates[key].label}</span>
+            <span className="text-xs font-medium text-brand-ink">{supportTemplates[key].label}</span>
           </label>
         ))}
       </div>
-      <label className="field">
-        <span>Private notes</span>
+
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Private notes</span>
         <textarea
-          rows={4}
+          className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+          rows={5}
           value={draft.notes}
           disabled={!draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, notes: event.target.value }))}
           placeholder="Only capture what helps you plan. This is not required."
         />
       </label>
-      <label className="field">
-        <span>Encouragement and practical next-step plan</span>
+
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Encouragement and practical next-step plan</span>
         <textarea
-          rows={4}
+          className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+          rows={5}
           value={draft.encouragement_plan}
           disabled={!draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, encouragement_plan: event.target.value }))}
           placeholder="Record a calm next-step plan for yourself."
         />
       </label>
-      <label className="checkbox-field">
+
+      <label className={`flex items-center gap-3 p-4 rounded-[1.5rem] border transition-all cursor-pointer ${draft.enabled ? 'border-black/5 bg-brand-surface-strong/50 hover:bg-brand-surface-strong' : 'border-transparent bg-black/5 opacity-50 cursor-not-allowed'}`}>
         <input
           type="checkbox"
+          className="w-5 h-5 rounded border-black/20 text-brand-accent focus:ring-brand-accent transition-all cursor-pointer disabled:cursor-not-allowed"
           checked={draft.include_in_export}
           disabled={!draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, include_in_export: event.target.checked }))}
         />
-        <span>Include this support profile in the next handoff export</span>
+        <span className="text-sm font-medium text-brand-ink">Include this support profile in the next handoff export</span>
       </label>
-      <button className="primary-action" type="submit" disabled={!draft.enabled}>
+
+      <button 
+        className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95 mt-2 self-start disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" 
+        type="submit" 
+        disabled={!draft.enabled}
+      >
         Save support profile
       </button>
     </form>

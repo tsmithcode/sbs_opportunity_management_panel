@@ -1,0 +1,26 @@
+# Dependency Bloat (Huge number of files)
+node_modules/
+**/node_modules/
+package-lock.json
+yarn.lock
+
+# Build & Output (Token hogs, Gemini can't read binaries)
+dist/
+build/
+output/
+.vercel/
+*.pdf
+*.png
+*.jpg
+*.svg
+
+# IDE & Other Tool Metadata
+.git/
+.vscode/
+.claude/
+.idea/
+.DS_Store
+
+# Large temporary/diff files
+admin_diff.txt
+*.log

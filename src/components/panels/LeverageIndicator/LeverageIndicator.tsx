@@ -2,16 +2,23 @@ import { LeverageIndicatorProps } from "./LeverageIndicator.contract";
 
 export function LeverageIndicator({ score, label, isComplete }: LeverageIndicatorProps) {
   return (
-    <div className="leverage-indicator">
-      <div className="leverage-label-row">
-        <span className="panel-label">Leverage Score 🥱</span>
-        <span style={{ fontWeight: 700 }}>{score}%</span>
+    <div className="w-full max-w-[360px] bg-white/60 p-4 lg:p-5 rounded-[1.5rem] border border-black/5 shadow-brand-shadow space-y-3">
+      <div className="flex justify-between items-center gap-4">
+        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">Leverage score</span>
+        <span className="text-sm font-bold text-brand-ink">{score}%</span>
       </div>
-      <div className="leverage-bar-container">
-        <div className="leverage-bar-fill" style={{ width: `${score}%` }} />
+      <div className="h-2.5 w-full bg-black/5 rounded-full overflow-hidden">
+        <div 
+          className="h-full bg-brand-accent transition-all duration-500 ease-out" 
+          style={{ width: `${score}%` }} 
+        />
       </div>
-      <p style={{ margin: "0.5rem 0 0", fontSize: "0.85rem", color: "var(--muted)" }}>
-        {isComplete ? "🚀 Maximum leverage achieved. Ready for outcome." : `Next: ${label}`}
+      <p className="text-xs text-brand-muted leading-relaxed">
+        {isComplete ? (
+          <span className="text-brand-accent font-semibold">Maximum leverage achieved. Ready for outcome.</span>
+        ) : (
+          <>Next: <span className="text-brand-ink font-medium">{label}</span></>
+        )}
       </p>
     </div>
   );

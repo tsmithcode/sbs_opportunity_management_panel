@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: linear-gradient(180deg, #ece5d6 0%, #f7f2e9 30%, #f4efe4 100%);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(10, 95, 87, 0.12), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+  min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-family: "IBM Plex Serif", Georgia, serif;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+p {
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid rgba(24, 32, 40, 0.14);
+  border-radius: 0.95rem;
+  padding: 0.8rem 0.9rem;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--ink);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.plain-list,
+.checklist,
+.step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.plain-list li,
+.checklist li {
+  padding-left: 1.2rem;
+  position: relative;
+  margin-bottom: 0.8rem;
+}
+
+.plain-list li::before,
+.checklist li::before {
+  content: "";
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: var(--accent);
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+}

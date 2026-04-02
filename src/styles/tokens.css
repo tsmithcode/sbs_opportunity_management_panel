@@ -1,0 +1,23 @@
+:root {
+  color-scheme: light;
+  font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --canvas: #f4efe4;
+  --surface: #fbf7ef;
+  --surface-strong: #fffdf8;
+  --surface-soft: rgba(255, 252, 245, 0.88);
+  --ink: #182028;
+  --muted: #55606d;
+  --line: #c4baa7;
+  --accent: #0a5f57;
+  --accent-strong: #083f3b;
+  --highlight: #d0e7dd;
+  --review: #f2dfb8;
+  --info: #d7e4f9;
+  --shadow: 0 18px 40px rgba(24, 32, 40, 0.08);
+}

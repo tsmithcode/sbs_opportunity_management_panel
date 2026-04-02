@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: #f4efe4;
+    --surface: #fbf7ef;
+    --surface-strong: #fffdf8;
+    --surface-soft: rgba(255, 252, 245, 0.88);
+    --ink: #182028;
+    --muted: #55606d;
+    --line: #c4baa7;
+    --accent: #0a5f57;
+    --accent-strong: #083f3b;
+    --highlight: #d0e7dd;
+    --review: #f2dfb8;
+    --info: #d7e4f9;
+  }
+
+  html {
+    @apply bg-brand-canvas;
+    background: linear-gradient(180deg, #ece5d6 0%, #f7f2e9 30%, #f4efe4 100%);
+  }
+
+  body {
+    @apply text-brand-ink min-h-screen font-sans;
+    background:
+      radial-gradient(circle at top left, rgba(10, 95, 87, 0.12), transparent 32%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply absolute left-4 -top-12 z-[100] bg-brand-accent-strong text-white px-4 py-3 rounded-lg focus:top-24 transition-all;
+  }
+
+  @keyframes pulse-dot {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 10px rgba(74,222,128,0.4); }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+  .animate-pulse-dot {
+    animation: pulse-dot 1.8s ease-in-out infinite;
+  }
+}

@@ -1,0 +1,75 @@
+.hero-copy,
+.hero-panel,
+.stage-panel,
+.proof-block,
+.step-nav,
+.stage-block,
+.mini-card {
+  background: var(--surface-soft);
+  border: 1px solid rgba(24, 32, 40, 0.1);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+}
+
+.hero-copy { padding: 2rem; }
+.hero-panel { padding: 1.5rem; }
+.stage-panel { padding: 1.6rem; }
+.stage-block { padding: 1.2rem; display: flex; flex-direction: column; }
+.mini-card { padding: 1rem; border-radius: 1rem; }
+
+.primary-action,
+.secondary-action {
+  border-radius: 999px;
+  padding: 0.85rem 1.15rem;
+  border: 2px solid transparent;
+  transition: all 160ms ease;
+  font-weight: 600;
+}
+
+.primary-action { background: var(--accent); color: white; }
+.primary-action:hover { background: var(--accent-strong); transform: translateY(-1px); }
+
+.secondary-action { background: transparent; border-color: var(--line); color: var(--ink); }
+.secondary-action:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+.status-chip {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+}
+
+.hero-metric {
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(24, 32, 40, 0.08);
+}
+
+.hero-metric strong { display: block; margin-top: 0.3rem; font-size: 2rem; }
+
+.coaching-panel {
+  border: 1px solid rgba(24, 32, 40, 0.1);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.46);
+  padding: 0.9rem 1rem;
+}
+
+.step-button {
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 0.85rem 0.8rem;
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem;
+}
+
+.step-button.is-active { background: var(--surface-strong); border-color: rgba(10, 95, 87, 0.2); }

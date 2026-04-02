@@ -50,7 +50,7 @@ const MonyawnContext = createContext<MonyawnContextType | undefined>(undefined);
 
 export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { state, patchState, resetSeedState } = useMonyawnCore();
-  const [currentPage, setCurrentPage] = useState<AppPage>("landing");
+  const [currentPage, setCurrentPage] = useState<AppPage>("login");
   const [mobileTab, setMobileTab] = useState<MobileTab>("home");
   const [notice, setNotice] = useState<Notice>(null);
 
@@ -59,8 +59,12 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
       const hash = window.location.hash;
       if (hash.includes("about")) setCurrentPage("about");
       else if (hash.includes("workspace")) setCurrentPage("workspace");
+      else if (hash.includes("confirm")) setCurrentPage("confirm");
+      else if (hash.includes("signal")) setCurrentPage("signal");
       else if (hash.includes("intake")) setCurrentPage("intake");
-      else setCurrentPage("landing");
+      else if (hash.includes("start")) setCurrentPage("start");
+      else if (hash.includes("login")) setCurrentPage("login");
+      else setCurrentPage("login");
     };
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);

@@ -87,8 +87,9 @@ async function fillBaseRecords(
 }
 
 async function addArtifacts(page: Page, scenario: DesktopE2EScenario) {
+  await page.getByRole("button", { name: "1. Artifacts" }).click();
   const artifactForm = page.locator("form").filter({
-    has: page.getByRole("heading", { name: "4. Document intake and management" }),
+    has: page.getByRole("heading", { name: "1. Document intake and management" }),
   });
   for (const artifact of scenario.artifacts) {
     await artifactForm.getByLabel("Artifact type").selectOption(artifact.type);
@@ -101,8 +102,9 @@ async function addArtifacts(page: Page, scenario: DesktopE2EScenario) {
 }
 
 async function fillProfile(page: Page, scenario: DesktopE2EScenario) {
+  await page.getByRole("button", { name: "2. Profile" }).click();
   const profileForm = page.locator("form").filter({
-    has: page.getByRole("heading", { name: "5. Candidate profile confirmation" }),
+    has: page.getByRole("heading", { name: "2. Candidate profile confirmation" }),
   });
   await profileForm.getByLabel("Skills summary").fill(scenario.profile.skillsSummary);
   await profileForm.getByLabel("Experience level").fill(scenario.profile.experienceLevel);
@@ -113,8 +115,9 @@ async function fillProfile(page: Page, scenario: DesktopE2EScenario) {
 }
 
 async function addCorrespondence(page: Page, scenario: DesktopE2EScenario) {
+  await page.getByRole("button", { name: "3. Messages" }).click();
   const correspondenceForm = page.locator("form").filter({
-    has: page.getByRole("heading", { name: "6. Correspondence operations" }),
+    has: page.getByRole("heading", { name: "3. Correspondence operations" }),
   });
   await correspondenceForm.getByLabel("Channel").selectOption(scenario.correspondence.channel);
   await correspondenceForm.getByLabel("Subject").fill(scenario.correspondence.subject);
@@ -128,6 +131,7 @@ async function configureSupport(page: Page, scenario: DesktopE2EScenario) {
     return;
   }
 
+  await page.getByRole("button", { name: "4. Support" }).click();
   const supportForm = page.locator("form").filter({
     has: page.getByRole("heading", { name: "Optional sensitive support path" }),
   });

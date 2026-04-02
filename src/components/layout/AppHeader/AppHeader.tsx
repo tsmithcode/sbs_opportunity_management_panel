@@ -1,57 +1,80 @@
 import { AppHeaderProps } from "./AppHeader.contract";
 
 export function AppHeader({ currentPage, currentMode, modeLabel, lastExportedAt, navigateToPage, onModeChange, opportunities = [], selectedOpportunityId, onOpportunitySelect }: AppHeaderProps & { onModeChange?: (mode: any) => void }) {
+  const inGuidedEntry =
+    currentPage === "start" ||
+    currentPage === "signal" ||
+    currentPage === "confirm" ||
+    currentPage === "intake";
+
   return (
-    <header className="topbar" aria-label="Primary">
-      <div className="brand-area">
-        <p className="brand-mark">Monyawn 🥱</p>
-        <p className="brand-subtitle hide-on-mobile">
-          Local-first career decision support.
-        </p>
-      </div>
-      <nav className="topbar-nav" aria-label="Page navigation">
-        <button
-          className={`secondary-action nav-button${currentPage === "workspace" ? " is-current" : ""}`}
-          type="button"
-          onClick={() => navigateToPage("workspace")}
-        >
-          Workspace
-        </button>
-        <button
-          className={`secondary-action nav-button${currentPage === "about" ? " is-current" : ""}`}
-          type="button"
-          onClick={() => navigateToPage("about")}
-        >
-          About
-        </button>
-        <div className="mode-switcher hide-on-mobile">
+    <header className="sticky top-0 z-50 border-b border-black/10 bg-[rgba(247,245,240,0.88)] backdrop-blur-xl" aria-label="Primary">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-3 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-col min-w-[150px]">
+          <p className="font-bold text-lg leading-tight tracking-[-0.03em] text-brand-ink">Monyawn 🥱</p>
+          <p className="text-[10px] uppercase tracking-[0.18em] text-brand-muted hidden lg:block">
+            Local-first career operating system
+          </p>
+        </div>
+
+        <nav className="flex items-center gap-2 sm:gap-3" aria-label="Page navigation">
+          <button
+            className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors ${inGuidedEntry ? "bg-brand-accent text-white hover:bg-brand-accent-strong" : "text-brand-muted hover:bg-black/5 hover:text-brand-ink"}`}
+            type="button"
+            onClick={() => navigateToPage("start")}
+          >
+            Get Started
+          </button>
+          <button
+            className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors ${currentPage === "workspace" ? "bg-brand-accent text-white hover:bg-brand-accent-strong" : "text-brand-muted hover:bg-black/5 hover:text-brand-ink"}`}
+            type="button"
+            onClick={() => navigateToPage("workspace")}
+          >
+            Workspace
+          </button>
+          <button
+            className={`px-3.5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors ${currentPage === "about" ? "bg-brand-accent text-white hover:bg-brand-accent-strong" : "text-brand-muted hover:bg-black/5 hover:text-brand-ink"}`}
+            type="button"
+            onClick={() => navigateToPage("about")}
+          >
+            About
+          </button>
+          {!inGuidedEntry && (
+            <div className="hidden lg:flex gap-1 bg-black/5 p-1 rounded-full ml-2">
           {(['user', 'staff', 'admin'] as const).map(m => (
             <button
               key={m}
-              className={`mode-button ${currentMode === m ? 'is-active' : ''}`}
+              className={`px-2.5 py-1 rounded-full text-[10px] font-bold tracking-[0.14em] transition-all ${currentMode === m ? 'bg-white text-brand-ink shadow-sm' : 'text-brand-muted hover:text-brand-ink'}`}
               onClick={() => onModeChange?.(m)}
             >
               {m.toUpperCase()}
             </button>
           ))}
+            </div>
+          )}
+        </nav>
+
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-end" aria-label="Session status">
+          {!inGuidedEntry && opportunities.length > 0 && onOpportunitySelect && (
+            <select 
+              value={selectedOpportunityId || ""} 
+              onChange={(e) => onOpportunitySelect(e.target.value)}
+              className="min-w-[200px] max-w-[280px] px-3 py-2 rounded-full bg-white/70 text-brand-ink text-xs font-semibold border border-black/10 focus:outline-none focus:ring-1 focus:ring-brand-accent"
+              aria-label="Switch Opportunity"
+            >
+              <option value="" disabled>Select opportunity</option>
+              {opportunities.map(opp => (
+                <option key={opp.id} value={opp.id}>{opp.name}</option>
+              ))}
+            </select>
+          )}
+          {!inGuidedEntry && (
+            <span className="px-3 py-1.5 rounded-full bg-brand-highlight/30 text-brand-accent text-[10px] font-bold tracking-[0.14em] border border-brand-accent/10 hidden md:block">{modeLabel}</span>
+          )}
+          {!inGuidedEntry && (
+            <span className="px-3 py-1.5 rounded-full bg-brand-highlight/30 text-brand-accent text-[10px] font-bold tracking-[0.14em] border border-brand-accent/10 hidden md:block">{lastExportedAt ? "ZIP READY" : "EXPORT ADVISED"}</span>
+          )}
         </div>
-      </nav>
-      <div className="topbar-actions" aria-label="Session status">
-        {opportunities.length > 0 && onOpportunitySelect && (
-          <select 
-            value={selectedOpportunityId || ""} 
-            onChange={(e) => onOpportunitySelect(e.target.value)}
-            className="status-chip"
-            aria-label="Switch Opportunity"
-          >
-            <option value="" disabled>Select...</option>
-            {opportunities.map(opp => (
-              <option key={opp.id} value={opp.id}>{opp.name}</option>
-            ))}
-          </select>
-        )}
-        <span className="status-chip hide-on-mobile">{modeLabel}</span>
-        <span className="status-chip hide-on-mobile">{lastExportedAt ? "ZIP ready" : "Export advised"}</span>
       </div>
     </header>
   );

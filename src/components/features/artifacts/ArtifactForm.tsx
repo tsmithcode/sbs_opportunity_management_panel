@@ -48,46 +48,54 @@ export const ArtifactForm: React.FC = () => {
   };
 
   return (
-    <form className="stage-block" onSubmit={handleArtifactSubmit}>
-      <h3>1. Document intake and management 🥱</h3>
-      <p>Capture resumes, job descriptions, notes, and generated outputs with lifecycle-aware metadata.</p>
-      <label className="field">
-        <span>Artifact type</span>
-        <select
-          value={artifactDraft.artifact_type}
-          onChange={(event) =>
-            setArtifactDraft((current) => ({
-              ...current,
-              artifact_type: event.target.value as ArtifactType,
-            }))
-          }
-        >
-          <option value="resume">Resume</option>
-          <option value="job_description">Job description</option>
-          <option value="message">Message</option>
-          <option value="note">Note</option>
-          <option value="offer">Offer</option>
-          <option value="debrief">Debrief</option>
-          <option value="generated_output">Generated output</option>
-          <option value="other">Other</option>
-        </select>
-      </label>
-      <label className="field">
-        <span>Source label</span>
+    <form className="flex flex-col gap-6 p-6 sm:p-8 lg:p-9 rounded-[2rem] bg-white/60 border border-black/5 shadow-brand-shadow" onSubmit={handleArtifactSubmit}>
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Evidence intake</p>
+        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Document intake and management</h3>
+        <p className="text-sm text-brand-muted leading-relaxed">Capture resumes, job descriptions, notes, and generated outputs with lifecycle-aware metadata.</p>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Artifact type</span>
+          <select
+            className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
+            value={artifactDraft.artifact_type}
+            onChange={(event) =>
+              setArtifactDraft((current) => ({
+                ...current,
+                artifact_type: event.target.value as ArtifactType,
+              }))
+            }
+          >
+            <option value="resume">Resume</option>
+            <option value="job_description">Job description</option>
+            <option value="message">Message</option>
+            <option value="note">Note</option>
+            <option value="offer">Offer</option>
+            <option value="debrief">Debrief</option>
+            <option value="generated_output">Generated output</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label className="flex flex-col gap-1.5">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Source label</span>
+          <input
+            className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
+            value={artifactDraft.source_label}
+            onChange={(event) =>
+              setArtifactDraft((current) => ({
+                ...current,
+                source_label: event.target.value,
+              }))
+            }
+            required
+          />
+        </label>
+      </div>
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Evidence note</span>
         <input
-          value={artifactDraft.source_label}
-          onChange={(event) =>
-            setArtifactDraft((current) => ({
-              ...current,
-              source_label: event.target.value,
-            }))
-          }
-          required
-        />
-      </label>
-      <label className="field">
-        <span>Evidence note</span>
-        <input
+          className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
           value={artifactDraft.evidence_note}
           onChange={(event) =>
             setArtifactDraft((current) => ({
@@ -97,10 +105,11 @@ export const ArtifactForm: React.FC = () => {
           }
         />
       </label>
-      <label className="field">
-        <span>Content summary</span>
+      <label className="flex flex-col gap-1.5">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Content summary</span>
         <textarea
-          rows={4}
+          className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
+          rows={5}
           value={artifactDraft.content_summary}
           onChange={(event) =>
             setArtifactDraft((current) => ({
@@ -110,12 +119,12 @@ export const ArtifactForm: React.FC = () => {
           }
         />
       </label>
-      <button className="primary-action" type="submit">
-        Add artifact 🥱
+      <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95 mt-2 self-start" type="submit">
+        Add artifact
       </button>
       {!opportunityArtifacts.length && (
-        <div className="warning-callout">
-          <p>No artifacts yet. Start by uploading your resume to build your foundation. 🥱</p>
+        <div className="p-4 rounded-[1.5rem] bg-brand-review/30 border border-brand-review/50 text-sm text-brand-ink">
+          <p>No artifacts yet. Start with the resume or the job description to give the opportunity a real evidence base.</p>
         </div>
       )}
     </form>
