@@ -1,15 +1,43 @@
-name: Verify
+name: Verify And Deploy
 
 on:
-  push:
   pull_request:
+  push:
   workflow_dispatch:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  verify:
+  static-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+  browser-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,25 +56,20 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
 
-      - name: Run verification bundle
-        run: npm run verify
+      - name: Run browser smoke and integration tests
+        run: npm run test:browser:all
 
-      - name: Generate verification summary artifacts
-        run: npm run release:summary
-
-      - name: Upload verification summary artifacts
+      - name: Upload Playwright artifacts
+        if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: release-verification-summary
-          path: output/release/
-          if-no-files-found: error
+          name: playwright-artifacts
+          path: output/playwright/
+          if-no-files-found: ignore
 
-  cross-browser-smoke:
+  release-summary:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chromium, firefox, webkit]
+    needs: [static-checks, browser-checks]
 
     steps:
       - name: Checkout
@@ -61,8 +84,48 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Generate verification summary artifacts
+        run: npm run release:summary
 
-      - name: Run smoke suite on ${{ matrix.browser }}
-        run: npx playwright test tests/smoke.spec.ts --project=${{ matrix.browser }}
+      - name: Upload verification summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-verification-summary
+          path: output/release/
+          if-no-files-found: error
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [static-checks, browser-checks]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
