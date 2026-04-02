@@ -8,7 +8,14 @@ import {
   SponsorshipType,
 } from "../types";
 
-export type AppPage = "login" | "start" | "signal" | "confirm" | "intake" | "workspace" | "about";
+export type AppPage =
+  | "login"
+  | "start"
+  | "proof-drop"
+  | "confirm"
+  | "setup-base"
+  | "workspace"
+  | "about";
 
 export type Notice = { tone: "success" | "info"; message: string } | null;
 

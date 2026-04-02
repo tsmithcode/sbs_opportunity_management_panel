@@ -12,37 +12,37 @@ export function IntakeFlow({
 }: IntakeFlowProps) {
   const [step, setStep] = useState<IntakeStep>("account");
   const steps: { id: IntakeStep; label: string; note: string }[] = [
-    { id: "account", label: "Account", note: "Create the workspace shell." },
-    { id: "user", label: "User", note: "Define the operator behind the pursuit." },
-    { id: "opportunity", label: "Opportunity", note: "Capture the target role and company." },
+    { id: "account", label: "Squad", note: "Name the home base." },
+    { id: "user", label: "You", note: "Lock in who’s getting the bag." },
+    { id: "opportunity", label: "The Play", note: "Set the company + role." },
   ];
   const activeStepIndex = steps.findIndex((item) => item.id === step);
   const stepGuidance: Record<IntakeStep, { title: string; body: string; checklist: string[] }> = {
     account: {
-      title: "Start with the container",
-      body: "The first screen should feel calm and minimal because it only establishes the operating boundary for everything that follows.",
+      title: "Name the home base",
+      body: "This is just your base name so exports don’t look crazy later.",
       checklist: [
-        "Use a clear account name you would recognize in exports.",
-        "Choose the account type without overthinking secondary details.",
-        "Move forward once the workspace container is named and correct.",
+        "Pick a name you’ll recognize fast.",
+        "Choose the type without overthinking it.",
+        "Move once it looks right.",
       ],
     },
     user: {
-      title: "Name the operator",
-      body: "This step anchors who is pursuing the role so the later profile and evidence screens have a real owner.",
+      title: "Put your name on it",
+      body: "This locks the hero to the play so everything else lines up.",
       checklist: [
-        "Use the exact full name you want tied to the opportunity.",
-        "Enter a working email that fits the current search posture.",
-        "Keep the screen narrow and finish the two required fields cleanly.",
+        "Use the name you actually want on the bag.",
+        "Email can be real or later, your call.",
+        "Keep it short and move on.",
       ],
     },
     opportunity: {
-      title: "Capture the opportunity cleanly",
-      body: "This is the last intake gate, so the company and role should be precise enough to drive the workspace without extra cleanup.",
+      title: "Lock the play",
+      body: "Company + role should be clean enough to run without extra cleanup.",
       checklist: [
-        "Choose the pathway before entering company and role.",
-        "Use the real company name and an exact role title.",
-        "Finish intake only when the base case reads correctly at a glance.",
+        "Pick the deal type first.",
+        "Use the real company name and exact role.",
+        "Finish only when it looks right at a glance.",
       ],
     },
   };
@@ -67,11 +67,11 @@ export function IntakeFlow({
     <PageTemplate
       id="intake-flow"
       header={{
-        kicker: `Intake step ${activeStepIndex + 1}`,
-        title: step === "account" ? "Set the workspace boundary." : step === "user" ? "Identify the operator." : "Capture the opportunity target.",
-        description: "This intake flow should feel narrow, decisive, and premium on desktop: one form in focus, one supporting rail, no competing regions.",
+        kicker: `Setup step ${activeStepIndex + 1}`,
+        title: step === "account" ? "Name the base." : step === "user" ? "Claim the hero." : "Lock the play.",
+        description: "Keep it tight. One form, one rail, no extra noise.",
         actions: (
-          <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-3 rounded-full font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={onCancel}>Cancel and return</button>
+          <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-3 rounded-full font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={onCancel}>Cancel and bounce</button>
         )
       }}
     >
@@ -80,11 +80,11 @@ export function IntakeFlow({
           {step === "account" && (
             <form onSubmit={handleAccountSubmit} className="flex flex-col gap-6">
               <div>
-                <h3 className="text-2xl lg:text-3xl font-bold tracking-[-0.04em] text-brand-ink mb-2">1. Account setup</h3>
-                <p className="text-sm text-brand-muted">Create the enterprise-grade container for your career records.</p>
+                <h3 className="text-2xl lg:text-3xl font-bold tracking-[-0.04em] text-brand-ink mb-2">1. Name your base</h3>
+                <p className="text-sm text-brand-muted">Just the home name for your plays.</p>
               </div>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Account Name</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Base name</span>
                 <input 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
                   value={accountDraft.account_name} 
@@ -93,18 +93,18 @@ export function IntakeFlow({
                 />
               </label>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Account Type</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Base type</span>
                 <select 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
                   value={accountDraft.account_type} 
                   onChange={e => onAccountDraftChange({ ...accountDraft, account_type: e.target.value as any })}
                 >
-                  <option value="enterprise">Enterprise</option>
-                  <option value="individual">Individual</option>
+                  <option value="enterprise">Crew / org</option>
+                  <option value="individual">Solo</option>
                 </select>
               </label>
               <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95 mt-4" type="submit">
-                Continue to User Setup
+                Next: your name
               </button>
             </form>
           )}
@@ -112,11 +112,11 @@ export function IntakeFlow({
           {step === "user" && (
             <form onSubmit={handleUserSubmit} className="flex flex-col gap-6">
               <div>
-                <h3 className="text-2xl lg:text-3xl font-bold tracking-[-0.04em] text-brand-ink mb-2">2. User onboarding</h3>
-                <p className="text-sm text-brand-muted">Who is pursuing this opportunity?</p>
+                <h3 className="text-2xl lg:text-3xl font-bold tracking-[-0.04em] text-brand-ink mb-2">2. Claim the hero</h3>
+                <p className="text-sm text-brand-muted">Who’s getting the bag?</p>
               </div>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Full Name</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Your name</span>
                 <input 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
                   value={userDraft.full_name} 
@@ -125,18 +125,17 @@ export function IntakeFlow({
                 />
               </label>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Email</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Email (optional)</span>
                 <input 
                   type="email" 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
                   value={userDraft.email} 
                   onChange={e => onUserDraftChange({ ...userDraft, email: e.target.value })} 
-                  required 
                 />
               </label>
               <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-black/5">
                 <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-3 rounded-full font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={() => setStep("account")}>Back</button>
-                <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Continue to Opportunity</button>
+                <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Next: the play</button>
               </div>
             </form>
           )}
@@ -144,22 +143,22 @@ export function IntakeFlow({
           {step === "opportunity" && (
             <form onSubmit={handleOpportunitySubmit} className="flex flex-col gap-6">
               <div>
-                <h3 className="text-2xl lg:text-3xl font-bold tracking-[-0.04em] text-brand-ink mb-2">3. Opportunity details</h3>
-                <p className="text-sm text-brand-muted">What is the role and company?</p>
+                <h3 className="text-2xl lg:text-3xl font-bold tracking-[-0.04em] text-brand-ink mb-2">3. Lock the play</h3>
+                <p className="text-sm text-brand-muted">Company and role, keep it clean.</p>
               </div>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Pathway</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Deal type</span>
                 <select 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
                   value={opportunityDraft.pathway} 
                   onChange={e => onOpportunityDraftChange({ ...opportunityDraft, pathway: e.target.value as "w2" | "1099" })}
                 >
-                  <option value="w2">W2 Employment / Career Progression</option>
-                  <option value="1099">1099 Consulting / CAD Guardian / B2B</option>
+                  <option value="w2">Payroll job</option>
+                  <option value="1099">Contract bag</option>
                 </select>
               </label>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Company Name</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Company</span>
                 <input 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
                   value={opportunityDraft.company_name} 
@@ -168,7 +167,7 @@ export function IntakeFlow({
                 />
               </label>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Role Title</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Role</span>
                 <input 
                   className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
                   value={opportunityDraft.role_title} 
@@ -178,7 +177,7 @@ export function IntakeFlow({
               </label>
               <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-black/5">
                 <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-3 rounded-full font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={() => setStep("user")}>Back</button>
-                <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Complete Intake</button>
+                <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Finish and go</button>
               </div>
             </form>
           )}
@@ -187,7 +186,7 @@ export function IntakeFlow({
         <aside className="space-y-6 xl:sticky xl:top-24">
           <section className="space-y-5 p-6 lg:p-7 rounded-[2rem] bg-[linear-gradient(160deg,rgba(255,255,255,0.98),rgba(230,239,236,0.88))] border border-brand-highlight/30 shadow-brand-shadow">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">Intake discipline</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">Keep it clean</p>
               <h3 className="text-2xl font-bold tracking-[-0.04em] text-brand-ink mt-2">{activeGuide.title}</h3>
               <p className="text-sm text-brand-muted leading-relaxed mt-3">{activeGuide.body}</p>
             </div>

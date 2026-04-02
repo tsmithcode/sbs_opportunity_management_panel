@@ -56,15 +56,19 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash.includes("about")) setCurrentPage("about");
-      else if (hash.includes("workspace")) setCurrentPage("workspace");
-      else if (hash.includes("confirm")) setCurrentPage("confirm");
-      else if (hash.includes("signal")) setCurrentPage("signal");
-      else if (hash.includes("intake")) setCurrentPage("intake");
-      else if (hash.includes("start")) setCurrentPage("start");
-      else if (hash.includes("login")) setCurrentPage("login");
-      else setCurrentPage("login");
+      const hash = window.location.hash.replace(/^#/, "");
+      const routeMap: Record<string, AppPage> = {
+        "login": "login",
+        "start": "start",
+        "proof-drop": "proof-drop",
+        "confirm": "confirm",
+        "setup-base": "setup-base",
+        "workspace": "workspace",
+        "about": "about",
+        "signal": "proof-drop",
+        "intake": "setup-base",
+      };
+      setCurrentPage(routeMap[hash] ?? "login");
     };
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
@@ -157,8 +161,7 @@ export const MonyawnProvider: React.FC<{ children: React.ReactNode }> = ({ child
     completionScore,
     integrityReport,
     lastIntegrityRunAt
-  };
-
+  }
   return <MonyawnContext.Provider value={value}>{children}</MonyawnContext.Provider>;
 };
 
