@@ -4,8 +4,8 @@ export function AiSettingsPanel({ settings, onSettingsChange }: AiSettingsPanelP
   return (
     <div className="flex flex-col gap-6 p-8 rounded-3xl bg-white/40 border border-black/5 shadow-brand-shadow">
       <div>
-        <h3 className="text-2xl font-bold text-brand-ink mb-1">AI Intelligence Settings 🥱</h3>
-        <p className="text-sm text-brand-muted">Configure how Monyawn processes your narrative. Local rule-based processing is always free and private. 🥱</p>
+        <h3 className="text-2xl font-bold text-brand-ink mb-1">AI settings</h3>
+        <p className="text-sm text-brand-muted">Pick how we polish your story. Local mode is free and private.</p>
       </div>
       
       <div className="flex flex-col gap-6">

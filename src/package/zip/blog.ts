@@ -12,8 +12,8 @@ export async function buildBlogAssetZip(input: {
   const generatedAt = nowIso();
 
   const title = input.outcome.resolution === "awarded" 
-    ? `Monyawn Success Case Study 🥱: ${input.opportunity.role_title} at ${input.opportunity.company_name}`
-    : `Monyawn Market Insights 🥱: Pursuing ${input.opportunity.role_title} at ${input.opportunity.company_name}`;
+    ? `Monyawn Success Story: ${input.opportunity.role_title} at ${input.opportunity.company_name}`
+    : `Monyawn Market Notes: Pursuing ${input.opportunity.role_title} at ${input.opportunity.company_name}`;
 
   const markdownContent = `# ${title}\n\nDate: ${generatedAt}\nResolution: ${input.outcome.resolution.toUpperCase()}\n\n## Overview\n${input.story?.summary || "No narrative summary provided."}\n\n## The Narrative\n${input.story?.markdown || "No detailed narrative provided."}\n\n## Lessons Learned\n${input.outcome.lessons_learned}\n\n## Market Intelligence\n${input.outcome.market_intelligence}\n`;
 
@@ -48,8 +48,8 @@ export async function buildSeasonReportZip(state: AppState): Promise<Blob> {
     
     if (opportunity) {
       const title = outcome.resolution === "awarded" 
-        ? `Monyawn Success Case Study 🥱: ${opportunity.role_title} at ${opportunity.company_name}`
-        : `Monyawn Market Insights 🥱: Pursuing ${opportunity.role_title} at ${opportunity.company_name}`;
+        ? `Monyawn Success Story: ${opportunity.role_title} at ${opportunity.company_name}`
+        : `Monyawn Market Notes: Pursuing ${opportunity.role_title} at ${opportunity.company_name}`;
 
       const markdownContent = `# ${title}\n\nDate: ${outcome.updated_at}\nResolution: ${outcome.resolution.toUpperCase()}\n\n## Overview\n${story?.summary || "No narrative summary provided."}\n\n## The Narrative\n${story?.markdown || "No detailed narrative provided."}\n\n## Lessons Learned\n${outcome.lessons_learned}\n\n## Market Intelligence\n${outcome.market_intelligence}\n`;
 
@@ -73,7 +73,7 @@ export async function buildSeasonReportZip(state: AppState): Promise<Blob> {
   }
 
   zip.file("research-lake.jsonl", jsonlLines.join("\n") + "\n");
-  zip.file("SUMMARY.md", `# Monyawn Season Report 🥱\n\nGenerated: ${generatedAt}\nTotal Outcomes: ${state.outcomes.length}\n\nThis report aggregates all cataloged outcomes into a research and marketing foundation.`);
+  zip.file("SUMMARY.md", `# Monyawn Season Report\n\nGenerated: ${generatedAt}\nTotal Outcomes: ${state.outcomes.length}\n\nThis report aggregates all cataloged outcomes into a research and marketing foundation.`);
 
   return zip.generateAsync({ type: "blob" });
 }

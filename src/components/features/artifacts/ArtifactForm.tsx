@@ -20,17 +20,17 @@ export const ArtifactForm: React.FC = () => {
     const task = createTask(
       selectedOpportunity.opportunity_id,
       `Review ${artifactDraft.artifact_type}: ${artifactDraft.source_label}`,
-      "Workflow Analyst",
+      "Play checker",
       true,
     );
     
     const checkpoint = createCheckpoint(
       selectedOpportunity,
-      "Artifact added",
+      "Proof added",
       artifactDraft.source_label,
       "low",
       "proceed",
-      `New ${artifactDraft.artifact_type} added to the opportunity record.`,
+      `New ${artifactDraft.artifact_type} added to this play.`,
       "low",
       "low",
     );
@@ -42,7 +42,7 @@ export const ArtifactForm: React.FC = () => {
         checkpoints: [checkpoint, ...current.checkpoints],
         tasks: [task, ...current.tasks],
       }),
-      "Artifact recorded."
+      "Proof added."
     );
     setArtifactDraft(defaultArtifactDraft);
   };
@@ -50,13 +50,13 @@ export const ArtifactForm: React.FC = () => {
   return (
     <form className="flex flex-col gap-6 p-6 sm:p-8 lg:p-9 rounded-[2rem] bg-white/60 border border-black/5 shadow-brand-shadow" onSubmit={handleArtifactSubmit}>
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Evidence intake</p>
-        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Document intake and management</h3>
-        <p className="text-sm text-brand-muted leading-relaxed">Capture resumes, job descriptions, notes, and generated outputs with lifecycle-aware metadata.</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Proof drop</p>
+        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Add your proof</h3>
+        <p className="text-sm text-brand-muted leading-relaxed">Resumes, job posts, notes, screenshots. Drop it and keep it clean.</p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Artifact type</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Proof type</span>
           <select
             className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
             value={artifactDraft.artifact_type}
@@ -68,7 +68,7 @@ export const ArtifactForm: React.FC = () => {
             }
           >
             <option value="resume">Resume</option>
-            <option value="job_description">Job description</option>
+            <option value="job_description">Job post</option>
             <option value="message">Message</option>
             <option value="note">Note</option>
             <option value="offer">Offer</option>
@@ -78,7 +78,7 @@ export const ArtifactForm: React.FC = () => {
           </select>
         </label>
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Source label</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Label</span>
           <input
             className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
             value={artifactDraft.source_label}
@@ -93,7 +93,7 @@ export const ArtifactForm: React.FC = () => {
         </label>
       </div>
       <label className="flex flex-col gap-1.5">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Evidence note</span>
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Why it matters</span>
         <input
           className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
           value={artifactDraft.evidence_note}
@@ -106,7 +106,7 @@ export const ArtifactForm: React.FC = () => {
         />
       </label>
       <label className="flex flex-col gap-1.5">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Content summary</span>
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Quick summary</span>
         <textarea
           className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
           rows={5}
@@ -120,11 +120,11 @@ export const ArtifactForm: React.FC = () => {
         />
       </label>
       <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95 mt-2 self-start" type="submit">
-        Add artifact
+        Add proof
       </button>
       {!opportunityArtifacts.length && (
         <div className="p-4 rounded-[1.5rem] bg-brand-review/30 border border-brand-review/50 text-sm text-brand-ink">
-          <p>No artifacts yet. Start with the resume or the job description to give the opportunity a real evidence base.</p>
+          <p>No proof yet. Start with the resume or job post so the play is real.</p>
         </div>
       )}
     </form>

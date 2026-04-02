@@ -2,10 +2,10 @@ import { MobileNavigationProps, MobileTab } from "./MobileNavigation.contract";
 
 export function MobileNavigation({ activeTab, onTabChange }: MobileNavigationProps) {
   const tabs: { id: MobileTab; label: string; icon: string }[] = [
-    { id: "home", label: "Home", icon: "🏠" },
-    { id: "lifecycle", label: "Workflow", icon: "🔄" },
-    { id: "story", label: "Story", icon: "📖" },
-    { id: "admin", label: "Admin", icon: "⚙️" },
+    { id: "home", label: "Bag", icon: "🏠" },
+    { id: "lifecycle", label: "Steps", icon: "🔄" },
+    { id: "story", label: "Receipts", icon: "📖" },
+    { id: "admin", label: "Boss", icon: "⚙️" },
   ];
 
   return (

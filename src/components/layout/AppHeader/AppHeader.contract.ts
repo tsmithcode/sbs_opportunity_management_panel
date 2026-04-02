@@ -1,4 +1,11 @@
-export type AppPage = "login" | "start" | "signal" | "confirm" | "intake" | "workspace" | "about";
+export type AppPage =
+  | "login"
+  | "start"
+  | "proof-drop"
+  | "confirm"
+  | "setup-base"
+  | "workspace"
+  | "about";
 
 export interface AppHeaderProps {
   currentPage: AppPage;

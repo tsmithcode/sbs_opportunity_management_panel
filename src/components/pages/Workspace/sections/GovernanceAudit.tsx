@@ -22,7 +22,7 @@ export const GovernanceAudit: React.FC = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div className="flex flex-col gap-6 p-8 rounded-3xl bg-brand-surface-soft border border-black/5 shadow-brand-shadow">
-        <h3 className="text-xl font-bold text-brand-ink">Exportable correspondence and audit data</h3>
+        <h3 className="text-xl font-bold text-brand-ink">Exportable DMs</h3>
         <div className="flex flex-col gap-4">
           {opportunityCorrespondence.map((item) => (
             <article key={item.correspondence_id} className="p-4 rounded-2xl bg-white border border-black/5 shadow-sm">
@@ -40,44 +40,44 @@ export const GovernanceAudit: React.FC = () => {
             </article>
           ))}
           {!opportunityCorrespondence.length && (
-            <p className="text-sm text-brand-muted italic text-center p-8 rounded-2xl bg-black/5 border border-dashed border-black/10">No correspondence records for this opportunity. 🥱</p>
+            <p className="text-sm text-brand-muted italic text-center p-8 rounded-2xl bg-black/5 border border-dashed border-black/10">No messages on this play yet.</p>
           )}
         </div>
       </div>
 
       <div className="flex flex-col gap-6 p-8 rounded-3xl bg-brand-surface-soft border border-black/5 shadow-brand-shadow">
-        <h3 className="text-xl font-bold text-brand-ink">Current opportunity governance</h3>
+        <h3 className="text-xl font-bold text-brand-ink">Play controls</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 rounded-2xl bg-white border border-black/5">
             <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Review controls</span>
             <p className="text-xs text-brand-ink mt-2">
-              Human-review-required checkpoints: <strong>{currentReviewRequiredCount}</strong>. Open escalations: <strong>{opportunityEscalations.length}</strong>. Blocking tasks: <strong>{blockingTaskCount}</strong>.
+              Human checks: <strong>{currentReviewRequiredCount}</strong>. Escalations: <strong>{opportunityEscalations.length}</strong>. Blockers: <strong>{blockingTaskCount}</strong>.
             </p>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-black/5">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Support boundary</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Private notes</span>
             <p className="text-xs text-brand-ink mt-2">
               {selectedSensitiveSupport?.enabled
                 ? selectedSensitiveSupport.include_in_export
-                  ? "Sensitive support is enabled and explicitly marked for export."
-                  : "Sensitive support is enabled but remains local-only and excluded from export."
-                : "No sensitive support profile is active for this opportunity."}
+                  ? "Private notes will go out in export."
+                  : "Private notes are local-only."
+                : "No private notes for this play."}
             </p>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-black/5">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Narrative readiness</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Story readiness</span>
             <p className="text-xs text-brand-ink mt-2">
               {selectedCandidateStory
-                ? `Candidate story ready with ${selectedCandidateStory.source_artifact_ids.length} linked artifacts.`
-                : "Candidate story has not been generated yet."}
+                ? `Story ready with ${selectedCandidateStory.source_artifact_ids.length} proof drops.`
+                : "Story not generated yet."}
             </p>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-black/5">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Governance outcome</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Boss notes</span>
             <ul className="text-[10px] text-brand-muted list-disc pl-4 mt-2 space-y-1">
-              <li>CEO direction: enterprise-grade opportunity platform.</li>
-              <li>President vote: Platform Ops First.</li>
-              <li>Operating model: human-in-the-loop with premium governance.</li>
+              <li>Direction: keep it real, keep it fast.</li>
+              <li>Focus: ops first, money next.</li>
+              <li>Model: human‑in‑the‑loop, no corporate zombie talk.</li>
             </ul>
           </div>
         </div>

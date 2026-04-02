@@ -20,43 +20,43 @@ export const AdminOverview: React.FC = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div className="flex flex-col gap-6 p-8 rounded-3xl bg-white/40 border border-black/5 shadow-brand-shadow">
         <div>
-          <h3 className="text-xl font-bold text-brand-ink mb-1">Current handoff package scope</h3>
+          <h3 className="text-xl font-bold text-brand-ink mb-1">What’s in the export</h3>
           <div className="flex flex-wrap gap-2 mt-4">
             {["session.json", "manifest.json", "lifecycle markdown", "candidate story markdown/pdf", "correspondence markdown/pdf", "memo markdown/pdf", "session summary pdf"].map(chip => (
               <span key={chip} className="px-2 py-0.5 rounded-full bg-brand-highlight/30 text-brand-accent text-[10px] font-bold border border-brand-accent/10">{chip}</span>
             ))}
           </div>
           <p className="text-sm text-brand-muted mt-4">
-            JSON remains the restore authority. Markdown and PDF outputs are readable derivatives for handoff, review, and print-safe usage.
+            JSON restores the full state. Markdown/PDF are for sharing and review.
           </p>
         </div>
         <div className="flex gap-4 mt-auto">
           <button className="bg-brand-surface border border-black/10 text-brand-ink px-4 py-2 rounded-xl text-sm font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleIntegrityCheck}>
-            Run integrity check
+            Run health check
           </button>
           <button className="bg-brand-surface border border-black/10 text-brand-ink px-4 py-2 rounded-xl text-sm font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleBuyerPacketExport}>
-            Generate buyer packet ZIP
+            Generate share ZIP
           </button>
         </div>
       </div>
 
       <div className="flex flex-col gap-6 p-8 rounded-3xl bg-brand-surface-soft border border-black/5 shadow-brand-shadow">
         <div>
-          <h3 className="text-xl font-bold text-brand-ink mb-1">Platform API surface</h3>
+          <h3 className="text-xl font-bold text-brand-ink mb-1">Data surface</h3>
           <div className="flex flex-wrap gap-2 mt-4">
             {apiSurface.map((resource) => (
               <span key={resource} className="px-2 py-0.5 rounded-full bg-brand-highlight/30 text-brand-accent text-[10px] font-bold border border-brand-accent/10">{resource}</span>
             ))}
           </div>
           <p className="text-sm text-brand-muted mt-4">
-            The current implementation uses the workflow schema as the local contract for first-class records and supports export of all resources as a local handoff package with canonical JSON.
+            These are the records we track and export in the local ZIP.
           </p>
         </div>
       </div>
 
       <div className="flex flex-col gap-6 p-8 rounded-3xl bg-brand-surface-soft border border-black/5 shadow-brand-shadow">
         <div>
-          <h3 className="text-xl font-bold text-brand-ink mb-1">Integrity summary</h3>
+          <h3 className="text-xl font-bold text-brand-ink mb-1">Health summary</h3>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div>
               <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Errors</span>
@@ -78,7 +78,7 @@ export const AdminOverview: React.FC = () => {
             ) : (
               <article className="p-3 rounded-lg bg-black/5 text-[10px] text-brand-muted">
                 <p className="font-bold uppercase tracking-tighter mb-1">Errors</p>
-                <p>No structural errors detected.</p>
+                <p>No structural errors found.</p>
               </article>
             )}
             {integrityReport.warnings.slice(0, 3).map((item) => (
@@ -91,20 +91,20 @@ export const AdminOverview: React.FC = () => {
           <p className="text-[10px] text-brand-muted mt-4 italic">
             {lastIntegrityRunAt
               ? `Last integrity run: ${new Date(lastIntegrityRunAt).toLocaleString()}.`
-              : "Integrity checks run automatically during import and export."}
+              : "Checks run automatically during import/export."}
           </p>
         </div>
       </div>
 
       <div className="col-span-1 md:col-span-2 lg:col-span-3 p-8 rounded-3xl bg-brand-surface-soft border border-black/5 shadow-brand-shadow">
-        <h3 className="text-xl font-bold text-brand-ink mb-6">Reporting snapshot</h3>
+        <h3 className="text-xl font-bold text-brand-ink mb-6">Snapshot</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Intake completion</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Setup done</span>
             <p className="text-3xl font-bold text-brand-accent">{Math.round(reportingSnapshot.intake_completion_rate * 100)}%</p>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Fit review completion</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Fit check done</span>
             <p className="text-3xl font-bold text-brand-accent">{Math.round(reportingSnapshot.fit_review_completion_rate * 100)}%</p>
           </div>
           <div>
@@ -112,7 +112,7 @@ export const AdminOverview: React.FC = () => {
             <p className="text-3xl font-bold text-brand-accent">{Math.round(reportingSnapshot.approval_rate * 100)}%</p>
           </div>
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Escalation rate</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Escalations</span>
             <p className="text-3xl font-bold text-brand-accent">{Math.round(reportingSnapshot.escalation_rate * 100)}%</p>
           </div>
         </div>

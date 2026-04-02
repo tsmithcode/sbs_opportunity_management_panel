@@ -31,43 +31,43 @@ type StepGuide = {
 
 const baseStepGuides: Record<Exclude<WorkspaceStep, "posture">, StepGuide> = {
   artifacts: {
-    title: "Build the evidence base",
-    description: "Start with the strongest proof first so every later decision has something concrete to work from.",
-    successSignal: "At least one core document is recorded and clearly labeled.",
+    title: "Stack the proof",
+    description: "Start with your strongest proof so every later move is solid.",
+    successSignal: "At least one core doc is in and labeled.",
     checklist: [
-      "Add the resume or job description before anything else.",
-      "Name the artifact so you can recognize it later without opening it.",
-      "Use the evidence note to explain why this record matters.",
+      "Add resume or job description first.",
+      "Name it so you can spot it fast.",
+      "Explain why it matters in one line.",
     ],
   },
   profile: {
-    title: "Correct the candidate record",
-    description: "Turn rough extraction into an accurate operating profile the rest of the workflow can trust.",
-    successSignal: "Skills, experience, strengths, and gaps read like a fair summary of you.",
+    title: "Make your profile real",
+    description: "Turn rough pulls into a clean, honest profile.",
+    successSignal: "Skills, strengths, and gaps read like the real you.",
     checklist: [
-      "Keep the skills summary specific to this opportunity.",
-      "State seniority in plain language rather than inflated titles.",
-      "List gaps honestly so positioning work can compensate for them later.",
+      "Keep skills tied to this play.",
+      "Use real titles, not hype.",
+      "Call out gaps so we can cover them.",
     ],
   },
   correspondence: {
-    title: "Prepare controlled outreach",
-    description: "Draft messages and notes with enough context that they can be reviewed before they leave the workspace.",
-    successSignal: "A draft exists for the next conversation you expect to have.",
+    title: "Draft the messages",
+    description: "Write the DMs and notes with enough context to send clean.",
+    successSignal: "A draft exists for your next convo.",
     checklist: [
-      "Choose the right channel first so tone matches the situation.",
-      "Use the subject to make the purpose obvious at a glance.",
-      "Capture internal notes here too if they affect timing or follow-up.",
+      "Pick the channel so the tone fits.",
+      "Make the subject say the purpose.",
+      "Drop internal notes if timing matters.",
     ],
   },
   coaching: {
-    title: "Absorb guidance without blocking momentum",
-    description: "Coaching should sharpen the next move, not create another mandatory data-entry task.",
-    successSignal: "You can explain the next step and the business context behind it.",
+    title: "Get the move right",
+    description: "Guidance should sharpen your next step, not slow you down.",
+    successSignal: "You can explain your next move with confidence.",
     checklist: [
-      "Open only the guidance that helps the current stage.",
-      "Use glossary and lifecycle context to reduce ambiguity.",
-      "Move back into execution once the next action is clear.",
+      "Only open what helps right now.",
+      "Use the notes to kill confusion.",
+      "Execute once the next move is clear.",
     ],
   },
 };
@@ -100,24 +100,24 @@ export function WorkspacePage() {
       <main id="main-content" className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 py-8 sm:py-10 lg:py-12 w-full min-h-screen">
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16" aria-labelledby="hero-title">
           <div className="flex flex-col gap-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">No Active Opportunity</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">No active play</p>
             <h1 id="hero-title" className="text-4xl md:text-5xl font-extrabold text-brand-ink leading-[1.15]">
-              Ready to start your next pursuit? 🥱
+              Ready to chase the monyawn?
             </h1>
             <p className="text-lg text-brand-muted leading-relaxed max-w-2xl">
-              You haven't selected an opportunity yet. You can start a new intake flow, restore from a previous ZIP export, or load the seeded demo data to explore the platform.
+              You haven’t picked a play yet. Start fresh, restore a ZIP, or load the mock bag to explore.
             </p>
 
             <div className="flex flex-wrap gap-4 mt-8">
-              <button className="bg-brand-accent text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-accent-strong transition-all shadow-sm active:scale-95" type="button" onClick={() => { window.location.hash = "intake"; setCurrentPage("intake"); }}>
-                Start new intake 🥱
+              <button className="bg-brand-accent text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-accent-strong transition-all shadow-sm active:scale-95" type="button" onClick={() => { window.location.hash = "setup-base"; setCurrentPage("setup-base"); }}>
+                Start a new play
               </button>
               <label className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95 cursor-pointer inline-flex items-center">
-                Restore from ZIP
+                Restore a ZIP
                 <input type="file" accept=".zip" className="hidden" onChange={handleImport} />
               </label>
               <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={() => patchState(() => createSeedState(), "Demo data loaded.")}>
-                Load demo data
+                Load mock bag
               </button>
             </div>
 
@@ -133,11 +133,11 @@ export function WorkspacePage() {
   }
 
   const steps: { id: WorkspaceStep; label: string }[] = [
-    { id: "artifacts", label: "1. Artifacts" },
-    { id: "profile", label: "2. Profile" },
-    { id: "correspondence", label: "3. Messages" },
-    { id: "posture", label: selectedOpportunity.pathway === "1099" ? "4. Commercial" : "4. Support" },
-    { id: "coaching", label: "5. Coaching" },
+    { id: "artifacts", label: "1. Proof" },
+    { id: "profile", label: "2. You" },
+    { id: "correspondence", label: "3. DMs" },
+    { id: "posture", label: selectedOpportunity.pathway === "1099" ? "4. Money talk" : "4. Real life" },
+    { id: "coaching", label: "5. Moves" },
   ];
 
   const stepGuides: Record<WorkspaceStep, StepGuide> = {
@@ -145,23 +145,23 @@ export function WorkspacePage() {
     posture:
       selectedOpportunity.pathway === "1099"
         ? {
-            title: "Define the deal before the rush",
-            description: "Use the posture step to pin down commercial terms while the opportunity is still moving.",
-            successSignal: "Rate, engagement shape, and SOW posture are explicit enough to negotiate from.",
+            title: "Talk money before the rush",
+            description: "Lock your rate and terms while the play is hot.",
+            successSignal: "Rate, deal shape, and status are clear enough to negotiate.",
             checklist: [
-              "Set a target rate or project budget you can defend.",
-              "Choose the engagement model that matches the work.",
-              "Track scope and SOW risk before discussions intensify.",
+              "Set a rate you can defend.",
+              "Pick the deal model that matches the work.",
+              "Track scope risk before it gets messy.",
             ],
           }
         : {
-            title: "Capture optional support privately",
-            description: "Keep any sensitive planning local-only and separate from the normal export path unless you choose otherwise.",
-            successSignal: "Your support plan helps you move calmly without oversharing.",
+            title: "Keep real life private",
+            description: "If you need support notes, keep it local unless you choose to export.",
+            successSignal: "Your plan helps you move without oversharing.",
             checklist: [
-              "Only enable support guidance if it helps this opportunity.",
-              "Record practical next steps instead of writing a diary entry.",
-              "Leave export disabled unless the handoff truly needs this context.",
+              "Only enable it if it helps this play.",
+              "Write practical next steps, not a diary.",
+              "Keep export off unless you really need it.",
             ],
           },
   };
@@ -199,24 +199,25 @@ export function WorkspacePage() {
                   .slice(0, 3)
               : [];
   const nextStep = steps[activeStepIndex + 1];
-  const nextStepLabel = nextStep ? nextStep.label.replace(/^\d+\.\s*/, "") : "Review and advance the opportunity stage";
+  const nextStepLabel = nextStep ? nextStep.label.replace(/^\d+\.\s*/, "") : "Review and level up the play";
   const userWorkspaceContent = (
     <div className="space-y-8">
-      <nav className="flex flex-wrap gap-2 border-b border-black/5 pb-4">
-        {steps.map((step) => (
-          <button
-            key={step.id}
-            onClick={() => setActiveStep(step.id)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${
-              activeStep === step.id
-                ? "bg-brand-accent text-white shadow-sm"
-                : "bg-brand-surface border border-black/5 text-brand-muted hover:bg-black/5"
-            }`}
-          >
-            {step.label}
-          </button>
-        ))}
-      </nav>
+      <div className="flex flex-wrap items-center gap-3 border-b border-black/5 pb-4">
+        <label className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">
+          Step
+        </label>
+        <select
+          value={activeStep}
+          onChange={(event) => setActiveStep(event.target.value as WorkspaceStep)}
+          className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest bg-brand-surface border border-black/5 text-brand-ink hover:bg-black/5 transition-all"
+        >
+          {steps.map((step) => (
+            <option key={step.id} value={step.id}>
+              {step.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.65fr)_minmax(320px,0.95fr)] gap-8 items-start">
         <div className="space-y-6">
@@ -224,14 +225,14 @@ export function WorkspacePage() {
             <div className="space-y-6">
               <ArtifactForm />
               <div className="flex justify-end">
-                <button
-                  className="bg-brand-surface border border-black/10 text-brand-ink px-8 py-3 rounded-xl font-bold hover:bg-black/5 transition-all active:scale-95 shadow-sm"
-                  onClick={() => setActiveStep("profile")}
-                >
-                  Next: Profile Confirmation 🥱
-                </button>
+                  <button
+                    className="bg-brand-surface border border-black/10 text-brand-ink px-8 py-3 rounded-xl font-bold hover:bg-black/5 transition-all active:scale-95 shadow-sm"
+                    onClick={() => setActiveStep("profile")}
+                  >
+                    Next: Your profile
+                  </button>
+                </div>
               </div>
-            </div>
           )}
 
           {activeStep === "profile" && (
@@ -244,14 +245,14 @@ export function WorkspacePage() {
                 >
                   Back
                 </button>
-                <button
-                  className="bg-brand-surface border border-black/10 text-brand-ink px-8 py-3 rounded-xl font-bold hover:bg-black/5 transition-all active:scale-95 shadow-sm"
-                  onClick={() => setActiveStep("correspondence")}
-                >
-                  Next: Correspondence 🥱
-                </button>
+                  <button
+                    className="bg-brand-surface border border-black/10 text-brand-ink px-8 py-3 rounded-xl font-bold hover:bg-black/5 transition-all active:scale-95 shadow-sm"
+                    onClick={() => setActiveStep("correspondence")}
+                  >
+                    Next: DMs
+                  </button>
+                </div>
               </div>
-            </div>
           )}
 
           {activeStep === "correspondence" && (
@@ -268,7 +269,7 @@ export function WorkspacePage() {
                   className="bg-brand-surface border border-black/10 text-brand-ink px-8 py-3 rounded-xl font-bold hover:bg-black/5 transition-all active:scale-95 shadow-sm"
                   onClick={() => setActiveStep("posture")}
                 >
-                  Next: {selectedOpportunity.pathway === "1099" ? "Commercial Posture" : "Sensitive Support"} 🥱
+                  Next: {selectedOpportunity.pathway === "1099" ? "Money talk" : "Real life"}
                 </button>
               </div>
             </div>
@@ -288,7 +289,7 @@ export function WorkspacePage() {
                   className="bg-brand-surface border border-black/10 text-brand-ink px-8 py-3 rounded-xl font-bold hover:bg-black/5 transition-all active:scale-95 shadow-sm"
                   onClick={() => setActiveStep("coaching")}
                 >
-                  Next: Optional Coaching 🥱
+                  Next: Tips
                 </button>
               </div>
             </div>
@@ -423,7 +424,7 @@ export function WorkspacePage() {
                   </ul>
                 ) : (
                   <p className="text-sm text-brand-muted mt-2">
-                    This step does not have saved data yet. Use the form on the left to create the first record.
+                    Nothing saved here yet. Use the form on the left to drop the first one.
                   </p>
                 )}
               </div>
@@ -431,8 +432,8 @@ export function WorkspacePage() {
                 <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand-muted">Next move</p>
                 <p className="text-sm text-brand-ink mt-2">
                   {nextStep
-                    ? `Once this step is in good shape, move to ${nextStepLabel}.`
-                    : "Once this review is complete, use the stage controls above to move the opportunity forward."}
+                    ? `When this looks right, move to ${nextStepLabel}.`
+                    : "When this is done, hit the stage controls above to level up the play."}
                 </p>
               </div>
             </div>
@@ -447,18 +448,18 @@ export function WorkspacePage() {
       <section className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.18fr)_minmax(340px,0.82fr)] gap-8 xl:gap-10 items-start mb-12 lg:mb-14" aria-labelledby="hero-title">
         <div className="flex flex-col gap-6 w-full">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-accent">
-            {state.currentMode === "user" ? `Step: ${activeStep.toUpperCase()} 🥱` : getMonyawnKicker()}
+            {state.currentMode === "user" ? `Step: ${activeStep.toUpperCase()}` : getMonyawnKicker()}
           </p>
           <h1 id="hero-title" className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.35rem] font-extrabold text-brand-ink leading-[0.98] tracking-[-0.04em]">
-            Operational cockpit for high-stakes career moves.
+            The money cockpit. You drive, we clear the lane.
           </h1>
           <p className="text-base lg:text-lg text-brand-muted leading-relaxed max-w-[68ch]">
-            Turn your job search into a governed, evidence-backed workflow. Monyawn helps you develop your story, manage artifacts, and maintain full control of your data.
+            Turn your hunt into a clean playbook. Monyawn keeps your proof, your moves, and your monyawn in order.
           </p>
 
           <div className="flex flex-wrap gap-4 mt-4">
             <button className="bg-brand-accent text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-accent-strong transition-all shadow-sm active:scale-95" type="button" onClick={handleAdvanceStage}>
-              Advance to next stage 🥱
+              Level up the play
             </button>
             <button 
               className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" 
@@ -466,13 +467,10 @@ export function WorkspacePage() {
               onClick={handleCloseLost}
               disabled={!selectedOpportunity || isClosedStage(selectedOpportunity.current_stage)}
             >
-              Close as lost
+              Mark it dead
             </button>
             <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleExport}>
-              Export ZIP handoff package 🥱
-            </button>
-            <button className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={resetSeedState}>
-              Reset seeded state
+              Export the ZIP
             </button>
           </div>
 
@@ -481,13 +479,26 @@ export function WorkspacePage() {
               {notice.message}
             </div>
           )}
+
+          <details className="mt-4 rounded-2xl border border-black/10 bg-brand-surface px-4 py-3 w-fit">
+            <summary className="cursor-pointer text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">
+              Dev tools
+            </summary>
+            <button
+              className="mt-3 bg-brand-surface border border-black/10 text-brand-ink px-4 py-2 rounded-full text-xs font-semibold hover:bg-black/5 transition-all"
+              type="button"
+              onClick={resetSeedState}
+            >
+              Reset the mock bag
+            </button>
+          </details>
         </div>
 
         <div className="grid grid-cols-1 gap-4 xl:sticky xl:top-24">
           <PrivacyGuard />
           <LeverageIndicator 
             score={completionScore} 
-            label={selectedOpportunity?.current_stage || "Next step"} 
+            label={selectedOpportunity?.current_stage || "Next move"} 
             isComplete={completionScore === 100}
           />
         </div>

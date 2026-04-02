@@ -41,5 +41,5 @@ export function formatDate(isoString: string) {
  * Returns a kicker for the Monyawn brand identity.
  */
 export function getMonyawnKicker() {
-  return "Money + Yawn = Monyawn 🥱";
+  return "We finna get to the monyan";
 }

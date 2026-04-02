@@ -29,11 +29,11 @@ export function useProfileOperations() {
 
     const checkpoint = createCheckpoint(
       selectedOpportunity,
-      "Candidate profile confirmation",
-      "User manually corrected or confirmed the extracted profile signals.",
+      "Profile confirmed",
+      "User corrected or confirmed profile details.",
       "high",
       "proceed",
-      "Profile reflects manual user input and truthfulness confirmation.",
+      "Profile reflects real user input.",
       "low",
       "low",
     );
@@ -47,10 +47,10 @@ export function useProfileOperations() {
         ],
         checkpoints: [checkpoint, ...current.checkpoints],
       }),
-      "Candidate profile updated and confirmed. 🥱",
+      "Profile updated and confirmed.",
     );
     
-    setNotice({ tone: "success", message: "Profile baseline confirmed. 🥱" });
+    setNotice({ tone: "success", message: "Profile confirmed." });
   };
 
   return {

@@ -4,7 +4,7 @@ export function LeverageIndicator({ score, label, isComplete }: LeverageIndicato
   return (
     <div className="w-full max-w-[360px] bg-white/60 p-4 lg:p-5 rounded-[1.5rem] border border-black/5 shadow-brand-shadow space-y-3">
       <div className="flex justify-between items-center gap-4">
-        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">Leverage score</span>
+        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">Bag meter</span>
         <span className="text-sm font-bold text-brand-ink">{score}%</span>
       </div>
       <div className="h-2.5 w-full bg-black/5 rounded-full overflow-hidden">
@@ -15,9 +15,9 @@ export function LeverageIndicator({ score, label, isComplete }: LeverageIndicato
       </div>
       <p className="text-xs text-brand-muted leading-relaxed">
         {isComplete ? (
-          <span className="text-brand-accent font-semibold">Maximum leverage achieved. Ready for outcome.</span>
+          <span className="text-brand-accent font-semibold">Max bag energy. Ready to close.</span>
         ) : (
-          <>Next: <span className="text-brand-ink font-medium">{label}</span></>
+          <>Next move: <span className="text-brand-ink font-medium">{label}</span></>
         )}
       </p>
     </div>

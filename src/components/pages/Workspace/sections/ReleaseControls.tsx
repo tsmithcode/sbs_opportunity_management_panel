@@ -33,10 +33,10 @@ export const ReleaseControls: React.FC = () => {
   return (
     <div className="flex flex-col gap-8 p-8 rounded-3xl bg-brand-surface-soft border border-black/5 shadow-brand-shadow">
       <div className="flex flex-col gap-2">
-        <h3 className="text-xl font-bold text-brand-ink">Release status</h3>
+        <h3 className="text-xl font-bold text-brand-ink">Launch status</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
           <div className="p-4 rounded-2xl bg-white/50 border border-black/5">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Last validated phase</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Last proof stage</span>
             <p className="text-lg font-bold text-brand-ink">{releaseStatus.lastValidatedPhase}</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/50 border border-black/5">
@@ -52,7 +52,7 @@ export const ReleaseControls: React.FC = () => {
 
       <div className="flex flex-wrap gap-4">
         <button className="bg-brand-accent text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-brand-accent-strong transition-all active:scale-95" type="button" onClick={() => fileInputRef.current?.click()}>
-          Import release artifact
+          Import proof
         </button>
         <button className="bg-brand-surface border border-black/10 text-brand-ink px-4 py-2 rounded-xl text-sm font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleReleaseSummaryMarkdownDownload}>
           Download summary MD
@@ -61,10 +61,10 @@ export const ReleaseControls: React.FC = () => {
           Download summary JSON
         </button>
         <button className="bg-brand-surface border border-black/10 text-brand-ink px-4 py-2 rounded-xl text-sm font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleReleaseReadinessPacketExport}>
-          Generate readiness ZIP
+          Generate share ZIP
         </button>
         <button className="bg-brand-surface border border-black/10 text-brand-ink px-4 py-2 rounded-xl text-sm font-medium hover:bg-black/5 transition-all active:scale-95" type="button" onClick={handleReadinessPacketDownload}>
-          Download readiness MD
+          Download share MD
         </button>
       </div>
 
@@ -79,7 +79,7 @@ export const ReleaseControls: React.FC = () => {
 
       <div className="flex flex-col gap-4 mt-4">
         <div className="flex justify-between items-center">
-          <h4 className="text-lg font-bold text-brand-ink">Review history ({state.releaseArtifactReviews.length} stored)</h4>
+          <h4 className="text-lg font-bold text-brand-ink">Proof history ({state.releaseArtifactReviews.length})</h4>
           <button 
             className="text-xs text-red-600 font-bold hover:underline" 
             onClick={() => clearReleaseArtifactReviewsForCurrentOpportunity(state.selectedAccountId, state.selectedOpportunityId)}
@@ -90,10 +90,10 @@ export const ReleaseControls: React.FC = () => {
         </div>
         <input
           className="w-full px-4 py-2 rounded-xl border border-black/10 bg-white/50 text-sm outline-none focus:ring-2 focus:ring-brand-accent"
-          placeholder="Search stored reviews..."
+          placeholder="Search proof..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          aria-label="Search stored reviews"
+          aria-label="Search proof"
         />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredReviews.map((item) => (
@@ -116,7 +116,7 @@ export const ReleaseControls: React.FC = () => {
           ))}
           {!filteredReviews.length && (
             <div className="col-span-full p-8 rounded-2xl bg-black/5 text-center text-sm text-brand-muted border border-dashed border-black/10">
-              No matching reviews found. 🥱
+              No matching proof found.
             </div>
           )}
         </div>

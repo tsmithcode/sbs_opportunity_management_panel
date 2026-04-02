@@ -21,68 +21,68 @@ export function OutcomePanel({ opportunityId, existingOutcome, onSubmit, onGener
   return (
     <div className="flex flex-col gap-6 p-8 rounded-3xl bg-white/40 border border-black/5 shadow-brand-shadow">
       <div>
-        <h3 className="text-2xl font-bold text-brand-ink mb-1">Opportunity Resolution 🥱</h3>
-        <p className="text-sm text-brand-muted">Turn this outcome into easy leverage for your next high-stakes move.</p>
+        <h3 className="text-2xl font-bold text-brand-ink mb-1">How it ended</h3>
+        <p className="text-sm text-brand-muted">Turn this into ammo for your next bag.</p>
       </div>
       
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Resolution 🥱</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Outcome</span>
           <select 
             className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
             value={resolution} 
             onChange={e => setResolution(e.target.value as any)}
           >
-            <option value="awarded">Awarded / Offer Accepted 🥱</option>
-            <option value="denied">Denied / Offer Declined</option>
+            <option value="awarded">Got it / Accepted</option>
+            <option value="denied">Nope / Declined</option>
             <option value="withdrawn">Withdrawn</option>
           </select>
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Lessons Learned</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">What you learned</span>
           <textarea 
             className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
             rows={3} 
             value={lessons} 
             onChange={e => setLessons(e.target.value)} 
-            placeholder="What did this process teach you about your narrative or technical fit?"
+            placeholder="What did this teach you about your story or fit?"
           />
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Market Intelligence</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Street intel</span>
           <textarea 
             className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
             rows={3} 
             value={marketIntel} 
             onChange={e => setMarketIntel(e.target.value)} 
-            placeholder="Any insights on company culture, tech stack, or hiring trends?"
+            placeholder="Insights on culture, stack, or hiring moves?"
           />
         </label>
 
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Content Potential</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Share potential</span>
           <select 
             className="w-full px-4 py-2.5 rounded-xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
             value={contentPotential} 
             onChange={e => setContentPotential(e.target.value as any)}
           >
-            <option value="low">Low - Internal Only</option>
-            <option value="medium">Medium - Great for Portfolio</option>
-            <option value="high">High - Blog / Marketing Asset</option>
+            <option value="low">Low - private</option>
+            <option value="medium">Medium - portfolio ready</option>
+            <option value="high">High - post it</option>
           </select>
         </label>
 
         <div className="flex flex-wrap gap-4 mt-6 pt-6 border-t border-black/5">
-          <button className="bg-brand-accent text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Save Outcome</button>
+          <button className="bg-brand-accent text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95" type="submit">Save outcome</button>
           <button 
             className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-2.5 rounded-xl font-medium hover:bg-black/5 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none" 
             type="button" 
             onClick={onGenerateBlog}
             disabled={!lessons}
           >
-            Generate Blog Asset (Markdown + JSONL)
+            Generate share pack (MD + JSONL)
           </button>
         </div>
       </form>

@@ -21,11 +21,11 @@ export function useCandidateStoryOps() {
 
   const handleGenerateCandidateStory = async () => {
     if (!selectedOpportunity || !selectedUser || !selectedProfile) {
-      setNotice({ tone: "info", message: "Missing required profile data for story generation." });
+      setNotice({ tone: "info", message: "Missing profile data for the story." });
       return;
     }
 
-    setNotice({ tone: "info", message: "Generating candidate story narrative... 🥱" });
+    setNotice({ tone: "info", message: "Dropping your story..." });
 
     try {
       let storyDraft: Omit<CandidateStory, "story_id" | "updated_at">;
@@ -53,11 +53,11 @@ export function useCandidateStoryOps() {
       const nextStory = createCandidateStoryRecord(storyDraft);
       const checkpoint = createCheckpoint(
         selectedOpportunity,
-        "Candidate story generated",
-        "Narrative ready for review",
+        "Story generated",
+        "Story ready for review",
         "high",
         "proceed",
-        "The AI-generated candidate story is now attached to the opportunity record.",
+        "The story is now attached to this play.",
         "medium",
         "low"
       );
@@ -68,7 +68,7 @@ export function useCandidateStoryOps() {
           candidateStories: [nextStory, ...current.candidateStories],
           checkpoints: [checkpoint, ...current.checkpoints],
         }),
-        "Candidate story narrative generated and attached to the opportunity."
+        "Story generated and attached."
       );
       
       return nextStory;

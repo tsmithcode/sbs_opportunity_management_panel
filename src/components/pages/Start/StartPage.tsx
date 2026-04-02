@@ -7,10 +7,10 @@ export function StartPage({ onAddSignal, onOpenWorkspace, onOpenAbout }: StartPa
       id="start-page"
       className="min-h-[calc(100vh-72px)]"
       header={{
-        kicker: "Get Started",
-        title: "Bring in the first signal. Let the system do the organizing.",
+        kicker: "Let’s Get This Bag",
+        title: "Drop the first move. We flip it into a money play.",
         description:
-          "Start from the real-world thing you actually have right now: a recruiter email, job link, transcript, or note. The product should structure the opportunity before it asks you for effort.",
+          "Start with what you already got: a recruiter text, a job link, a voice note, or a screenshot. We do the cleanup so you can chase the monyawn.",
         actions: (
           <>
             <button
@@ -18,39 +18,39 @@ export function StartPage({ onAddSignal, onOpenWorkspace, onOpenAbout }: StartPa
               type="button"
               onClick={onAddSignal}
             >
-              Add your first signal
+              Drop first move
             </button>
             <button
               className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-3 rounded-full font-medium hover:bg-black/5 transition-all active:scale-95"
               type="button"
               onClick={onOpenWorkspace}
             >
-              Open existing opportunity
+              Open my grind
             </button>
             <button
               className="bg-brand-surface border border-black/10 text-brand-ink px-6 py-3 rounded-full font-medium hover:bg-black/5 transition-all active:scale-95"
               type="button"
               onClick={onOpenAbout}
             >
-              Read the system brief
+              Read the vibe
             </button>
           </>
         ),
         panel: (
           <div className="rounded-[2rem] border border-black/5 bg-white/75 shadow-brand-shadow p-6 lg:p-7">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-accent">Fastest path</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-accent">Fast lane</p>
             <div className="space-y-4 mt-4">
               <div className="border-t border-black/8 pt-4">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted">1. Drop the signal</p>
-                <p className="text-sm text-brand-ink mt-2 leading-relaxed">Paste the recruiter email, job link, transcript, or note.</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted">1. Drop the proof</p>
+                <p className="text-sm text-brand-ink mt-2 leading-relaxed">Paste the text, link, or note. No extra drama.</p>
               </div>
               <div className="border-t border-black/8 pt-4">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted">2. Confirm the draft</p>
-                <p className="text-sm text-brand-ink mt-2 leading-relaxed">Approve what the system inferred instead of typing from scratch.</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted">2. Check the draft</p>
+                <p className="text-sm text-brand-ink mt-2 leading-relaxed">We fill it in. You just nod or tweak.</p>
               </div>
               <div className="border-t border-black/8 pt-4">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted">3. Move the opportunity</p>
-                <p className="text-sm text-brand-ink mt-2 leading-relaxed">Use guided next steps for messages, interview prep, and outcome decisions.</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-muted">3. Make the move</p>
+                <p className="text-sm text-brand-ink mt-2 leading-relaxed">Shoot the messages, prep the talk, lock the bag.</p>
               </div>
             </div>
           </div>
@@ -59,27 +59,27 @@ export function StartPage({ onAddSignal, onOpenWorkspace, onOpenAbout }: StartPa
     >
       <section className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(300px,0.9fr)] gap-6">
         <div className="rounded-[2rem] border border-black/5 bg-white/60 shadow-brand-shadow p-6 lg:p-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">What the product should feel like</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">How it should feel</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
             <div>
-              <h3 className="text-xl font-bold tracking-[-0.03em] text-brand-ink">Fast</h3>
-              <p className="text-sm text-brand-muted leading-relaxed mt-2">Most new opportunities should start in under five minutes.</p>
+              <h3 className="text-xl font-bold tracking-[-0.03em] text-brand-ink">Quick</h3>
+              <p className="text-sm text-brand-muted leading-relaxed mt-2">Get a new move started in a few minutes.</p>
             </div>
             <div>
-              <h3 className="text-xl font-bold tracking-[-0.03em] text-brand-ink">Supportive</h3>
-              <p className="text-sm text-brand-muted leading-relaxed mt-2">Every recruiter touchpoint should feel like progress, not admin work.</p>
+              <h3 className="text-xl font-bold tracking-[-0.03em] text-brand-ink">On your side</h3>
+              <p className="text-sm text-brand-muted leading-relaxed mt-2">Every text or email should feel like progress, not paperwork.</p>
             </div>
             <div>
-              <h3 className="text-xl font-bold tracking-[-0.03em] text-brand-ink">Predictable</h3>
-              <p className="text-sm text-brand-muted leading-relaxed mt-2">Users should never wonder where to look, what matters, or what comes next.</p>
+              <h3 className="text-xl font-bold tracking-[-0.03em] text-brand-ink">Clear</h3>
+              <p className="text-sm text-brand-muted leading-relaxed mt-2">You always know the next move.</p>
             </div>
           </div>
         </div>
 
         <div className="rounded-[2rem] border border-black/5 bg-brand-review/20 shadow-brand-shadow p-6 lg:p-8">
-          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">Primary promise</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted">Main promise</p>
           <p className="text-base text-brand-ink leading-relaxed mt-3">
-            Bring the raw input. Let the product structure the opportunity, preserve context, and recommend the next move without overwhelming the screen.
+            Bring the raw stuff. We structure it and tell you the next money move without the corporate zombie talk.
           </p>
         </div>
       </section>

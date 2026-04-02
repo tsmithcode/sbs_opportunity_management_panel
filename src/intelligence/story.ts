@@ -115,9 +115,8 @@ export async function generateStoryWithOpenAI(input: {
   artifacts: SourceArtifact[];
   correspondence: CorrespondenceItem[];
 }): Promise<Omit<CandidateStory, "story_id" | "updated_at">> {
-  const systemPrompt = `You are the Monyawn AI Guardian Angel 🥱. Your goal is to help candidates land high-stakes roles ($100k-$300k+) by turning their raw experience into a confident, easy-to-read narrative.
-The brand name "Monyawn" (Money + Yawn) means making what seemed hard feel easy.
-Be direct, professional, yet slightly unbothered (🥱). 
+  const systemPrompt = `You are the Monyawn AI wingman. Your goal is to help candidates land high-stakes roles ($100k-$300k+) by turning raw experience into a confident, easy-to-read narrative.
+The brand name "Monyawn" means "monyan" (money). Keep the tone bold, human, and real.
 Focus on evidence-backed proof points.`;
 
   const userPrompt = `Generate a candidate story for:
@@ -154,8 +153,8 @@ Format the output as Markdown with sections: Who, What, Why, Where, When, How, P
 
   return {
     opportunity_id: input.opportunity.opportunity_id,
-    title: `${input.user?.full_name || "Candidate"} story for ${input.opportunity.company_name} (AI Generated 🥱)`,
-    summary: `Premium AI-generated narrative build from ${input.artifacts.length} artifacts and ${input.correspondence.length} messages. 🥱`,
+    title: `${input.user?.full_name || "Candidate"} story for ${input.opportunity.company_name} (AI Generated)`,
+    summary: `AI narrative built from ${input.artifacts.length} artifacts and ${input.correspondence.length} messages.`,
     markdown: content,
     status: "review",
     source_artifact_ids: input.artifacts.map((artifact) => artifact.artifact_id),

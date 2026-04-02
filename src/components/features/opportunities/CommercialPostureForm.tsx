@@ -43,11 +43,11 @@ export const CommercialPostureForm: React.FC = () => {
 
     const checkpoint = createCheckpoint(
       selectedOpportunity,
-      "Commercial posture updated",
-      "User defined target rate and SOW status.",
+      "Money terms updated",
+      "User set rate and scope status.",
       "medium",
       "proceed",
-      "Commercial terms are actively managed.",
+      "Money terms are being tracked.",
       "low",
       "low",
     );
@@ -59,7 +59,7 @@ export const CommercialPostureForm: React.FC = () => {
         ...current.commercialPostures.filter(p => p.opportunity_id !== selectedOpportunity.opportunity_id)
       ],
       checkpoints: [checkpoint, ...current.checkpoints]
-    }), "Commercial posture updated.");
+    }), "Money terms updated.");
   };
 
   if (!selectedOpportunity || selectedOpportunity.pathway !== "1099") return null;
@@ -67,14 +67,14 @@ export const CommercialPostureForm: React.FC = () => {
   return (
     <form className="flex flex-col gap-6 p-6 sm:p-8 lg:p-9 rounded-[2rem] bg-white/60 border border-black/5 shadow-brand-shadow" onSubmit={handleSubmit}>
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Deal posture</p>
-        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">1099 commercial posture</h3>
-        <p className="text-sm text-brand-muted leading-relaxed">Define your consulting terms, rate expectations, and SOW readiness.</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Money talk</p>
+        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Contract bag setup</h3>
+        <p className="text-sm text-brand-muted leading-relaxed">Set your rate, availability, and scope status.</p>
       </div>
       
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Target Rate / Budget</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Target rate / budget</span>
           <input 
             className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm"
             value={draft.target_rate} 
@@ -96,47 +96,47 @@ export const CommercialPostureForm: React.FC = () => {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Engagement Type</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Deal type</span>
           <select 
             className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
             value={draft.engagement_type} 
             onChange={e => setDraft(d => ({ ...d, engagement_type: e.target.value as any }))}
           >
-            <option value="time_and_materials">Time and Materials</option>
-            <option value="fixed_bid">Fixed Bid / Project</option>
+            <option value="time_and_materials">Time + materials</option>
+            <option value="fixed_bid">Fixed bid</option>
             <option value="retainer">Retainer</option>
           </select>
         </label>
         
         <label className="flex flex-col gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">SOW Status</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Scope status</span>
           <select 
             className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm appearance-none"
             value={draft.sow_status} 
             onChange={e => setDraft(d => ({ ...d, sow_status: e.target.value as any }))}
           >
-            <option value="not_started">Not Started</option>
+            <option value="not_started">Not started</option>
             <option value="drafting">Drafting</option>
-            <option value="proposed">Proposed / Sent</option>
+            <option value="proposed">Proposed / sent</option>
             <option value="negotiating">Negotiating</option>
-            <option value="signed">Signed / Active</option>
+            <option value="signed">Signed / active</option>
           </select>
         </label>
       </div>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Internal Notes & Scope Risks</span>
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Notes & scope risks</span>
         <textarea 
           className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none"
           rows={5} 
           value={draft.notes} 
           onChange={e => setDraft(d => ({ ...d, notes: e.target.value }))}
-          placeholder="Track risks, scope creep concerns, or required prep here."
+          placeholder="Track risks, scope creep, or required prep."
         />
       </label>
 
       <button className="bg-brand-accent text-white px-6 py-3 rounded-full font-bold hover:bg-brand-accent-strong transition-all shadow-md active:scale-95 mt-2 self-start" type="submit">
-        Save posture
+        Save money terms
       </button>
     </form>
   );

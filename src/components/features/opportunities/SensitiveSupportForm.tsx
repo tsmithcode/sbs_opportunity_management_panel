@@ -43,18 +43,17 @@ export const SensitiveSupportForm: React.FC = () => {
           ...current.sensitiveSupportProfiles.filter(p => p.opportunity_id !== selectedOpportunity.opportunity_id)
         ],
       }),
-      "Sensitive support profile updated."
+      "Support notes updated."
     );
   };
 
   return (
     <form className="flex flex-col gap-6 p-6 sm:p-8 lg:p-9 rounded-[2rem] bg-white/60 border border-black/5 shadow-brand-shadow" onSubmit={handleSubmit}>
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Private support</p>
-        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Optional sensitive support path</h3>
+        <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-muted mb-2">Private zone</p>
+        <h3 className="text-2xl lg:text-[2rem] font-bold tracking-[-0.04em] text-brand-ink mb-2">Real‑life notes (optional)</h3>
         <p className="text-sm text-brand-muted leading-relaxed">
-          This section is fully optional. It stays local to this device and
-          is excluded from export unless you explicitly include it.
+          Optional and local-only. Export stays off unless you flip it on.
         </p>
       </div>
       
@@ -65,7 +64,7 @@ export const SensitiveSupportForm: React.FC = () => {
           checked={draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, enabled: event.target.checked }))}
         />
-        <span className="text-sm font-medium text-brand-ink">Enable local-only support guidance for this opportunity</span>
+        <span className="text-sm font-medium text-brand-ink">Turn on private support notes for this play</span>
       </label>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -91,19 +90,19 @@ export const SensitiveSupportForm: React.FC = () => {
           value={draft.notes}
           disabled={!draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, notes: event.target.value }))}
-          placeholder="Only capture what helps you plan. This is not required."
+          placeholder="Only write what helps you plan. Totally optional."
         />
       </label>
 
       <label className="flex flex-col gap-1.5">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Encouragement and practical next-step plan</span>
+        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-muted">Your next‑step plan</span>
         <textarea
           className="w-full px-4 py-3 rounded-2xl border border-black/10 bg-brand-surface-strong focus:ring-2 focus:ring-brand-accent focus:border-transparent outline-none transition-all text-sm resize-none disabled:opacity-50 disabled:cursor-not-allowed"
           rows={5}
           value={draft.encouragement_plan}
           disabled={!draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, encouragement_plan: event.target.value }))}
-          placeholder="Record a calm next-step plan for yourself."
+          placeholder="Write the next move you want for yourself."
         />
       </label>
 
@@ -115,7 +114,7 @@ export const SensitiveSupportForm: React.FC = () => {
           disabled={!draft.enabled}
           onChange={(event) => setDraft(c => ({ ...c, include_in_export: event.target.checked }))}
         />
-        <span className="text-sm font-medium text-brand-ink">Include this support profile in the next handoff export</span>
+        <span className="text-sm font-medium text-brand-ink">Include these notes in the next export</span>
       </label>
 
       <button 
@@ -123,7 +122,7 @@ export const SensitiveSupportForm: React.FC = () => {
         type="submit" 
         disabled={!draft.enabled}
       >
-        Save support profile
+        Save private notes
       </button>
     </form>
   );

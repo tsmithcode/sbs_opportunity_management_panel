@@ -10,7 +10,7 @@ export function useArtifactOperations() {
   const handleArtifactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOpportunity) {
-      setNotice({ tone: "info", message: "Select an opportunity first." });
+      setNotice({ tone: "info", message: "Pick a play first." });
       return;
     }
 
@@ -22,7 +22,7 @@ export function useArtifactOperations() {
     const task = createTask(
       selectedOpportunity.opportunity_id,
       `Review ${artifactDraft.artifact_type}: ${artifactDraft.source_label}`,
-      "Data Steward",
+      "Proof checker",
       true,
     );
 
@@ -32,11 +32,11 @@ export function useArtifactOperations() {
         artifacts: [nextArtifact, ...current.artifacts],
         tasks: [task, ...current.tasks],
       }),
-      `Artifact '${artifactDraft.source_label}' added. 🥱`,
+      `Proof '${artifactDraft.source_label}' added.`,
     );
     
     setArtifactDraft(defaultArtifactDraft);
-    setNotice({ tone: "success", message: "Artifact recorded in lifecycle. 🥱" });
+    setNotice({ tone: "success", message: "Proof recorded." });
   };
 
   return {
