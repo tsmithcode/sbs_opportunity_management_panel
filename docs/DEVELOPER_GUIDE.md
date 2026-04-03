@@ -18,10 +18,13 @@ Read the "Monyawn Truth" documentation first:
 - **Evidence-Backed:** Ensure all candidate story claims can be traced back to artifacts or correspondence items.
 
 ## Local Setup
+
 ```bash
-npm install
+bash scripts/setup.sh   # installs deps, bootstraps .env, sets git hooks
 npm run dev
 ```
+
+Or use the included devcontainer (`devcontainer.json`) for a fully configured environment in VS Code or GitHub Codespaces.
 
 ## Verification Suite
 We prioritize automated verification to maintain our "10/10" quality bar:
@@ -39,6 +42,18 @@ The same release gate is automated in `.github/workflows/verify.yml`.
 - **Package Discipline:** Respect the boundaries between `packages/` (conversation engine) and `src/` (Monyawn host app).
 - **Accessibility:** Maintain keyboard-first usability and ARIA-compliant semantics.
 - **Consistency:** Keep filenames, folder structures, and internal naming (e.g., `use_case_id: "monyawn"`) consistent.
+
+## Rollback Procedure
+
+**GitHub Pages deployment rollback:**
+1. Navigate to the Actions tab → `Verify And Deploy` workflow.
+2. Find the last successful deploy run on `main`.
+3. Re-run the `deploy` job from that run to re-deploy the previous artifact.
+
+**Supabase migration rollback:**
+- Never delete or edit existing migration files.
+- Write a forward corrective migration with a later timestamp in `supabase/migrations/`.
+- Run `supabase db push` to apply.
 
 ## Escalation Path
 Pause and escalate to the **Panel of Experts** if your change touches:
