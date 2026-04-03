@@ -23,13 +23,13 @@ export function LoginPage({
                 Monyawn // route to the bag 💸
               </p>
               <h1 className="text-4xl sm:text-5xl xl:text-[4.1rem] font-extrabold tracking-[-0.05em] leading-[0.92] text-brand-ink">
-                Recruiter hit you up?
-                <br />
                 We finna get to the bag, no cap. 🏃‍♂️💨
               </h1>
               <p className="max-w-[58ch] text-base lg:text-lg text-brand-muted leading-relaxed">
                 Paste the tea, the link, or the transcript and we map the next play fast. It&apos;s
-                giving low effort, high aura, fully locked in.
+                giving low effort, high aura, fully locked in. This is an opportunity management
+                platform with the vibe of a bestie who always knows the move. We keep the route
+                clear, the chaos contained, and the energy focused on the win.
               </p>
             </div>
 
