@@ -1,6 +1,23 @@
 {
-  "name": "conversation-adapters",
+  "name": "@monyawn/conversation-adapters",
   "version": "0.1.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "@monyawn/conversation-core": "workspace:*",
+    "@monyawn/conversation-schema": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
 }
