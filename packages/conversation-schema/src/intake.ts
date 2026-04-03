@@ -10,10 +10,22 @@ export const intakeConversationSteps: ConversationStep[] = [
     helper: "This choice shapes the next question so the chat feels natural, not like a survey.",
     control: "choice",
     options: [
-      { value: "recruiter_email", label: "Recruiter text/email", hint: "Paste the message and let the chat pull the play out of it." },
-      { value: "job_link", label: "Job link", hint: "Drop the link and add context only if the post is messy." },
+      {
+        value: "recruiter_email",
+        label: "Recruiter text/email",
+        hint: "Paste the message and let the chat pull the play out of it.",
+      },
+      {
+        value: "job_link",
+        label: "Job link",
+        hint: "Drop the link and add context only if the post is messy.",
+      },
       { value: "job_text", label: "Job text", hint: "Paste the write-up directly." },
-      { value: "transcript", label: "Interview transcript", hint: "Turn raw talk into next moves." },
+      {
+        value: "transcript",
+        label: "Interview transcript",
+        hint: "Turn raw talk into next moves.",
+      },
       { value: "note", label: "Quick note", hint: "Rough notes are fine. We shape it." },
     ],
     summarize: (value) => {
@@ -27,14 +39,19 @@ export const intakeConversationSteps: ConversationStep[] = [
     label: "Drop the proof",
     segue: "Now talk to me like you're sending a voice note, not filing paperwork.",
     prompt: "Paste the message, role text, transcript, or notes.",
-    helper: "We'll use this to infer the company, role, and next move before asking you to clean anything up.",
+    helper:
+      "We'll use this to infer the company, role, and next move before asking you to clean anything up.",
     control: "textarea",
     placeholder: "Paste the message, job text, or notes here...",
     validate: (value) =>
       typeof value === "string" && value.trim().length >= 8
         ? null
         : "Drop a little more detail so the engine has something real to work with.",
-    summarize: (value) => String(value ?? "").replace(/\s+/g, " ").trim().slice(0, 120),
+    summarize: (value) =>
+      String(value ?? "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 120),
   },
   {
     id: "signalUrl",
@@ -58,7 +75,9 @@ export const intakeConversationSteps: ConversationStep[] = [
         return "This link needs to be plain text.";
       }
 
-      return /^https?:\/\//i.test(value.trim()) ? null : "Use a full link starting with http:// or https://";
+      return /^https?:\/\//i.test(value.trim())
+        ? null
+        : "Use a full link starting with http:// or https://";
     },
   },
   {
@@ -118,7 +137,9 @@ export const intakeConversationSteps: ConversationStep[] = [
         return null;
       }
 
-      return /\S+@\S+\.\S+/.test(String(value)) ? null : "Drop a real-looking email or skip it for now.";
+      return /\S+@\S+\.\S+/.test(String(value))
+        ? null
+        : "Drop a real-looking email or skip it for now.";
     },
   },
   {
@@ -145,15 +166,14 @@ export const intakeConversationSteps: ConversationStep[] = [
     control: "text",
     placeholder: "Role title",
     validate: (value) =>
-      typeof value === "string" && value.trim().length >= 2
-        ? null
-        : "Drop the actual role title.",
+      typeof value === "string" && value.trim().length >= 2 ? null : "Drop the actual role title.",
   },
   {
     id: "pathway",
     module: "The Play",
     label: "What kind of bag is this?",
-    segue: "Last fork in the road. This tells the workspace whether we're talking payroll or contract money.",
+    segue:
+      "Last fork in the road. This tells the workspace whether we're talking payroll or contract money.",
     prompt: "Pick the deal type.",
     control: "choice",
     options: [
@@ -163,3 +183,5 @@ export const intakeConversationSteps: ConversationStep[] = [
     summarize: (value) => (value === "1099" ? "Contract bag" : "Payroll job"),
   },
 ];
+
+console.log("signalUrl summarize at module load:", intakeConversationSteps[2].summarize);

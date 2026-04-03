@@ -22,6 +22,7 @@ type StoryInput = {
     provider: "local" | "openai" | "anthropic";
     openai_api_key?: string;
     anthropic_api_key?: string;
+    api_base_url?: string;
     model?: string; // e.g., gpt-4o-mini, claude-3-opus-20240229
   };
 };
@@ -41,6 +42,7 @@ async function generateStoryWithOpenAI(
   }
   const client = new OpenAI({
     apiKey: input.aiSettings.openai_api_key,
+    baseURL: input.aiSettings.api_base_url || undefined,
     dangerouslyAllowBrowser: true,
   });
 
@@ -98,7 +100,10 @@ async function generateStoryWithAnthropic(
   if (!input.aiSettings?.anthropic_api_key) {
     throw new Error("Anthropic API key is missing.");
   }
-  const client = new Anthropic({ apiKey: input.aiSettings.anthropic_api_key });
+  const client = new Anthropic({
+    apiKey: input.aiSettings.anthropic_api_key,
+    baseURL: input.aiSettings.api_base_url || undefined,
+  });
 
   const systemPrompt = `You are the Monyawn AI wingman. Your goal is to help candidates land high-stakes roles ($100k-$300k+) by turning raw experience into a confident, easy-to-read narrative.
 The brand name "Monyawn" means "monyan" (money). Keep the tone bold, human, and real.
