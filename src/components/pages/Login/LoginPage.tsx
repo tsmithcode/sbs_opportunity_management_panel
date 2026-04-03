@@ -26,10 +26,10 @@ export function LoginPage({
                 We finna get to the bag, no cap. 🏃‍♂️💨
               </h1>
               <p className="max-w-[58ch] text-base lg:text-lg text-brand-muted leading-relaxed">
-                Paste the tea, the link, or the transcript and we map the next play fast. It&apos;s
-                giving low effort, high aura, fully locked in. This is an opportunity management
-                platform with the vibe of a bestie who always knows the move. We keep the route
-                clear, the chaos contained, and the energy focused on the win.
+                Paste the message, link, or transcript and we&apos;ll figure out the next move fast.
+                It&apos;s made to feel easy, clear, and confident. This is a platform for managing
+                opportunities, but it feels like having a smart friend helping you stay organized,
+                calm, and focused on winning.
               </p>
             </div>
 
