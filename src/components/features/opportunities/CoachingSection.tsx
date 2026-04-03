@@ -2,7 +2,8 @@ import React, { useState, useCallback } from "react";
 import { useMonyawn } from "../../../context/MonyawnContext";
 import { getCoachingTitle, getCoachingForStage } from "../../../coaching";
 import { FLAGS } from "../../../lib/flags";
-import { generateStoryWithOpenAI, createCandidateStoryRecord } from "../../../intelligence/story";
+import { generateStory } from "../../../intelligence/providers";
+import { createCandidateStoryRecord } from "../../../intelligence/story";
 import { CandidateStory } from "../../../types";
 
 export const CoachingSection: React.FC = () => {
@@ -20,20 +21,19 @@ export const CoachingSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGenerateStory = useCallback(async () => {
-    if (!selectedOpportunity || !import.meta.env.VITE_OPENAI_API_KEY) return;
+    if (!selectedOpportunity) return;
 
     setIsLoading(true);
     setNotice(null);
 
     try {
-      const newStoryData = await generateStoryWithOpenAI({
-        apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-        model: "gpt-4o-mini", // Or other configurable model
+      const newStoryData = await generateStory({
         user: state.users.find((u) => u.user_id === state.selectedUserId),
         opportunity: selectedOpportunity,
         profile: selectedProfile,
         artifacts: opportunityArtifacts,
         correspondence: opportunityCorrespondence,
+        aiSettings: state.aiSettings,
       });
       const newStory: CandidateStory = createCandidateStoryRecord(newStoryData);
 
@@ -60,6 +60,7 @@ export const CoachingSection: React.FC = () => {
     selectedProfile,
     opportunityArtifacts,
     opportunityCorrespondence,
+    state.aiSettings,
     patchState,
     setNotice,
   ]);
