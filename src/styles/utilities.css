@@ -49,8 +49,115 @@
   50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
 }
 
+@keyframes float-bob {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, -10px, 0) rotate(-1.5deg); }
+}
+
+@keyframes float-bob-delayed {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  50% { transform: translate3d(0, 12px, 0) rotate(2deg); }
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -120; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.65; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+@keyframes sticker-spin {
+  0%, 100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(2deg) scale(1.04); }
+}
+
 .animate-pulse-dot {
   animation: pulse-dot 2s infinite;
+}
+
+.animate-float {
+  animation: float-bob 5.5s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-bob-delayed 6.2s ease-in-out infinite;
+}
+
+.animate-dash-flow {
+  stroke-dasharray: 12 12;
+  animation: dash-flow 7s linear infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.6s ease-in-out infinite;
+}
+
+.animate-sticker-spin {
+  animation: sticker-spin 4s ease-in-out infinite;
+}
+
+.onboarding-grid {
+  position: relative;
+  overflow: hidden;
+}
+
+.onboarding-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(24, 32, 40, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 32, 40, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent);
+  pointer-events: none;
+}
+
+.toy-surface {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 34%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.86), rgba(208, 231, 221, 0.58));
+}
+
+.toy-surface::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -28% auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 999px;
+  background: rgba(10, 95, 87, 0.09);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.sticker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(24, 32, 40, 0.08);
+  box-shadow: 0 12px 24px rgba(24, 32, 40, 0.08);
+  color: var(--ink);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.wayfinding-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.9rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(24, 32, 40, 0.08);
 }
 
 @media (max-width: 768px) {
