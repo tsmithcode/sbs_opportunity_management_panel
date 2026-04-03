@@ -7,34 +7,60 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "test:unit": "vitest run tests/unit",
+    "lint": "eslint .",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "test:unit": "vitest run tests/unit --coverage",
     "test:smoke": "playwright test tests/smoke.spec.ts --project=chromium",
     "test:integration": "playwright test tests/roundtrip.spec.ts --project=chromium",
-    "test:browser:all": "npm run test:smoke && npm run test:integration",
+    "test:perf": "playwright test tests/perf.spec.ts --project=chromium",
+    "test:browser:all": "playwright test tests/smoke.spec.ts tests/roundtrip.spec.ts",
     "release:summary": "node scripts/write_release_summary.mjs",
-    "smoke": "npm run test:smoke",
-    "roundtrip": "npm run test:integration",
-    "verify": "npm run build && npm run test:unit && npm run test:browser:all",
-    "verify:artifacts": "npm run verify && npm run release:summary"
+    "smoke": "pnpm run test:smoke",
+    "roundtrip": "pnpm run test:integration",
+    "verify": "pnpm run build && pnpm run lint && pnpm run test:unit && pnpm run test:browser:all",
+    "verify:artifacts": "pnpm run verify && pnpm run release:summary",
+    "prepare": "husky"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@supabase/supabase-js": "^2.39.0",
     "jspdf": "^4.2.1",
     "jszip": "^3.10.1",
+    "openai": "^4.68.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@playwright/test": "^1.58.2",
+    "@sentry/react": "^8.55.1",
+    "@sentry/vite-plugin": "^2.23.1",
     "@types/jszip": "^3.4.1",
     "@types/node": "^25.5.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
     "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/coverage-v8": "^4.1.2",
     "autoprefixer": "^10.4.27",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react": "^7.37.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
     "postcss": "^8.5.8",
+    "prettier": "^3.3.0",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.6.3",
-    "vite": "^5.4.10",
+    "vite": "^6.3.0",
     "vitest": "^4.1.2"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }
