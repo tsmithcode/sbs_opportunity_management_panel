@@ -1,5 +1,20 @@
 # Workflow Schema
 
+## Implementation Status (Shipped vs Roadmap)
+This document defines the target architecture. The current build (`v0.1.0`) has implemented:
+
+- [x] **Core Entities:** User, Account, Opportunity, Artifact, Profile, Story, Correspondence.
+- [x] **Local Persistence:** Full browser LocalStorage state management with ZIP export/import.
+- [x] **AI Integration:** Configurable OpenAI/Anthropic providers with custom Base URL support (for proxies like Railway).
+- [x] **Workspace Cockpit:** Multi-play management, stage advancement, and leverage scoring.
+- [x] **Enterprise Controls:** Admin-only panel for governing AI and account posture.
+- [x] **Testing:** Vitest unit suite and Playwright browser smoke tests.
+
+**Roadmap (Not Yet Shipped):**
+- [ ] **Supabase Sync Handoff:** Fully hardened RLS and cloud-shadowing persistence.
+- [ ] **Automated Signal Extraction:** Browser-extension or server-side automated scraping.
+- [ ] **Advanced Compliance:** Formal audit log tamper-proofing and SOC2-ready observability.
+
 ## Purpose
 This document defines the canonical operating schema for Monyawn workflows.
 

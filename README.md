@@ -26,6 +26,10 @@ We maintain a "10/10" documentation strategy to ensure architectural and brand i
 2. **Setup dev environment:** `bash scripts/setup.sh`
 3. **Launch Dev:** `pnpm run dev`
 
+## 📦 Deployment
+- **Production:** [monyawn.com](https://monyawn.com) (Deploys via Vercel CLI)
+- **CI/CD:** GitHub Actions for verification and GitHub Pages staging.
+
 ## 🏗️ Architecture
 Monyawn is built as a set of decoupled packages. For a detailed architectural overview, refer to the [TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md).
 - `packages/conversation-core`: Headless guided flow engine.
@@ -33,12 +37,13 @@ Monyawn is built as a set of decoupled packages. For a detailed architectural ov
 - `packages/conversation-react`: Chat UI primitives.
 - `packages/conversation-adapters`: Host-app domain mapping.
 
-## 🥱 Current Play
-The workspace starts with a pre-seeded **Monyawn Pilot Account** demonstrating:
-- Multiple "Plays" (Opportunities) in different stages.
-- Artifacts (Resumes, JDs) and Correspondence drafts.
-- AI-generated candidate stories.
-- Professional "Leverage Score" tracking.
+## 🥱 Current Play (Shipped)
+The workspace includes:
+- **Local-First Persistence:** State saved to Browser LocalStorage; optional ZIP export/import.
+- **AI Wingman:** Configurable OpenAI/Anthropic support with custom API Base URL (e.g., for Railway proxies).
+- **Workspace Cockpit:** Multiple "Plays" tracking, Artifact management, and Correspondence drafting.
+- **Enterprise Controls:** Admin-mode for managing account-level governance and AI settings.
+- **Verification:** Vitest unit tests and Playwright browser smoke tests.
 
 ---
 *Monyawn: Finna get to the monyawn.* 🥱
