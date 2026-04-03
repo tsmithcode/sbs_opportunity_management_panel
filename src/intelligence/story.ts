@@ -1,3 +1,5 @@
+import OpenAI from "openai";
+import * as Sentry from "@sentry/react";
 import {
   CandidateProfile,
   CandidateStory,
@@ -8,6 +10,7 @@ import {
 } from "../types";
 import { createId, nowIso } from "../workflow";
 import { EMPTY_SIGNALS, mergeSignalSets } from "./signals";
+import { candidateStoryContentSchema } from "./validators";
 
 function bulletOrFallback(values: string[], fallback: string): string {
   return values.length ? values.join(", ") : fallback;
@@ -27,21 +30,26 @@ export function generateCandidateStory(input: {
 
   const title = `${input.user?.full_name || "Candidate"} story for ${input.opportunity.company_name}`;
   const summary = `${input.opportunity.role_title} narrative built from lifecycle evidence, structured signals, and profile context.`;
-  const who = input.profile?.experience_level || input.user?.current_role || "a professional in transition";
-  const what = input.profile?.skills_summary || "translating prior experience into a clearer next-step story";
-  const why =
-    input.opportunity.opportunity_source
-      ? `This opportunity matters because it connects through ${input.opportunity.opportunity_source} and aligns to the target role of ${input.opportunity.role_title}.`
-      : `This opportunity matters because it is a concrete path toward ${input.opportunity.role_title}.`;
+  const who =
+    input.profile?.experience_level || input.user?.current_role || "a professional in transition";
+  const what =
+    input.profile?.skills_summary || "translating prior experience into a clearer next-step story";
+  const why = input.opportunity.opportunity_source
+    ? `This opportunity matters because it connects through ${input.opportunity.opportunity_source} and aligns to the target role of ${input.opportunity.role_title}.`
+    : `This opportunity matters because it is a concrete path toward ${input.opportunity.role_title}.`;
   const where = bulletOrFallback(
-    aggregatedSignals.locations.length ? aggregatedSignals.locations : [input.opportunity.location_type],
+    aggregatedSignals.locations.length
+      ? aggregatedSignals.locations
+      : [input.opportunity.location_type],
     "the settings where this opportunity is expected to operate",
   );
   const when = bulletOrFallback(
     [...aggregatedSignals.dates, ...aggregatedSignals.times],
     "upcoming milestones are still being clarified",
   );
-  const how = input.profile?.domain_strengths || "through evidence-backed communication, practical delivery, and steady follow-through";
+  const how =
+    input.profile?.domain_strengths ||
+    "through evidence-backed communication, practical delivery, and steady follow-through";
   const gaps = input.profile?.declared_gaps || "No major gaps have been declared yet.";
   const proofPoints = bulletOrFallback(
     aggregatedSignals.companies.length
@@ -106,6 +114,13 @@ ${interviewCues}
   };
 }
 
+/**
+ * Generates a candidate story via the OpenAI SDK.
+ *
+ * NOTE: dangerouslyAllowBrowser is intentional — Monyawn is a local-first app
+ * where the user supplies their own API key. No key ever touches our servers.
+ * For managed deployments, route through a server-side proxy instead.
+ */
 export async function generateStoryWithOpenAI(input: {
   apiKey: string;
   model: string;
@@ -115,6 +130,8 @@ export async function generateStoryWithOpenAI(input: {
   artifacts: SourceArtifact[];
   correspondence: CorrespondenceItem[];
 }): Promise<Omit<CandidateStory, "story_id" | "updated_at">> {
+  const client = new OpenAI({ apiKey: input.apiKey, dangerouslyAllowBrowser: true });
+
   const systemPrompt = `You are the Monyawn AI wingman. Your goal is to help candidates land high-stakes roles ($100k-$300k+) by turning raw experience into a confident, easy-to-read narrative.
 The brand name "Monyawn" means "monyan" (money). Keep the tone bold, human, and real.
 Focus on evidence-backed proof points.`;
@@ -123,43 +140,38 @@ Focus on evidence-backed proof points.`;
 User: ${JSON.stringify(input.user || {})}
 Opportunity: ${JSON.stringify(input.opportunity)}
 Profile: ${JSON.stringify(input.profile || {})}
-Artifacts: ${input.artifacts.map(a => a.source_text).join("\n---\n")}
-Correspondence: ${input.correspondence.map(c => c.body).join("\n---\n")}
+Artifacts: ${input.artifacts.map((a) => a.source_text).join("\n---\n")}
+Correspondence: ${input.correspondence.map((c) => c.body).join("\n---\n")}
 
 Format the output as Markdown with sections: Who, What, Why, Where, When, How, Proof Points, Gaps.`;
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${input.apiKey}`
-    },
-    body: JSON.stringify({
+  try {
+    const completion = await client.chat.completions.create({
       model: input.model || "gpt-4o-mini",
       messages: [
         { role: "system", content: systemPrompt },
-        { role: "user", content: userPrompt }
+        { role: "user", content: userPrompt },
       ],
-      temperature: 0.7
-    })
-  });
+      temperature: 0.7,
+    });
 
-  if (!response.ok) {
-    throw new Error(`OpenAI API error: ${response.statusText}`);
+    const rawContent = completion.choices[0]?.message?.content ?? "";
+    // Validate content meets minimum quality bar
+    const content = candidateStoryContentSchema.parse(rawContent);
+
+    return {
+      opportunity_id: input.opportunity.opportunity_id,
+      title: `${input.user?.full_name || "Candidate"} story for ${input.opportunity.company_name} (AI Generated)`,
+      summary: `AI narrative built from ${input.artifacts.length} artifacts and ${input.correspondence.length} messages.`,
+      markdown: content,
+      status: "review",
+      source_artifact_ids: input.artifacts.map((artifact) => artifact.artifact_id),
+      source_correspondence_ids: input.correspondence.map((item) => item.correspondence_id),
+    };
+  } catch (err) {
+    Sentry.captureException(err, { tags: { feature: "ai_story_generation" } });
+    throw err;
   }
-
-  const data = await response.json();
-  const content = data.choices[0].message.content;
-
-  return {
-    opportunity_id: input.opportunity.opportunity_id,
-    title: `${input.user?.full_name || "Candidate"} story for ${input.opportunity.company_name} (AI Generated)`,
-    summary: `AI narrative built from ${input.artifacts.length} artifacts and ${input.correspondence.length} messages.`,
-    markdown: content,
-    status: "review",
-    source_artifact_ids: input.artifacts.map((artifact) => artifact.artifact_id),
-    source_correspondence_ids: input.correspondence.map((item) => item.correspondence_id),
-  };
 }
 
 export function createCandidateStoryRecord(

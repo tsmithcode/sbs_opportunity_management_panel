@@ -24,13 +24,14 @@ export function useDataTransformOps() {
     anchor.download = createExportFilename(payload);
     anchor.click();
     window.URL.revokeObjectURL(url);
-    
-    patchState(current => ({ ...current, lastExportedAt: new Date().toISOString() }));
+
+    patchState((current) => ({ ...current, lastExportedAt: new Date().toISOString() }));
     setNotice({
       tone: "success",
-      message: report.warnings.length > 0
-        ? `ZIP handoff package generated with ${report.warnings.length} integrity warning${report.warnings.length === 1 ? "" : "s"}.`
-        : "ZIP handoff package generated.",
+      message:
+        report.warnings.length > 0
+          ? `ZIP handoff package generated with ${report.warnings.length} integrity warning${report.warnings.length === 1 ? "" : "s"}.`
+          : "ZIP handoff package generated.",
     });
   };
 
@@ -84,18 +85,26 @@ export function useDataTransformOps() {
         ...fallback,
         ...result.state,
         schemaVersion: result.state.schemaVersion || SCHEMA_VERSION,
-        reportingSnapshots: result.state.reportingSnapshots?.length ? result.state.reportingSnapshots : fallback.reportingSnapshots,
+        reportingSnapshots: result.state.reportingSnapshots?.length
+          ? result.state.reportingSnapshots
+          : fallback.reportingSnapshots,
         candidateStories: result.state.candidateStories ?? fallback.candidateStories,
-        sensitiveSupportProfiles: result.state.sensitiveSupportProfiles ?? fallback.sensitiveSupportProfiles,
-        releaseArtifactReviews: result.state.releaseArtifactReviews ?? fallback.releaseArtifactReviews,
+        sensitiveSupportProfiles:
+          result.state.sensitiveSupportProfiles ?? fallback.sensitiveSupportProfiles,
+        releaseArtifactReviews:
+          result.state.releaseArtifactReviews ?? fallback.releaseArtifactReviews,
         lastExportedAt: result.state.lastExportedAt ?? "",
       };
-      
+
       const importIntegrity = validateAppStateIntegrity(importedState);
       patchState(() => importedState, "Platform import loaded.");
       setNotice({
         tone: "success",
-        message: result.warning ?? (importIntegrity.errors.length ? "Import loaded with errors." : "Platform import loaded."),
+        message:
+          result.warning ??
+          (importIntegrity.errors.length
+            ? "Import loaded with errors."
+            : "Platform import loaded."),
       });
     } else {
       setNotice({ tone: "info", message: (result as any).error || "Import failed" });
@@ -110,24 +119,27 @@ export function useDataTransformOps() {
     const { importReleaseArtifactForReview } = await import("../package");
     const result = await importReleaseArtifactForReview(file);
     if (result.ok && result.artifact) {
-      patchState(current => ({
-        ...current,
-        releaseArtifactReviews: [
-          {
-            review_id: `release_review_${Date.now()}`,
-            account_id: current.selectedAccountId,
-            opportunity_id: current.selectedOpportunityId,
-            title: result.artifact!.title,
-            summary: result.artifact!.summary,
-            source_name: result.artifact!.sourceName,
-            entries: result.artifact!.entries,
-            content: result.artifact!.content,
-            pinned: false,
-            imported_at: nowIso(),
-          },
-          ...current.releaseArtifactReviews,
-        ],
-      }), "Release artifact imported.");
+      patchState(
+        (current) => ({
+          ...current,
+          releaseArtifactReviews: [
+            {
+              review_id: `release_review_${Date.now()}`,
+              account_id: current.selectedAccountId,
+              opportunity_id: current.selectedOpportunityId,
+              title: result.artifact!.title,
+              summary: result.artifact!.summary,
+              source_name: result.artifact!.sourceName,
+              entries: result.artifact!.entries,
+              content: result.artifact!.content,
+              pinned: false,
+              imported_at: nowIso(),
+            },
+            ...current.releaseArtifactReviews,
+          ],
+        }),
+        "Release artifact imported.",
+      );
       setNotice({ tone: "success", message: "Release/readiness artifact imported for review." });
     } else {
       setNotice({ tone: "info", message: (result as any).error || "Import failed" });
@@ -145,12 +157,14 @@ export function useDataTransformOps() {
       setNotice({ tone: "info", message: "Select an opportunity first." });
       return;
     }
-    const opportunity = state.opportunities.find(o => o.opportunity_id === state.selectedOpportunityId);
+    const opportunity = state.opportunities.find(
+      (o) => o.opportunity_id === state.selectedOpportunityId,
+    );
     if (!opportunity) return;
 
     const { buildPremiumDiligencePacketPdf } = await import("../package/pdf");
     const pdfData = await buildPremiumDiligencePacketPdf(state, opportunity);
-    const blob = new Blob([pdfData], { type: "application/pdf" });
+    const blob = new Blob([pdfData as unknown as BlobPart], { type: "application/pdf" });
     const url = window.URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
@@ -165,11 +179,13 @@ export function useDataTransformOps() {
       setNotice({ tone: "info", message: "Select an opportunity first." });
       return;
     }
-    const opportunity = state.opportunities.find(o => o.opportunity_id === state.selectedOpportunityId);
+    const opportunity = state.opportunities.find(
+      (o) => o.opportunity_id === state.selectedOpportunityId,
+    );
     if (!opportunity) return;
 
-    const shareText = `Monyawn Play: ${opportunity.role_title} at ${opportunity.company_name}\n\nEvidence-backed status: ${state.candidateStories.find(s => s.opportunity_id === opportunity.opportunity_id) ? "Story locked" : "Intake in progress"}\n\nManaged via Monyawn 🥱`;
-    
+    const shareText = `Monyawn Play: ${opportunity.role_title} at ${opportunity.company_name}\n\nEvidence-backed status: ${state.candidateStories.find((s) => s.opportunity_id === opportunity.opportunity_id) ? "Story locked" : "Intake in progress"}\n\nManaged via Monyawn 🥱`;
+
     if (navigator.share) {
       try {
         await navigator.share({
@@ -178,6 +194,7 @@ export function useDataTransformOps() {
           url: window.location.origin,
         });
       } catch (err) {
+        console.error("Share failed:", err);
         // User cancelled or share failed
       }
     } else {
@@ -194,6 +211,6 @@ export function useDataTransformOps() {
     handleSharePlay,
     handleImport,
     handleReleaseArtifactImport,
-    resetSeedState
+    resetSeedState,
   };
 }

@@ -1,14 +1,14 @@
 import { useMonyawn } from "../context/MonyawnContext";
-import { 
-  createOpportunity, 
-  createCheckpoint, 
-  createTask, 
-  createStageEvent, 
+import {
+  createOpportunity,
+  createCheckpoint,
+  createTask,
+  createStageEvent,
   createMemo,
   getNextStage,
   nowIso,
   isClosedStage,
-  stageMeta
+  stageMeta,
 } from "../workflow";
 import { OpportunityStatus } from "../types";
 import { createSeedState } from "../seed";
@@ -32,7 +32,7 @@ export function useOpportunityOps() {
       use_case_id: "monyawn",
       ...draft,
     });
-    
+
     const profile = {
       ...createSeedState().candidateProfiles[0],
       profile_id: `profile_${opportunity.opportunity_id}`,
@@ -45,7 +45,7 @@ export function useOpportunityOps() {
       user_corrected: false,
       updated_at: nowIso(),
     };
-    
+
     const checkpoint = createCheckpoint(
       opportunity,
       "Opportunity created",
@@ -56,14 +56,14 @@ export function useOpportunityOps() {
       "none",
       "low",
     );
-    
+
     const task = createTask(
       opportunity.opportunity_id,
       "Collect intake artifacts and confirm candidate profile",
       "Customer Success Lead",
       true,
     );
-    
+
     const stageEvent = createStageEvent(
       opportunity.opportunity_id,
       opportunity.current_stage,
@@ -85,7 +85,7 @@ export function useOpportunityOps() {
       }),
       "Opportunity created and routed into intake.",
     );
-    
+
     return opportunity;
   };
 
@@ -104,34 +104,58 @@ export function useOpportunityOps() {
         : nextStage === "closed_lost"
           ? "closed_lost"
           : "active";
-          
+
     const updatedOpportunity = {
       ...selectedOpportunity,
       current_stage: nextStage,
       updated_at: nowIso(),
       status: nextStatus,
     };
-    
+
     const checkpoint = createCheckpoint(
       updatedOpportunity,
       stageMeta[nextStage].label,
-      `Advance from ${stageMeta[selectedOpportunity.current_stage].label}`,
-      nextStage === "positioning" || nextStage === "offer_review" ? "medium" : "high",
-      nextStage === "outreach_ready" || nextStage === "offer_review"
+      `Pre-stage advance check for ${stageMeta[nextStage].label}`,
+      "high", // All stage advances are high-stakes for AI checkpoints
+      nextStage === "outreach_ready" ||
+        nextStage === "offer_review" ||
+        nextStage === "intake_complete" ||
+        nextStage === "positioning"
         ? "escalate_for_review"
         : "proceed",
-      stageMeta[nextStage].description,
-      nextStage === "positioning" ? "medium" : "low",
-      nextStage === "offer_review" ? "medium" : "low",
+      `AI evaluation before advancing to ${stageMeta[nextStage].label}.`,
+      "medium", // Default truthfulness risk
+      "low", // Default policy risk
     );
-    
+
+    const isBlocking =
+      checkpoint.decision === "block" || checkpoint.decision === "escalate_for_review";
+    const requiresHumanReview = checkpoint.human_review_required;
+
+    if (isBlocking) {
+      setNotice({
+        tone: "info",
+        message: `Stage advance blocked: ${checkpoint.evidence_summary}. Decision: ${checkpoint.decision}.`,
+      });
+      return;
+    }
+
+    if (requiresHumanReview) {
+      setNotice({
+        tone: "info",
+        message: `Human review required before proceeding to ${stageMeta[nextStage].label}. Assigned to: ${checkpoint.assigned_reviewer_role || "N/A"}.`,
+      });
+      // Optionally, a modal could be rendered here to confirm human review
+      // For now, we proceed but alert the user.
+    }
+
     const task = createTask(
       selectedOpportunity.opportunity_id,
       `Complete ${stageMeta[nextStage].label.toLowerCase()} review`,
       stageMeta[nextStage].reviewerRole,
       !isClosedStage(nextStage),
     );
-    
+
     const stageEvent = createStageEvent(
       selectedOpportunity.opportunity_id,
       nextStage,
@@ -140,7 +164,7 @@ export function useOpportunityOps() {
       state.selectedUserId!,
       `Advanced from ${stageMeta[selectedOpportunity.current_stage].label} to ${stageMeta[nextStage].label}.`,
     );
-    
+
     const memo = createMemo(
       selectedOpportunity.opportunity_id,
       nextStage === "offer_review"
@@ -188,7 +212,7 @@ export function useOpportunityOps() {
       updated_at: nowIso(),
       status: "closed_lost" as OpportunityStatus,
     };
-    
+
     const checkpoint = createCheckpoint(
       updatedOpportunity,
       stageMeta.closed_lost.label,
@@ -199,7 +223,7 @@ export function useOpportunityOps() {
       "low",
       "low",
     );
-    
+
     const memo = createMemo(
       selectedOpportunity.opportunity_id,
       "final",
@@ -207,7 +231,7 @@ export function useOpportunityOps() {
       checkpoint.confidence_level,
       false,
     );
-    
+
     const stageEvent = createStageEvent(
       selectedOpportunity.opportunity_id,
       "closed_lost",

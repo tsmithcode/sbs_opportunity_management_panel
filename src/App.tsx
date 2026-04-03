@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react";
 import { MonyawnProvider, useMonyawn } from "./context/MonyawnContext";
 import { AppHeader } from "./components/layout/AppHeader/AppHeader";
 import { MobileNavigation } from "./components/layout/MobileNavigation/MobileNavigation";
@@ -7,21 +8,22 @@ import { LoginPage } from "./components/pages/Login/LoginPage";
 import { StartPage } from "./components/pages/Start/StartPage";
 import { ConversationIntakePage } from "./components/pages/ConversationIntake/ConversationIntakePage";
 import { useEffect, useState } from "react";
-import { 
+import {
   defaultAccountDraft,
-  defaultUserDraft, 
+  defaultUserDraft,
   defaultOpportunityDraft,
   AppPage,
   AccountDraft,
   OpportunityDraft,
   UserDraft,
 } from "./context/MonyawnContext.types";
-import {
-  AppMode,
-} from "./types";
+import { AppMode } from "./types";
 import { createSeedState } from "./seed";
 import { SignalIntakePayload } from "./components/pages/SignalIntake/SignalIntakePage.contract";
-import { commitMonyawnConversationResult, hydrateMonyawnConversationDrafts } from "../packages/conversation-adapters/src";
+import {
+  commitMonyawnConversationResult,
+  hydrateMonyawnConversationDrafts,
+} from "../packages/conversation-adapters/src";
 
 const modeLabels: Record<AppMode, string> = {
   user: "Hero mode",
@@ -29,16 +31,13 @@ const modeLabels: Record<AppMode, string> = {
   admin: "Boss room",
 };
 
-
 function AppContent() {
-  const { 
-    state, patchState, 
-    currentPage, setCurrentPage, 
-    mobileTab, setMobileTab,
-    setNotice
-  } = useMonyawn();
+  const { state, patchState, currentPage, setCurrentPage, mobileTab, setMobileTab, setNotice } =
+    useMonyawn();
 
-  const [windowWidth, setWindowWidth] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1200,
+  );
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -127,20 +126,27 @@ function AppContent() {
           modeLabel={modeLabels[state.currentMode]}
           lastExportedAt={state.lastExportedAt}
           navigateToPage={navigateToPage}
-          onModeChange={(mode: AppMode) => patchState(s => ({ ...s, currentMode: mode }), `Mode switched to ${mode}.`)}
-          opportunities={state.opportunities.map(o => ({ id: o.opportunity_id, name: `${o.company_name} - ${o.role_title}` }))}
+          onModeChange={(mode: AppMode) =>
+            patchState((s) => ({ ...s, currentMode: mode }), `Mode switched to ${mode}.`)
+          }
+          opportunities={state.opportunities.map((o) => ({
+            id: o.opportunity_id,
+            name: `${o.company_name} - ${o.role_title}`,
+          }))}
           selectedOpportunityId={state.selectedOpportunityId}
-          onOpportunitySelect={(id) => patchState(s => ({ ...s, selectedOpportunityId: id }), "Opportunity switched.")}
+          onOpportunitySelect={(id) =>
+            patchState((s) => ({ ...s, selectedOpportunityId: id }), "Opportunity switched.")
+          }
         />
       )}
-      
+
       {windowWidth <= 768 && currentPage !== "login" && (
         <MobileNavigation
           activeTab={mobileTab}
           onTabChange={(tab) => {
             setMobileTab(tab);
-            if (tab === "admin") patchState(c => ({ ...c, currentMode: "admin" }));
-            else patchState(c => ({ ...c, currentMode: "user" }));
+            if (tab === "admin") patchState((c) => ({ ...c, currentMode: "admin" }));
+            else patchState((c) => ({ ...c, currentMode: "user" }));
           }}
         />
       )}
@@ -162,7 +168,9 @@ function AppContent() {
         />
       )}
 
-      {(currentPage === "proof-drop" || currentPage === "confirm" || currentPage === "setup-base") && (
+      {(currentPage === "proof-drop" ||
+        currentPage === "confirm" ||
+        currentPage === "setup-base") && (
         <ConversationIntakePage
           accountDraft={accountDraft}
           userDraft={userDraft}
@@ -187,8 +195,27 @@ function AppContent() {
 
 export default function App() {
   return (
-    <MonyawnProvider>
-      <AppContent />
-    </MonyawnProvider>
+    <Sentry.ErrorBoundary
+      fallback={
+        <div className="min-h-screen flex items-center justify-center p-8 text-center">
+          <div>
+            <h1 className="text-xl font-semibold mb-2">Something went wrong.</h1>
+            <p className="text-sm text-gray-500 mb-4">
+              The error has been reported. Refresh to try again.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-black text-white rounded text-sm"
+            >
+              Refresh
+            </button>
+          </div>
+        </div>
+      }
+    >
+      <MonyawnProvider>
+        <AppContent />
+      </MonyawnProvider>
+    </Sentry.ErrorBoundary>
   );
 }

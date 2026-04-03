@@ -23,8 +23,9 @@ import { EnterpriseControlProfile, RoleEntitlement } from "./enterprise";
 
 export type AiSettings = {
   openai_api_key?: string;
+  anthropic_api_key?: string;
   model?: string;
-  provider: "local" | "openai";
+  provider: "local" | "openai" | "anthropic";
 };
 
 export type AppState = {

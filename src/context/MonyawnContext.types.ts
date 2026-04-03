@@ -65,6 +65,7 @@ export type ArtifactDraft = {
   parse_status: ParseStatus;
   evidence_note: string;
   content_summary: string;
+  source_text?: string;
 };
 
 export type ProfileDraft = {

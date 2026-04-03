@@ -120,9 +120,7 @@ export async function buildMemoPdf(memo: DecisionMemo): Promise<Uint8Array> {
   ]);
 }
 
-export async function buildCorrespondencePdf(
-  item: CorrespondenceItem,
-): Promise<Uint8Array> {
+export async function buildCorrespondencePdf(item: CorrespondenceItem): Promise<Uint8Array> {
   return buildPdf(item.subject || "Untitled correspondence", [
     {
       heading: "Correspondence Metadata",
@@ -141,11 +139,17 @@ export async function buildPremiumDiligencePacketPdf(
   state: AppState,
   opportunity: Opportunity,
 ): Promise<Uint8Array> {
-  const story = state.candidateStories.find(s => s.opportunity_id === opportunity.opportunity_id);
-  const artifacts = state.artifacts.filter(a => a.opportunity_id === opportunity.opportunity_id);
-  const correspondence = state.correspondence.filter(c => c.opportunity_id === opportunity.opportunity_id);
-  const posture = state.commercialPostureProfiles.find(p => p.opportunity_id === opportunity.opportunity_id);
-  const support = state.sensitiveSupportProfiles.find(p => p.opportunity_id === opportunity.opportunity_id);
+  const story = state.candidateStories.find((s) => s.opportunity_id === opportunity.opportunity_id);
+  const artifacts = state.artifacts.filter((a) => a.opportunity_id === opportunity.opportunity_id);
+  const correspondence = state.correspondence.filter(
+    (c) => c.opportunity_id === opportunity.opportunity_id,
+  );
+  const posture = state.commercialPostures.find(
+    (p) => p.opportunity_id === opportunity.opportunity_id,
+  );
+  const support = state.sensitiveSupportProfiles.find(
+    (p) => p.opportunity_id === opportunity.opportunity_id,
+  );
 
   const sections: Array<{ heading: string; body: string }> = [
     {
@@ -154,7 +158,7 @@ export async function buildPremiumDiligencePacketPdf(
         `Company: ${opportunity.company_name}`,
         `Role: ${opportunity.role_title}`,
         `Status: ${stageMeta[opportunity.current_stage].label}`,
-        `Integrity Check: ${state.lastIntegrityRunAt ? "Verified" : "Pending human review"}`,
+        `Integrity Check: ${state.lastSavedAt ? "Saved" : "Pending human review"}`,
         `Export Security: Local-only sovereign deployment guarantee active.`,
       ].join("\n"),
     },
@@ -171,7 +175,10 @@ export async function buildPremiumDiligencePacketPdf(
     sections.push({
       heading: "Artifact Evidence Base",
       body: artifacts
-        .map(a => `- [${a.artifact_type.toUpperCase()}] ${a.source_label}: ${a.evidence_note || a.content_summary}`)
+        .map(
+          (a) =>
+            `- [${a.artifact_type.toUpperCase()}] ${a.source_label}: ${a.evidence_note || a.content_summary}`,
+        )
         .join("\n"),
     });
   }
@@ -180,7 +187,7 @@ export async function buildPremiumDiligencePacketPdf(
     sections.push({
       heading: "Operational Correspondence",
       body: correspondence
-        .map(c => `- [${c.channel.toUpperCase()}] ${c.subject}: ${c.status}`)
+        .map((c) => `- [${c.channel.toUpperCase()}] ${c.subject}: ${c.status}`)
         .join("\n"),
     });
   }
@@ -212,6 +219,11 @@ export async function buildPremiumDiligencePacketPdf(
 
 export async function buildSessionSummaryPdf(state: AppState): Promise<Uint8Array> {
   return buildPdf("Monyawn session summary", [
-    { heading: "Summary", body: renderSessionSummaryMarkdown(state).replace(/^# .+\n?/m, "").trim() },
+    {
+      heading: "Summary",
+      body: renderSessionSummaryMarkdown(state)
+        .replace(/^# .+\n?/m, "")
+        .trim(),
+    },
   ]);
 }
