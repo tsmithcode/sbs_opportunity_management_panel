@@ -9,7 +9,7 @@
  * VITE_FLAG_CREW_MODE=true    — enables multi-user collaboration features
  */
 export const FLAGS = {
-  openai_enabled: import.meta.env.VITE_FLAG_OPENAI === "true",
+  openai_enabled: import.meta.env.VITE_FLAG_OPENAI !== "false", // default on
   supabase_sync: import.meta.env.VITE_FLAG_SUPABASE_SYNC !== "false", // default on
   crew_mode: import.meta.env.VITE_FLAG_CREW_MODE === "true",
 } as const;
