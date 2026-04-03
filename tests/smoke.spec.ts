@@ -71,9 +71,9 @@ test("conversation page exposes accessible tabs and edit dialog behavior", async
   await page.getByRole("tab", { name: "Data Entry" }).click();
 
   await page.getByRole("radio", { name: /Quick note/i }).click();
-  await page.getByRole("textbox", { name: "Paste the message, role text, transcript, or notes." }).fill(
-    "Recruiter note about a senior controls engineer role at Nova Robotics.",
-  );
+  await page
+    .getByRole("textbox", { name: "Paste the message, role text, transcript, or notes." })
+    .fill("Recruiter note about a senior controls engineer role at Nova Robotics.");
   await page.getByRole("button", { name: "Save and keep moving" }).click();
 
   const editButton = page.getByRole("button", { name: "Edit" }).first();
@@ -82,4 +82,63 @@ test("conversation page exposes accessible tabs and edit dialog behavior", async
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toBeHidden();
   await expect(editButton).toBeFocused();
+});
+
+test("stage advance is blocked by checkpoint enforcement", async ({ page }) => {
+  // Load mock data and navigate to workspace
+  await page.goto("/");
+  await page.getByRole("button", { name: "Load mock bag" }).click();
+  await page.waitForURL(/#workspace/);
+
+  // Set the AI flag to true to enable AI checkpoints if not already
+  await page.evaluate(() => {
+    // This is a workaround for setting env vars in Playwright tests if not already done via config
+    // In a real scenario, this would be set via test environment configuration
+    (window as any).VITE_FLAG_OPENAI = "true";
+  });
+
+  // Attempt to advance stage (this should trigger a checkpoint and block)
+  // The 'Level up the play' button is designed to advance the stage
+  const advanceButton = page.getByRole("button", { name: "Level up the play" });
+  await advanceButton.click();
+
+  // Expect an error notice indicating the block
+  await expect(page.getByRole("status", { name: /error/i })).toBeVisible();
+  await expect(page.getByRole("status", { name: /error/i })).toContainText(
+    /Stage advance blocked/i,
+  );
+
+  // Assert that the stage has not visually changed (e.g., still "INTAKE_STARTED" or initial stage)
+  // This might require inspecting the stage display in the UI
+  await expect(page.locator(".text-sm.font-semibold.text-brand-ink").first()).not.toContainText(
+    /INTAKE_COMPLETE/i,
+  );
+});
+
+test("AI story generation works when flag is enabled", async ({ page }) => {
+  // Load mock data and navigate to workspace
+  await page.goto("/");
+  await page.getByRole("button", { name: "Load mock bag" }).click();
+  await page.waitForURL(/#workspace/);
+
+  // Ensure AI flag is enabled (via .env.example or test config)
+  // For this test, we assume VITE_FLAG_OPENAI is true in the test environment
+  // If not, it would need to be mocked or set before the test runs.
+
+  // Click the 'Coaching' tab to reveal the AI generation button
+  await page.getByRole("option", { name: "5. Moves" }).click(); // Selects the coaching step
+
+  // Click the 'Generate with AI' button
+  const generateAIButton = page.getByRole("button", { name: "Generate with AI" });
+  await expect(generateAIButton).toBeVisible();
+  await generateAIButton.click();
+
+  // Expect a success notice
+  await expect(page.getByRole("status", { name: /success/i })).toBeVisible();
+  await expect(page.getByRole("status", { name: /success/i })).toContainText(
+    /AI generated a new candidate story!/i,
+  );
+
+  // Optionally, verify that a new story entry is visible (might need to inspect state or UI)
+  // For now, relying on the success notice. A more robust test would inspect the story content.
 });

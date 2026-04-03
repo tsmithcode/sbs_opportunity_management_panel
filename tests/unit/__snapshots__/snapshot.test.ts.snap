@@ -1,0 +1,68 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CandidateStory markdown structure snapshot 1`] = `
+"# John Doe story for Acme Corp
+
+## Story Summary
+Senior Software Engineer narrative built from lifecycle evidence, structured signals, and profile context.
+
+## Who
+I am Senior. My current narrative shows that I bring Experienced in React, Node.js, TypeScript..
+
+## What
+I am pursuing the Senior Software Engineer opportunity at Acme Corp with a focus on clear, supportable evidence rather than generic claims.
+
+## Why
+This opportunity matters because it connects through LinkedIn and aligns to the target role of Senior Software Engineer.
+
+## Where
+I create value in New York.
+
+## When
+The current timeline signals include upcoming milestones are still being clarified.
+
+## How
+I communicate and execute by leaning on Frontend architecture, API design..
+
+## Proof Points
+Experience or signal linked to PreviousCo, Experience or signal linked to OldCorp, Experience or signal linked to Acme Corp
+
+## Gaps To Address
+Less experience with distributed systems.
+
+## Interview And Outreach Cues
+No interview-specific signals captured yet.
+
+## Structured Signals
+- Names: John Doe, Recruiter Name
+- Emails: john.doe@example.com
+- Phones: 555-123-4567
+- Companies: PreviousCo, OldCorp, Acme Corp
+- Locations: New York
+- Contingencies: None captured
+"
+`;
+
+exports[`ExportPackageManifest snapshot 1`] = `
+{
+  "account_id": "mock_account_123",
+  "generated_at": "2026-04-03T10:00:00Z",
+  "included_paths": [
+    "session.json",
+    "manifest.json",
+    "README.md",
+    "candidate-story.md",
+  ],
+  "notes": [
+    "Generated for snapshot testing",
+    "Contains mock data",
+  ],
+  "package_version": "0.1.0",
+  "schema_version": "1.0",
+  "selected_opportunity_id": "mock_opportunity_789",
+  "selected_user_id": "mock_user_456",
+  "use_case_ids": [
+    "monyawn-sbs",
+  ],
+}
+`;
